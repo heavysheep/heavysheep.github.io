@@ -268,6 +268,168 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/24/Paxos算法简易理解/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/24/Paxos算法简易理解/" itemprop="url">
+                  Paxos算法简易理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-24T13:32:31+08:00">
+                2017-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介">简介</h2>
+<p>Paxos算法简单来说就是一个在异步分布式系统里用以保证一致性的投票算法，严格来说，Paxos并不是一个算法，而是一个经过严谨逻辑推导出的投票方式。该算法由莱斯利·兰伯特于1990年提出，只由一些必须要被满足的基本条件推导得出，因此Paxos是在所有分布式算法中最简单，同时也是最稳定的算法。</p>
+<p>Paxos应用于“基于消息传递且要求具有高度容错特性”的场景，在“共享内存”的分布式场景中并不适用，另外，虽然有许多基于Paxos的一致性算法，但都没有paxos稳定。</p>
+<p>谷歌在其分布式锁服务（Chubby lock）中应用了Paxos算法。Yahoo!开源的ZooKeeper是一个开源的类Paxos实现，而hadoop也支持ZooKeeper协议。</p>
+<blockquote>
+<p>这个世界上只有一种一致性算法，那就是Paxos，其它的算法都是残次品 – Mike Burrows</p>
+</blockquote>
+<h2 id="算法假设">算法假设</h2>
+<p>1.不存在<a href="https://zh.wikipedia.org/wiki/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98" target="_blank" rel="external">拜占庭将军问题</a>（一条消息可能被传递两次，但在传递中不会出错） 2.只要等待足够的时间，消息就会被传到(信息必定到达） 3.每个节点对于信息，接收到信息即以为赞同，同时只有接受和忽略，没有反对。（只可根据赞成数来确定结果） 4.信息不一定会被成功传递，也无法确定传递时间。（包容传递失败，并确定在此条件下也能保持一致性） ##算法定义 在一个分布式系统中，每个节点会有最少1种，最多3种身份，分别是<strong>proposers（提案者）</strong>、<strong>acceptors（批准者）</strong>、<strong>learners（接受者）</strong>，他们在节点中相互传递信息被称为<strong>value（决议）</strong>。 1.决议只能被提案者提出，同时随决议附有一个编号，编号是递增且唯一的； 2.任何两个提案编号之间构成偏序（意味着提案者的编号大小是有意义的；同一次提案，提案者的权限是有等级分别的）； 3.在一次算法执行中，每个批准者一次只批准一条决议，并且只与最新的决议形成交互（意味着可能存在信息队列）； 4.收到超过半数的表态，即视为通过决议，并向所有人广播； 5.接受者只能获得最终被批准的决议。 需要注意的是，节点可以同时拥有三种身份，当节点既是提案者，又是批准者时，他必定会为自己提出的决议投出一票。</p>
+<h2 id="实例">实例</h2>
+<p>东方网准备开一场主题为“智橙生活未来发展方向”的会议，与会人员分别是董事长何XX、副董事长徐XX、纪委书记金X、副总裁高X、技术总监老王。与会人员都可以<strong>提案</strong>和<strong>赞同</strong>，一人一票。其他未与会人员例如开发、产品、数据分析师等，只能<strong>接受</strong>讨论结果（定义5）。</p>
+<p>第一天：董事长提案智橙生活应该主打“上海市民离不开的产品”，其他4人纷纷表示“赞同”，董事长收到其他4人的表态，开心的表示全票通过，向所有人广播<strong>“产品基调定好，新的提案不得再讨论本问题”</strong>，全场统一。</p>
+<p>第二天：董事长提案智橙生活应该添加“为民办事”功能，老王不能装作听不见，只好表示“赞同”（假设3），副总裁和纪委书记睡着了，无法表态，董事长等了半天只等到了两个表态，表示少两人老子照样干，加上自己一票通过了决议（定义4），向所有人广播<strong>“功能确定，新的提案不得再讨论本问题”</strong>，全场统一。</p>
+<p>第三天：副总裁和纪委书记睡醒了，发现了董事长的提案，但同时（或更早）收到了提案结果的广播，于是他们<strong>不必再对此提案表态</strong>，全场统一。</p>
+<p>第四天：轮到老王提案，他提出了“打磨产品，塑造核心功能点”的主旨，这时其他4位领导都睡着了，老王未获得任何表态。<strong>决议失败，不能向任何人广播。只能重新提案</strong>，全场统一。</p>
+<p>第五天：4位领导终于都醒了，这时董事长提出了“尽可能多的造功能，我们要做一款万能APP”的主旨，老王再次提出昨天的提案，其他三位领导先听见了董事长的训示，纷纷表态支持，这时才反应过来老王有一份同样的提案，这时有两种情况：</p>
+<p>老王职级低：其他领导表态后收到了老王的提案并发现是相同的提案（定义3），但老王的职级比他们的低，因此会<strong>忽略</strong>老王的提案，全场统一。</p>
+<p>老王职级高：其他领导表态后收到了老王的提案并发现是相同的提案（定义3），他们会向老王<strong>回复之前已经通过了的提案及其内容并忽略投票</strong>，这样老王会知道自己的提案无望，全场统一。</p>
+<p>第六天：董事长和老王同时说出对一件事的提案，并且获得邻座（近邻节点）的迅速反馈，此时老王邻座的副总裁和纪委书记先向老王表态“赞同”，当董事长的提案到来时，他们会再次表示“赞同”。而副董事长先向董事长的提案表示“赞同”后，收到了老王的提案，此时他将向老王表示“已有大人物关注此事，你不要插手”（定义2）。<strong>当信息传递结束，高权限必定获得更高的“赞同”</strong>，提案通过，全场统一。</p>
+<p>第七天：老王总结出了深刻的人生哲理：在异步的任何情况下，即使<strong>某一节点出于某些原因无法接受信息，也绝不影响该节点以及总体对于一致性的检测</strong>，并且<strong>为了保证异步一致，权限相对较低的节点在提案和投票中处于较不利的位置</strong>。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/18/使用sklearn进行数据预处理 —— 归一化-标准化-正则化/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1324,165 +1486,13 @@ P(D|J) = 0.612</code></pre>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/05/瞎聊聊怎么造个人工智能/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/05/瞎聊聊怎么造个人工智能/" itemprop="url">
-                  瞎聊聊怎么造个人工智能
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-05T13:13:19+08:00">
-                2017-01-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="section">0</h2>
-<p>给黑猩猩一把枪，在教会他开枪之后，他会无聊的把枪丢掉，即使知道这能帮助他杀死自己的敌人。</p>
-<p>人类则不一样，人类在大自然中是一个奇怪的、乐于争斗的物种。在电影里，为了营造冲突，人类不停的给自己制造着反派。随着人类认知的发展，我们得不停的为反派升级来试着在电影里毁灭人类，从鬼神、人类本身、外星人到新一代的人工智能。</p>
-<p>从《太空漫游》开始，人类就不断在畅想人工智能，《太空漫游》还不错，起码AI不是坏人，接下去就慢慢不太对劲了，《终结者》、《机器公敌》、《鹰眼》，反正一个个人工智能都想毁灭人类。</p>
-<p>OK，那我们作为程序员的问题是，怎样才能造一款能毁灭人类的人工智能？</p>
-<p>一个AI，想要迅速成长，一定不能受人力的限；不受人力的限制，一定要实现自学习；要应用自学习的成果，一定要实现代码的自我迭代，让机器自己给自己写代码。</p>
-<p>就像《环形使者》一样，AI造出自己的下一版AI，如果AI可用，将会杀死前一个自己，不停的尝试自我毁灭的方式。</p>
-<h2 id="section-1">1</h2>
-<p>刚开始思考的时候就陷入一个错误的方向：AI要实现自学习，第一要实现代码识别，分析代码的意图，了解代码的意义，从而学会为了实现这个意义的写作方式；第二要实现提出需求，AI得知道“我需要一个列表来放置元素”才能制造一个列表。以此不断分解业务，由无数小的业务组成大的业务，最终实现自学习。</p>
-<p>直到我看到了鸭子预测 &gt; 如果一只鸭子看起来像鸭子，游泳像鸭子，叫声像鸭子，那么它就是只鸭子。</p>
-<p>智能生物对明显具有外部特征的定义，会选择只看表象来判断，而不是把它解剖了来确认；同理，机器只要了解通过代码中的数值转换，明白其最终达到了业务目标，那这就是代码的意义，除了结果之外，代码内容只是实现的“工具”而已，AI只需记住这么转换是可行的，下次就照着做准没错–如果错了，就去找下一段代码。</p>
-<p>1956年的夏天，40岁的香农和28岁的麦卡锡、明斯基、37岁的罗切斯特及其他六位大神一起举办了朴茨茅斯会议，尝试解决自然语言处理的问题。世界上最聪明的10个人头脑风暴了一个月，最后得到的结论还有没有当代一个机器学习PHD在读脑子里的东西多–他们一度陷入了机器“翻译”是基于“理解”的错误上，实际上，华生实验室90年代的成果表明，机器不需要了解词语的意义，只需要按照大数据的理念找到这种情况的其他做法就行，这一成果一夜之间让机器翻译的准确率从70%提升到了90%。</p>
-<p>其实人类对“原理”的理解，也只是用自己的所见去解释而已，我们不知道我们是不是活在《黑客帝国》里，我们不知道是不是三体人的质子正在干扰我们，我们不需要知道这么多。</p>
-<p>AI也不需要知道。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
           
           </div>
@@ -1523,7 +1533,7 @@ P(D|J) = 0.612</code></pre>
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
