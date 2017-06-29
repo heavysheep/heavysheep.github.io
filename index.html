@@ -268,6 +268,262 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/sklearn学习笔记-2 数据处理/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/17/sklearn学习笔记-2 数据处理/" itemprop="url">
+                  sklearn学习笔记-2 数据处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-17T22:54:52+08:00">
+                2017-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="稀疏和非稀疏">稀疏和非稀疏</h2>
+<p>在矩阵中，若数值为0的元素数目远远多于非0元素的数目时，则称该矩阵为稀疏矩阵；与之相反，若非0元素数目占大多数时，则称该矩阵为稠密矩阵。<del>稀疏被称为L1，非稀疏被称为L2</del>。</p>
+<h2 id="数据标准化">2.1 数据标准化</h2>
+<ul>
+<li>特征决定了模型的上限，算法决定了如何逼近这个上限<br>
+</li>
+<li>对业务了解的越多，提出的特征越好<br>
+</li>
+<li>sklearn的数据处理能力现在非常强大，能处理文本、图片或更多的数据<br>
+</li>
+<li>在数据量纲不一样时，需要对数据进行标准化，一般来说，涉及到梯度下降的模型，和涉及到距离的模型，都需要做数据标准化。</li>
+</ul>
+<p><strong>定义</strong><br>
+标准化1(常用的标准化）：减去一列的平均数再除以标准差，使其符合平均数为0标准差为1的高斯分布。<br>
+标准化2：压缩数据至0到1<br>
+树类模型不需要标准化。<br>
+标准化不能在训练集和测试集上分开进行（两个集的平均数和标准差不同），应当在测试集上应用训练集的标准化（减去标准化的平均数，除以标准化的标准差）。<br>
+把训练集和测试集放在一起做标准化也不是一种较好的办法，最优的办法是在训练集上做标准化，并transform到测试集中。</p>
+<h3 id="scale"><strong>scale</strong></h3>
+<p>用于针对列的数据标准化</p>
+<p><strong>函数</strong><br>
+sklearn.preprocessing.scale(X,axis=0,with_mean=True,with_std=True,copy=True)<br>
+X传入数组，支持pandas数据框,axis=0按列处理，mean=True平均数接近0，std=True标准差接近1<br>
+<strong>方法</strong><br>
+sklearn.preprocessing.StandarScaler(with_mean=True,with_std=True,copy=True)<br>
+相比方法，函数很少被用到，因为该方法没有transform接口。<br>
+当数据不以时间为顺序时，可以随机划分训练集和测试集。</p>
+<p><strong>随机划分数据集</strong></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.cross_validation <span class="im">import</span> train_test_split<span class="co">#调取切割函数  </span>
+X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(df1,df[<span class="st">&#39;area&#39;</span>],train_size<span class="op">=</span><span class="fl">0.7</span>)   <span class="co"># 数据参数，数据结果，切分为测试集的比例  </span>
+<span class="co"># X_train是被切分为训练集的比例，X_test是被切分为测试集的比例，y相同  </span></code></pre></div>
+<p>在一个函数内训练两个集，目的是为了不破坏索引顺序</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">标准化数据1（正态数据）  
+<span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler<span class="co">#调取标准化函数  </span>
+ss<span class="op">=</span>StandardScaler()<span class="co">#创建标准化对象  </span>
+ss.fit(X_train)<span class="co">#以训练集训练标准化对象  </span>
+X_train_ss<span class="op">=</span>ss.transform(X_train)<span class="co">#将训练结果应用于训练集  </span>
+X_test_ss<span class="op">=</span>ss.transform(X_test)<span class="co">#将训练结果用于与测试集  </span></code></pre></div>
+<p>此时，返回的结果都是numpy形式的多维数组。<br>
+每一组的平均值无限接近于0，标准差无限接近于1。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">标准化数据2（压缩数据）  
+<span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler<span class="co">#调取压缩函数  </span>
+mms <span class="op">=</span> MinMaxScaler()<span class="co">#创建标准化对象  </span>
+mms.fit(X_train)<span class="co">#依然以训练集训练标注化对象  </span>
+<span class="co">#...  </span></code></pre></div>
+<p>以上标准化方法，都是对每一列（每一个特征进行标准化）</p>
+<h3 id="normalize"><strong>normalize</strong></h3>
+<p>对整个样本进行数据标准化（正则）</p>
+<p><strong>函数</strong><br>
+sklearn.preprocessing.normalize(X, norm=‘12’, axis=1 ,copy=True, return_norm=False)<br>
+<strong>方法</strong><br>
+sklearn.preprocessing.Normalizer(norm=‘12’, copy=True)</p>
+<p>normalize针对样本，但样本间是独立的，因此该方法的transform无意义（整个样本都被转换了，单个使用时就不必transform），只会在papline中有意义。<br>
+该方法只会用于计算距离、无监督学习的聚类中使用。默认接受L2 <del>（稠密矩阵）</del></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.preprocessing <span class="im">import</span>  Normalizer  <span class="co"># 调用正则函数  </span>
+norm <span class="op">=</span> Normalizer()  <span class="co"># 创建初始化对象  </span>
+norm.fit((X_train))  <span class="co"># 虽然无意义，仍需要按照标准书写  </span>
+norm.transform(X_train)  <span class="co"># 虽然无意义，仍需要按照标准书写  </span>
+norm.transform(X_test)  <span class="co"># 虽然无意义，仍需要按照标准书写  </span></code></pre></div>
+<h2 id="分类值与缺失值">2.2 分类值与缺失值</h2>
+<h3 id="binarizer"><strong>binarizer</strong></h3>
+<p>用作数据二分化的分类，将一个连续性变量改为离散变量。</p>
+<p>数据离散化的好处：数据存储空间小，并且因为0不参与运算（相加为原值，相乘为0）使运算速度非常快。<br>
+离散化也能较好的处理缺失值，可以将缺失值单独的形成一个特征，出现缺失值的行为1.<br>
+逻辑回归非常偏好离散化完成的数据</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Binarizer<span class="co">#调取二分数据函数  </span>
+bi <span class="op">=</span> Binarizer(<span class="dv">548</span>)<span class="co">#创建对象定义分类标准，大于该值会被分为1，小于为0  </span>
+DC_bi<span class="op">=</span>bi.fit_transform(df[<span class="st">&#39;DC&#39;</span>])<span class="co">#调用对象进行分类  </span></code></pre></div>
+<p>当使用一列表示象征性的分类时，不要使用数字，因为程序sklearn会认为该特征的大小和顺序是有意义的，正确的做法是对少量参数进行稀释矩阵。<br>
+构建稀疏矩阵：skleran的OneHotEncoder非常不好用还容易报错，因此我们使用pandas的get_dummies()。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">pd.get_dummies(data<span class="op">=</span>df, columns<span class="op">=</span>[<span class="st">&#39;month&#39;</span>,<span class="st">&#39;day&#39;</span>,<span class="st">&#39;DC_bi&#39;</span>])  </code></pre></div>
+<h3 id="缺失值"><strong>缺失值</strong></h3>
+<p>缺失值有时是真实存在的，缺失是存在意义的，并且当数据不够大时，删除缺失值只会浪费样本。<br>
+因此，更好的方式是填充缺失值，填充方式尽量通过业务的理解来进行填充。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Imputer<span class="co">#调用填充缺失值函数，该函数默认填充平均值  </span>
+im<span class="op">=</span>Imputer()<span class="co">#创建对象  </span>
+dfna<span class="op">=</span>im.fit_transform(df[<span class="st">&#39;DC_na&#39;</span>])<span class="co">#选出需要填充的列并输出列  </span></code></pre></div>
+<p>Tips：<br>
+1. 这里有错误，训练出来的列长度并不等于原来的长度，因此还是寄希望于pandas来处理<br>
+2. sklearn有些函数不支持缺失值或无限大、无限小的数据，因此通过pandas将此类数据设为缺失值，并且一次性的处理它。<br>
+3. 缺失值可以使用-999代替。</p>
+<h2 id="变量选择">2.3 变量选择</h2>
+<h3 id="特征选取"><strong>特征选取</strong></h3>
+<p>共线性特征，只保留一个就可以，可以用皮尔逊共线测试一下。<br>
+当特征过多时，只保留重要特征，删除掉不重要的参数也可以提高准确率。</p>
+<p>针对稀疏矩阵判断特征的两种方式：<br>
+1. 使用lasso来选择特征</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso  <span class="co"># 从线性模型这种调取能判断参数重要性的函数lasso()  </span>
+lasso <span class="op">=</span> Lasso()  <span class="co"># 创建对象  </span>
+lasso.fit(xdata,ydata)  <span class="co">#   fit不接受缺失值，使用前记得填充缺失值为-999。第一个参数为参数df，第二个参数为结果df  </span>
+<span class="bu">print</span>(lasso.coef_)  <span class="co"># 打印特征重要程度，可以删除无限接近于0的特征  </span></code></pre></div>
+<p>所有的稀疏矩阵类型，都可以放入此函数进行判断。</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>使用featureselect来选择特征：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel  <span class="co"># 调用参数选择模型  </span>
+model <span class="op">=</span> SelectFromModel(lasso)  <span class="co"># 创建对象并直接传入模型，相当于省略了fit步骤  </span>
+model.fit_transform()  <span class="co"># 无意义，为了是一个popline，另外sklearn不接受异常值，这里因为极大和极小值的存在，会报错。  </span></code></pre></div></li>
+</ol>
+<p>支持LR回归，简单线性回归<br>
+当特征是连续性，我们希望方差越大越好</p>
+<h3 id="特诊判断"><strong>特诊判断</strong></h3>
+<p>基于树形模型对特征进行判断：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor<span class="co">#从随机森林库中调取树类特征选择函数  </span>
+rf <span class="op">=</span> RandomForestRegressor()<span class="co">#创建对象  </span>
+rf.fit(xdata,ydata)<span class="co">#训练模型，第一个参数为参数df，第二个参数为结果df  </span>
+<span class="bu">print</span>(rf.feature_importances_)<span class="co">#打印特征重要程度，数值越接近于0，意义越小  </span></code></pre></div>
+<h3 id="提到的pandas相关操作">提到的pandas相关操作</h3>
+<p>.head():读取前五行数据<br>
+df.loc[ : ,x:y]:索引选取x到y列的数据<br>
+df[0, : ]维度转换<br>
+pd.cut(df[‘’],n)：将padans中的一列均匀的切分成n份，返回的值是一个字符串。<br>
+pd.get_dummies(data, prefix = None, prefix_sep = ’_’, dummy_na = False, columns=None, sparse = False, drop_first = False)：函数接受一个df表格以及使用columns选取的列，函数会删除原来的列并对其进行稀疏化矩阵的扩充，使其变为0/1形式，返回一个重新构建好的df表格。<br>
+df.loc[df[‘DC’]&gt;=600,‘DC_na’] = np.nan ：对df行中的DF列大于等于600的，新建一列设为NaN。<br>
+df.replace(np.inf,np.nan)：替换过大值为NaN</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1017,240 +1273,6 @@ score有很大的问题：这个值是处于变动的。</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/13/windows 10 github page + hexo + pandoc + next 搭建博客/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/13/windows 10 github page + hexo + pandoc + next 搭建博客/" itemprop="url">
-                  windows 10 github page + hexo + pandoc + next 搭建博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T17:32:25+08:00">
-                2017-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/历程/" itemprop="url" rel="index">
-                    <span itemprop="name">历程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>之前根据crossin的编程教室一系列教程使用githubpage + hexo + yilia成功搭建了博客，但是知其然不知其所以然，在尝试转变风格为next的时候花了不少功夫，痛定思痛之后决定把这些记录下来，以备将来再次安装使用。</p>
-<p>简单的教程很多就不再赘述，直接粘贴当时看的教程。 <a href="https://mp.weixin.qq.com/s?__biz=MjM5MDEyMDk4Mw==&amp;mid=2650166025&amp;idx=1&amp;sn=50a22c1953f57db0240ca2d1363ba47a&amp;mpshare=1&amp;scene=1&amp;srcid=0212SeSbnQgvbyzfVgfSTdkK&amp;pass_ticket=W%2FXDrSAzGLlSbUsfxcw4MwwCTPprJvbUFD7S1QRB2CqUluJvZaS%2BxhURz44VWoNZ#rd" target="_blank" rel="external">用 GitHub + Hexo 建立你的第一个博客</a> <a href="https://mp.weixin.qq.com/s?__biz=MjM5MDEyMDk4Mw==&amp;mid=2650166037&amp;idx=1&amp;sn=377ea81674f6a31e32064f00138a5b01&amp;mpshare=1&amp;scene=1&amp;srcid=0212c2UUi4AG6E3mKtuDwH46&amp;pass_ticket=W%2FXDrSAzGLlSbUsfxcw4MwwCTPprJvbUFD7S1QRB2CqUluJvZaS%2BxhURz44VWoNZ#rd" target="_blank" rel="external">部署博客及更新博文</a> <a href="https://mp.weixin.qq.com/s?__biz=MjM5MDEyMDk4Mw==&amp;mid=2650166056&amp;idx=1&amp;sn=5693b76cd7528d76305f420deb2f2598&amp;mpshare=1&amp;scene=1&amp;srcid=0212VnzD5xbtWOLtxL0hsHZz&amp;pass_ticket=W%2FXDrSAzGLlSbUsfxcw4MwwCTPprJvbUFD7S1QRB2CqUluJvZaS%2BxhURz44VWoNZ#rd" target="_blank" rel="external">安装自己喜欢的主题</a></p>
-<h2 id="更换markdown渲染引擎">更换markdown渲染引擎</h2>
-<p>hexo默认只支持最基础的markdown渲染，为了实现现代化的功能（囧），改用pandoc来进行渲染。 首先前往<a href="http://www.pandoc.org/installing.html" target="_blank" rel="external">pandoc官网</a>下载并安装pandoc，安装成功后测试<code>pandoc --help</code>命令以确定安装成功。 之后安装pandoc作为hexo的渲染引擎，进入hexo目录后，输入以下命令：</p>
-<pre><code>npm uninstall hexo-renderer-marked --save
-npm install hexo-renderer-pandoc --save</code></pre>
-<p>pandoc和基础markdown语法有细微不同，具体细节可以去官网查阅。</p>
-<h2 id="支持latex数学公式">支持LATEX数学公式</h2>
-<p>hexo目录中，输入以下命令：</p>
-<pre><code>npm install hexo-math --save
-hexo math install</code></pre>
-<p>并且在网站配置的<code>_config.yml</code>文件中添加：</p>
-<pre><code>plugins:
-- hexo-math</code></pre>
-<p>最后有一点许多教程都没有提到的，记得去正在使用的<strong>主题配置_config.yml</strong>中，将<strong>MathJex</strong>相关支持设定为<code>true</code>。</p>
-<h2 id="更换主题为next">更换主题为next</h2>
-<p>依然在hexo目录中，安装next主题</p>
-<pre><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></pre>
-<p>打开站点配置文件<code>_config.yml</code>修改主题为next</p>
-<pre><code>theme: next</code></pre>
-<p>相关建议设置<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next官网</a>有清楚的描述。</p>
-<h2 id="使用hexo的内建归档categories">使用Hexo的内建归档categories</h2>
-<p>作者：碎瞳Artin 链接：https://www.zhihu.com/question/33324071/answer/58775540 来源：知乎 著作权归作者所有，转载请联系作者获得授权。</p>
-<p>1.第一步：生成post（文章）时默认生成categories配置项：在根目录下scaffolds/post.md中，添加一行categories:。同理可应用在page.md和photo.md，示例如下：</p>
-<pre><code>title: {{ title }}
-date: {{ date }}
-tags:
-categories:
- # 此处为添加内容
----</code></pre>
-<p>2.第二步：在实际写作时，在开头进行categories配置。例如：</p>
-<pre><code>title: Hello，World!你好，世界！
-date: 2014-01-21 23:33:02
-tags: 写作 
-categories: 随笔 # 配置categories</code></pre>
-<p>这样在文章发布时，在git中使用hexo g命令，hexo会在根目录/public/categrises下自动生成归档文件夹，如图：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/ye3zdr046rdr45mncmpslrc1/image_1b8php9vm1tb71u91170v1kusmrqg.png" alt="image_1b8php9vm1tb71u91170v1kusmrqg.png-26kB">
-<p class="caption">image_1b8php9vm1tb71u91170v1kusmrqg.png-26kB</p>
-</div>
-<p>3.第三步：配置博客首页归档展示样式。在主题配置文件themes/_config.yml中添加以下代码（#号后为注释内容）:</p>
-<pre><code>menu:
-  home: /
-  essay: /categories/随笔     # 博客首页展示文本/访问路径/自定义归档名称
-  write: /categories/写作     
-  read: /categories/阅读       
-  study: /categories/学习
-  code: /categories/编程</code></pre>
-<p>4.补充说明：如果发现博客首页展示文本为英文，需要改为中文显示，需要修改先博客根目录下的_config.yml文件的language配置，示例如下：</p>
-<pre><code># Site
-title: My Blog
-subtitle: 
-description: 
-author: 
-language: zh-CN # 修改此处，一般默认为default.yml，原生英文显示
-timezone:</code></pre>
-<p>然后为实现文章归档名称显示为中文，接着再修改主题配置文件下language/zh-CN.yml即可，示例如下：</p>
-<pre><code>title:
-  archive: 归档
-  category: 分类
-  tag: 标签
-menu:
-  home: 首页
-  archives: 归档
-  categories: 分类
-  tags: 标签
-  about: 关于
-  essay: 随笔  # 编辑代码时注意语法规范如缩进、空格等
-  read: 阅读   # Hexo采用yml语法，具体可自行搜索
-  write: 写作</code></pre>
-<p>5.最终展示效果（图中红框作强调用）：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/iufblxk57cnscrgaw2xfdvce/image_1b8phsloq155m1dbv9f9cgd6g4t.png" alt="image_1b8phsloq155m1dbv9f9cgd6g4t.png-41.6kB">
-<p class="caption">image_1b8phsloq155m1dbv9f9cgd6g4t.png-41.6kB</p>
-</div>
-<p>6.点进某一归档分类如“阅读”，博客文章会依照归档配置，排序显示如下：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/ulra4asiae33y81ntpipyyrc/image_1b8pht2l6ifh1neh1k4i3hgsg21a.png" alt="image_1b8pht2l6ifh1neh1k4i3hgsg21a.png-27.1kB">
-<p class="caption">image_1b8pht2l6ifh1neh1k4i3hgsg21a.png-27.1kB</p>
-</div>
-<p>**注：目前下载安装的hexo貌似都没有<code>zh-CN.yml</code>，而以<code>zh-Hans</code>代替，第四步修改对应文件即可。</p>
-<h2 id="上传博客常用命令">上传博客常用命令</h2>
-<p>hexo目录下：</p>
-<pre><code># 清理缓存
-hexo clean
-# 生成静态文件
-hexo generate
-# 本地预览（在4000端口）
-hexo s
-#　提交至网站
-hexo deploy</code></pre>
-<p>文件前的title各标签视主题而有所不同。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1298,7 +1320,7 @@ hexo deploy</code></pre>
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
