@@ -268,6 +268,806 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/sklearn学习笔记-2 数据处理/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/17/sklearn学习笔记-2 数据处理/" itemprop="url">
+                  sklearn学习笔记-2 数据处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-17T22:54:52+08:00">
+                2017-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="稀疏和非稀疏">稀疏和非稀疏</h2>
+<p>在矩阵中，若数值为0的元素数目远远多于非0元素的数目时，则称该矩阵为稀疏矩阵；与之相反，若非0元素数目占大多数时，则称该矩阵为稠密矩阵。<del>稀疏被称为L1，非稀疏被称为L2</del>。</p>
+<h2 id="数据标准化">2.1 数据标准化</h2>
+<ul>
+<li>特征决定了模型的上限，算法决定了如何逼近这个上限<br>
+</li>
+<li>对业务了解的越多，提出的特征越好<br>
+</li>
+<li>sklearn的数据处理能力现在非常强大，能处理文本、图片或更多的数据<br>
+</li>
+<li>在数据量纲不一样时，需要对数据进行标准化，一般来说，涉及到梯度下降的模型，和涉及到距离的模型，都需要做数据标准化。</li>
+</ul>
+<p><strong>定义</strong><br>
+标准化1(常用的标准化）：减去一列的平均数再除以标准差，使其符合平均数为0标准差为1的高斯分布。<br>
+标准化2：压缩数据至0到1<br>
+树类模型不需要标准化。<br>
+标准化不能在训练集和测试集上分开进行（两个集的平均数和标准差不同），应当在测试集上应用训练集的标准化（减去标准化的平均数，除以标准化的标准差）。<br>
+把训练集和测试集放在一起做标准化也不是一种较好的办法，最优的办法是在训练集上做标准化，并transform到测试集中。</p>
+<h3 id="scale"><strong>scale</strong></h3>
+<p>用于针对列的数据标准化</p>
+<p><strong>函数</strong><br>
+sklearn.preprocessing.scale(X,axis=0,with_mean=True,with_std=True,copy=True)<br>
+X传入数组，支持pandas数据框,axis=0按列处理，mean=True平均数接近0，std=True标准差接近1<br>
+<strong>方法</strong><br>
+sklearn.preprocessing.StandarScaler(with_mean=True,with_std=True,copy=True)<br>
+相比方法，函数很少被用到，因为该方法没有transform接口。<br>
+当数据不以时间为顺序时，可以随机划分训练集和测试集。</p>
+<p><strong>随机划分数据集</strong></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.cross_validation <span class="im">import</span> train_test_split<span class="co">#调取切割函数  </span>
+X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(df1,df[<span class="st">&#39;area&#39;</span>],train_size<span class="op">=</span><span class="fl">0.7</span>)   <span class="co"># 数据参数，数据结果，切分为测试集的比例  </span>
+<span class="co"># X_train是被切分为训练集的比例，X_test是被切分为测试集的比例，y相同  </span></code></pre></div>
+<p>在一个函数内训练两个集，目的是为了不破坏索引顺序</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">标准化数据1（正态数据）  
+<span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler<span class="co">#调取标准化函数  </span>
+ss<span class="op">=</span>StandardScaler()<span class="co">#创建标准化对象  </span>
+ss.fit(X_train)<span class="co">#以训练集训练标准化对象  </span>
+X_train_ss<span class="op">=</span>ss.transform(X_train)<span class="co">#将训练结果应用于训练集  </span>
+X_test_ss<span class="op">=</span>ss.transform(X_test)<span class="co">#将训练结果用于与测试集  </span></code></pre></div>
+<p>此时，返回的结果都是numpy形式的多维数组。<br>
+每一组的平均值无限接近于0，标准差无限接近于1。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">标准化数据2（压缩数据）  
+<span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler<span class="co">#调取压缩函数  </span>
+mms <span class="op">=</span> MinMaxScaler()<span class="co">#创建标准化对象  </span>
+mms.fit(X_train)<span class="co">#依然以训练集训练标注化对象  </span>
+<span class="co">#...  </span></code></pre></div>
+<p>以上标准化方法，都是对每一列（每一个特征进行标准化）</p>
+<h3 id="normalize"><strong>normalize</strong></h3>
+<p>对整个样本进行数据标准化（正则）</p>
+<p><strong>函数</strong><br>
+sklearn.preprocessing.normalize(X, norm=‘12’, axis=1 ,copy=True, return_norm=False)<br>
+<strong>方法</strong><br>
+sklearn.preprocessing.Normalizer(norm=‘12’, copy=True)</p>
+<p>normalize针对样本，但样本间是独立的，因此该方法的transform无意义（整个样本都被转换了，单个使用时就不必transform），只会在papline中有意义。<br>
+该方法只会用于计算距离、无监督学习的聚类中使用。默认接受L2 <del>（稠密矩阵）</del></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.preprocessing <span class="im">import</span>  Normalizer  <span class="co"># 调用正则函数  </span>
+norm <span class="op">=</span> Normalizer()  <span class="co"># 创建初始化对象  </span>
+norm.fit((X_train))  <span class="co"># 虽然无意义，仍需要按照标准书写  </span>
+norm.transform(X_train)  <span class="co"># 虽然无意义，仍需要按照标准书写  </span>
+norm.transform(X_test)  <span class="co"># 虽然无意义，仍需要按照标准书写  </span></code></pre></div>
+<h2 id="分类值与缺失值">2.2 分类值与缺失值</h2>
+<h3 id="binarizer"><strong>binarizer</strong></h3>
+<p>用作数据二分化的分类，将一个连续性变量改为离散变量。</p>
+<p>数据离散化的好处：数据存储空间小，并且因为0不参与运算（相加为原值，相乘为0）使运算速度非常快。<br>
+离散化也能较好的处理缺失值，可以将缺失值单独的形成一个特征，出现缺失值的行为1.<br>
+逻辑回归非常偏好离散化完成的数据</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Binarizer<span class="co">#调取二分数据函数  </span>
+bi <span class="op">=</span> Binarizer(<span class="dv">548</span>)<span class="co">#创建对象定义分类标准，大于该值会被分为1，小于为0  </span>
+DC_bi<span class="op">=</span>bi.fit_transform(df[<span class="st">&#39;DC&#39;</span>])<span class="co">#调用对象进行分类  </span></code></pre></div>
+<p>当使用一列表示象征性的分类时，不要使用数字，因为程序sklearn会认为该特征的大小和顺序是有意义的，正确的做法是对少量参数进行稀释矩阵。<br>
+构建稀疏矩阵：skleran的OneHotEncoder非常不好用还容易报错，因此我们使用pandas的get_dummies()。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">pd.get_dummies(data<span class="op">=</span>df, columns<span class="op">=</span>[<span class="st">&#39;month&#39;</span>,<span class="st">&#39;day&#39;</span>,<span class="st">&#39;DC_bi&#39;</span>])  </code></pre></div>
+<h3 id="缺失值"><strong>缺失值</strong></h3>
+<p>缺失值有时是真实存在的，缺失是存在意义的，并且当数据不够大时，删除缺失值只会浪费样本。<br>
+因此，更好的方式是填充缺失值，填充方式尽量通过业务的理解来进行填充。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Imputer<span class="co">#调用填充缺失值函数，该函数默认填充平均值  </span>
+im<span class="op">=</span>Imputer()<span class="co">#创建对象  </span>
+dfna<span class="op">=</span>im.fit_transform(df[<span class="st">&#39;DC_na&#39;</span>])<span class="co">#选出需要填充的列并输出列  </span></code></pre></div>
+<p>Tips：<br>
+1. 这里有错误，训练出来的列长度并不等于原来的长度，因此还是寄希望于pandas来处理<br>
+2. sklearn有些函数不支持缺失值或无限大、无限小的数据，因此通过pandas将此类数据设为缺失值，并且一次性的处理它。<br>
+3. 缺失值可以使用-999代替。</p>
+<h2 id="变量选择">2.3 变量选择</h2>
+<h3 id="特征选取"><strong>特征选取</strong></h3>
+<p>共线性特征，只保留一个就可以，可以用皮尔逊共线测试一下。<br>
+当特征过多时，只保留重要特征，删除掉不重要的参数也可以提高准确率。</p>
+<p>针对稀疏矩阵判断特征的两种方式：<br>
+1. 使用lasso来选择特征</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso  <span class="co"># 从线性模型这种调取能判断参数重要性的函数lasso()  </span>
+lasso <span class="op">=</span> Lasso()  <span class="co"># 创建对象  </span>
+lasso.fit(xdata,ydata)  <span class="co">#   fit不接受缺失值，使用前记得填充缺失值为-999。第一个参数为参数df，第二个参数为结果df  </span>
+<span class="bu">print</span>(lasso.coef_)  <span class="co"># 打印特征重要程度，可以删除无限接近于0的特征  </span></code></pre></div>
+<p>所有的稀疏矩阵类型，都可以放入此函数进行判断。</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>使用featureselect来选择特征：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel  <span class="co"># 调用参数选择模型  </span>
+model <span class="op">=</span> SelectFromModel(lasso)  <span class="co"># 创建对象并直接传入模型，相当于省略了fit步骤  </span>
+model.fit_transform()  <span class="co"># 无意义，为了是一个popline，另外sklearn不接受异常值，这里因为极大和极小值的存在，会报错。  </span></code></pre></div></li>
+</ol>
+<p>支持LR回归，简单线性回归<br>
+当特征是连续性，我们希望方差越大越好</p>
+<h3 id="特诊判断"><strong>特诊判断</strong></h3>
+<p>基于树形模型对特征进行判断：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor<span class="co">#从随机森林库中调取树类特征选择函数  </span>
+rf <span class="op">=</span> RandomForestRegressor()<span class="co">#创建对象  </span>
+rf.fit(xdata,ydata)<span class="co">#训练模型，第一个参数为参数df，第二个参数为结果df  </span>
+<span class="bu">print</span>(rf.feature_importances_)<span class="co">#打印特征重要程度，数值越接近于0，意义越小  </span></code></pre></div>
+<h3 id="提到的pandas相关操作">提到的pandas相关操作</h3>
+<p>.head():读取前五行数据<br>
+df.loc[ : ,x:y]:索引选取x到y列的数据<br>
+df[0, : ]维度转换<br>
+pd.cut(df[‘’],n)：将padans中的一列均匀的切分成n份，返回的值是一个字符串。<br>
+pd.get_dummies(data, prefix = None, prefix_sep = ’_’, dummy_na = False, columns=None, sparse = False, drop_first = False)：函数接受一个df表格以及使用columns选取的列，函数会删除原来的列并对其进行稀疏化矩阵的扩充，使其变为0/1形式，返回一个重新构建好的df表格。<br>
+df.loc[df[‘DC’]&gt;=600,‘DC_na’] = np.nan ：对df行中的DF列大于等于600的，新建一列设为NaN。<br>
+df.replace(np.inf,np.nan)：替换过大值为NaN</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/" itemprop="url">
+                  天池赛IJCAI-17 口碑商家客流量预测 解题思路
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T21:40:03+08:00">
+                2017-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/历程/" itemprop="url" rel="index">
+                    <span itemprop="name">历程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://tianchi.shuju.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.zu3kSJ&amp;raceId=231591" target="_blank" rel="external">赛题与数据</a><br>
+<a href="https://github.com/heavysheep/tianchi" target="_blank" rel="external">代码</a></p>
+<h2 id="基本数据创建">基本数据创建</h2>
+<p><strong>result</strong>：每家店铺每日交易成功数量<br>
+<strong>view</strong>：每家店铺每日浏览量</p>
+<h2 id="参数分解">参数分解</h2>
+<h3 id="shop_info">shop_info</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="center">shop_id</th>
+<th align="center">city_name</th>
+<th align="center">location_id</th>
+<th align="center">per_pay</th>
+<th align="center">score</th>
+<th align="center">comment_cnt</th>
+<th align="center">shop_level</th>
+<th align="center">cate_name..</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">商家id</td>
+<td align="center">城市名</td>
+<td align="center">所在位置编号</td>
+<td align="center">人均消费</td>
+<td align="center">评分</td>
+<td align="center">评论数</td>
+<td align="center">商铺等级</td>
+<td align="center">分类</td>
+</tr>
+</tbody>
+</table>
+<p><strong>shop_id</strong>：主键，索引<br>
+<strong>city_name</strong>：获取气温、消费能力、消费习惯<br>
+<strong><del>location_id</del></strong>：聚类算法，估计功效太低没什么意义，pass<br>
+<strong>per_pay</strong>：检测与result负相关，与view负相关。<br>
+<strong>socre</strong>：检测与result正相关，与view正相关。<br>
+<strong>comment_cnt</strong>：检测与result正相关，与view正相关。<br>
+<strong>shop_level</strong>：检测与result正相关，与view正相关。<br>
+<strong>cate_name</strong>：分类太细，考虑只保留使用“超市”和“美食”进行区分。</p>
+<p>检测<strong>per_pay</strong>、<strong>score</strong>、<strong>comment_cnt</strong>、<strong>shop——level</strong>与<strong>view</strong>、<strong>result</strong>的关联度。<br>
+score有很大的问题：这个值是处于变动的。</p>
+<h3 id="user_pay">user_pay</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="center">user_id</th>
+<th align="center">shop_id</th>
+<th align="center">time_stamp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">付费用户id</td>
+<td align="center">商家id</td>
+<td align="center">消费时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
+<h3 id="user_view">user_view</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="center">user_id</th>
+<th align="center">shop_id</th>
+<th align="center">time_stamp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">浏览用户id</td>
+<td align="center">商家id</td>
+<td align="center">浏览时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
+<h2 id="特征工程">特征工程</h2>
+<p>1.考虑到口碑是2015年6月23日开始发布，必然遭遇冷启动和虚假数据问题，那么时间序列中，体现趋势的指标应该是7日移动平均线ma，影响最大的特征因子应该是最近一次的ma_7。<br>
+2.城市天气逻辑体现非常重要，主要划分了三级（晴，小雨/小雪/，大雨/雪），但划分后的效果并不很好。<br>
+3.当日是否为工作日，次日是否为工作日比较重要。<br>
+4.16年情人节到过年的那周视为噪音。<br>
+5.GDP作为特征果然没效果，删了。</p>
+<h2 id="感受">感受</h2>
+<p>1.以不同可索引对象制造的模型再融合有巨大威力，第一次瞎配的权重都带来了最好的提升。<br>
+2.solo的问题不在于想法…判断出哪个想法提升最多是最重要的，当然这需要经验。<br>
+3.xgboost因为bug跑不起来，没时间走ARIMA，也没时间再上prophet，凄苦…水平不够时候有队友提升会比较快。<br>
+4.合理利用每日评分确定正确方向是非常有必要的，相信前几的差距已经是谁对趋势判断更敏锐了。<br>
+5.全身心的投入大约勉强能进前200，看wepon大神的blog，对底层的理解还是很重要，今后要加强学习和训练。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/17/最近在做测试/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/17/最近在做测试/" itemprop="url">
+                  最近在做测试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T14:25:46+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/历程/" itemprop="url" rel="index">
+                    <span itemprop="name">历程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近一直在忙测试相关工作，记录下测试工作心得：<br>
+1.重要的不仅只是懂业务流程，也要把思路抽离在流程之外。因为产品在设计时，往往会先定下大的方向，再逐渐寻找最优路线，在不停的修改中，也许已经偏离“可用”的轨道，此时测试应该代入的是用户的思路，对测试时找到的BUG，提出期望结果；对不合适的流程，也要提出优化期望。<br>
+2.细化的测试用例很重要，一方面可用于自动化测试的架构，另一方面，越细的测试用例，在写的时候就能发现非常多的问题。<br>
+3.如果作为懂技术的测试人员，对于测出的问题，应该做到比写这个功能的开发了解的更透彻，这也是一个测试人员平庸和杰出的分水岭。<br>
+4.测试人员是产品和开发扯皮中的重要第三方，沟通非常重要。<br>
+5.同上，测试“可信任”也是非常重要的，对能复现的问题，一定要通过复现从而找出问题；对不能复现的问题，记录下相关操作以便将来找出原因，直觉是知识、感官的积累，对于难以找到原因的问题，直觉非常重要。<br>
+6.最好的用例就是文档，文档即用例。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/24/Paxos算法简易理解/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/24/Paxos算法简易理解/" itemprop="url">
+                  Paxos算法简易理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-24T13:32:31+08:00">
+                2017-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介">简介</h2>
+<p>Paxos算法简单来说就是一个在异步分布式系统里用以保证一致性的投票算法，严格来说，Paxos并不是一个算法，而是一个经过严谨逻辑推导出的投票方式。该算法由莱斯利·兰伯特于1990年提出，只由一些必须要被满足的基本条件推导得出，因此Paxos是在所有分布式算法中最简单，同时也是最稳定的算法。</p>
+<p>Paxos应用于“基于消息传递且要求具有高度容错特性”的场景，在“共享内存”的分布式场景中并不适用，另外，虽然有许多基于Paxos的一致性算法，但都没有paxos稳定。</p>
+<p>谷歌在其分布式锁服务（Chubby lock）中应用了Paxos算法。Yahoo!开源的ZooKeeper是一个开源的类Paxos实现，而hadoop也支持ZooKeeper协议。</p>
+<blockquote>
+<p>这个世界上只有一种一致性算法，那就是Paxos，其它的算法都是残次品 – Mike Burrows</p>
+</blockquote>
+<h2 id="算法假设">算法假设</h2>
+<p>1.不存在<a href="https://zh.wikipedia.org/wiki/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98" target="_blank" rel="external">拜占庭将军问题</a>（一条消息可能被传递两次，但在传递中不会出错） 2.只要等待足够的时间，消息就会被传到(信息必定到达） 3.每个节点对于信息，接收到信息即以为赞同，同时只有接受和忽略，没有反对。（只可根据赞成数来确定结果） 4.信息不一定会被成功传递，也无法确定传递时间。（包容传递失败，并确定在此条件下也能保持一致性） ##算法定义 在一个分布式系统中，每个节点会有最少1种，最多3种身份，分别是<strong>proposers（提案者）</strong>、<strong>acceptors（批准者）</strong>、<strong>learners（接受者）</strong>，他们在节点中相互传递信息被称为<strong>value（决议）</strong>。 1.决议只能被提案者提出，同时随决议附有一个编号，编号是递增且唯一的； 2.任何两个提案编号之间构成偏序（意味着提案者的编号大小是有意义的；同一次提案，提案者的权限是有等级分别的）； 3.在一次算法执行中，每个批准者一次只批准一条决议，并且只与最新的决议形成交互（意味着可能存在信息队列）； 4.收到超过半数的表态，即视为通过决议，并向所有人广播； 5.接受者只能获得最终被批准的决议。 需要注意的是，节点可以同时拥有三种身份，当节点既是提案者，又是批准者时，他必定会为自己提出的决议投出一票。</p>
+<h2 id="实例">实例</h2>
+<p>东方网准备开一场主题为“智橙生活未来发展方向”的会议，与会人员分别是董事长何XX、副董事长徐XX、纪委书记金X、副总裁高X、技术总监老王。与会人员都可以<strong>提案</strong>和<strong>赞同</strong>，一人一票。其他未与会人员例如开发、产品、数据分析师等，只能<strong>接受</strong>讨论结果（定义5）。</p>
+<p>第一天：董事长提案智橙生活应该主打“上海市民离不开的产品”，其他4人纷纷表示“赞同”，董事长收到其他4人的表态，开心的表示全票通过，向所有人广播<strong>“产品基调定好，新的提案不得再讨论本问题”</strong>，全场统一。</p>
+<p>第二天：董事长提案智橙生活应该添加“为民办事”功能，老王不能装作听不见，只好表示“赞同”（假设3），副总裁和纪委书记睡着了，无法表态，董事长等了半天只等到了两个表态，表示少两人老子照样干，加上自己一票通过了决议（定义4），向所有人广播<strong>“功能确定，新的提案不得再讨论本问题”</strong>，全场统一。</p>
+<p>第三天：副总裁和纪委书记睡醒了，发现了董事长的提案，但同时（或更早）收到了提案结果的广播，于是他们<strong>不必再对此提案表态</strong>，全场统一。</p>
+<p>第四天：轮到老王提案，他提出了“打磨产品，塑造核心功能点”的主旨，这时其他4位领导都睡着了，老王未获得任何表态。<strong>决议失败，不能向任何人广播。只能重新提案</strong>，全场统一。</p>
+<p>第五天：4位领导终于都醒了，这时董事长提出了“尽可能多的造功能，我们要做一款万能APP”的主旨，老王再次提出昨天的提案，其他三位领导先听见了董事长的训示，纷纷表态支持，这时才反应过来老王有一份同样的提案，这时有两种情况：</p>
+<p>老王职级低：其他领导表态后收到了老王的提案并发现是相同的提案（定义3），但老王的职级比他们的低，因此会<strong>忽略</strong>老王的提案，全场统一。</p>
+<p>老王职级高：其他领导表态后收到了老王的提案并发现是相同的提案（定义3），他们会向老王<strong>回复之前已经通过了的提案及其内容并忽略投票</strong>，这样老王会知道自己的提案无望，全场统一。</p>
+<p>第六天：董事长和老王同时说出对一件事的提案，并且获得邻座（近邻节点）的迅速反馈，此时老王邻座的副总裁和纪委书记先向老王表态“赞同”，当董事长的提案到来时，他们会再次表示“赞同”。而副董事长先向董事长的提案表示“赞同”后，收到了老王的提案，此时他将向老王表示“已有大人物关注此事，你不要插手”（定义2）。<strong>当信息传递结束，高权限必定获得更高的“赞同”</strong>，提案通过，全场统一。</p>
+<p>第七天：老王总结出了深刻的人生哲理：在异步的任何情况下，即使<strong>某一节点出于某些原因无法接受信息，也绝不影响该节点以及总体对于一致性的检测</strong>，并且<strong>为了保证异步一致，权限相对较低的节点在提案和投票中处于较不利的位置</strong>。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/18/使用sklearn进行数据预处理 —— 归一化-标准化-正则化/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -473,1018 +1273,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/13/windows 10 github page + hexo + pandoc + next 搭建博客/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/13/windows 10 github page + hexo + pandoc + next 搭建博客/" itemprop="url">
-                  windows 10 github page + hexo + pandoc + next 搭建博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T17:32:25+08:00">
-                2017-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/历程/" itemprop="url" rel="index">
-                    <span itemprop="name">历程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>之前根据crossin的编程教室一系列教程使用githubpage + hexo + yilia成功搭建了博客，但是知其然不知其所以然，在尝试转变风格为next的时候花了不少功夫，痛定思痛之后决定把这些记录下来，以备将来再次安装使用。</p>
-<p>简单的教程很多就不再赘述，直接粘贴当时看的教程。 <a href="https://mp.weixin.qq.com/s?__biz=MjM5MDEyMDk4Mw==&amp;mid=2650166025&amp;idx=1&amp;sn=50a22c1953f57db0240ca2d1363ba47a&amp;mpshare=1&amp;scene=1&amp;srcid=0212SeSbnQgvbyzfVgfSTdkK&amp;pass_ticket=W%2FXDrSAzGLlSbUsfxcw4MwwCTPprJvbUFD7S1QRB2CqUluJvZaS%2BxhURz44VWoNZ#rd" target="_blank" rel="external">用 GitHub + Hexo 建立你的第一个博客</a> <a href="https://mp.weixin.qq.com/s?__biz=MjM5MDEyMDk4Mw==&amp;mid=2650166037&amp;idx=1&amp;sn=377ea81674f6a31e32064f00138a5b01&amp;mpshare=1&amp;scene=1&amp;srcid=0212c2UUi4AG6E3mKtuDwH46&amp;pass_ticket=W%2FXDrSAzGLlSbUsfxcw4MwwCTPprJvbUFD7S1QRB2CqUluJvZaS%2BxhURz44VWoNZ#rd" target="_blank" rel="external">部署博客及更新博文</a> <a href="https://mp.weixin.qq.com/s?__biz=MjM5MDEyMDk4Mw==&amp;mid=2650166056&amp;idx=1&amp;sn=5693b76cd7528d76305f420deb2f2598&amp;mpshare=1&amp;scene=1&amp;srcid=0212VnzD5xbtWOLtxL0hsHZz&amp;pass_ticket=W%2FXDrSAzGLlSbUsfxcw4MwwCTPprJvbUFD7S1QRB2CqUluJvZaS%2BxhURz44VWoNZ#rd" target="_blank" rel="external">安装自己喜欢的主题</a></p>
-<h2 id="更换markdown渲染引擎">更换markdown渲染引擎</h2>
-<p>hexo默认只支持最基础的markdown渲染，为了实现现代化的功能（囧），改用pandoc来进行渲染。 首先前往<a href="http://www.pandoc.org/installing.html" target="_blank" rel="external">pandoc官网</a>下载并安装pandoc，安装成功后测试<code>pandoc --help</code>命令以确定安装成功。 之后安装pandoc作为hexo的渲染引擎，进入hexo目录后，输入以下命令：</p>
-<pre><code>npm uninstall hexo-renderer-marked --save
-npm install hexo-renderer-pandoc --save</code></pre>
-<p>pandoc和基础markdown语法有细微不同，具体细节可以去官网查阅。</p>
-<h2 id="支持latex数学公式">支持LATEX数学公式</h2>
-<p>hexo目录中，输入以下命令：</p>
-<pre><code>npm install hexo-math --save
-hexo math install</code></pre>
-<p>并且在网站配置的<code>_config.yml</code>文件中添加：</p>
-<pre><code>plugins:
-- hexo-math</code></pre>
-<p>最后有一点许多教程都没有提到的，记得去正在使用的<strong>主题配置_config.yml</strong>中，将<strong>MathJex</strong>相关支持设定为<code>true</code>。</p>
-<h2 id="更换主题为next">更换主题为next</h2>
-<p>依然在hexo目录中，安装next主题</p>
-<pre><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></pre>
-<p>打开站点配置文件<code>_config.yml</code>修改主题为next</p>
-<pre><code>theme: next</code></pre>
-<p>相关建议设置<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">next官网</a>有清楚的描述。</p>
-<h2 id="使用hexo的内建归档categories">使用Hexo的内建归档categories</h2>
-<p>作者：碎瞳Artin 链接：https://www.zhihu.com/question/33324071/answer/58775540 来源：知乎 著作权归作者所有，转载请联系作者获得授权。</p>
-<p>1.第一步：生成post（文章）时默认生成categories配置项：在根目录下scaffolds/post.md中，添加一行categories:。同理可应用在page.md和photo.md，示例如下：</p>
-<pre><code>title: {{ title }}
-date: {{ date }}
-tags:
-categories:
- # 此处为添加内容
----</code></pre>
-<p>2.第二步：在实际写作时，在开头进行categories配置。例如：</p>
-<pre><code>title: Hello，World!你好，世界！
-date: 2014-01-21 23:33:02
-tags: 写作 
-categories: 随笔 # 配置categories</code></pre>
-<p>这样在文章发布时，在git中使用hexo g命令，hexo会在根目录/public/categrises下自动生成归档文件夹，如图：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/ye3zdr046rdr45mncmpslrc1/image_1b8php9vm1tb71u91170v1kusmrqg.png" alt="image_1b8php9vm1tb71u91170v1kusmrqg.png-26kB">
-<p class="caption">image_1b8php9vm1tb71u91170v1kusmrqg.png-26kB</p>
-</div>
-<p>3.第三步：配置博客首页归档展示样式。在主题配置文件themes/_config.yml中添加以下代码（#号后为注释内容）:</p>
-<pre><code>menu:
-  home: /
-  essay: /categories/随笔     # 博客首页展示文本/访问路径/自定义归档名称
-  write: /categories/写作     
-  read: /categories/阅读       
-  study: /categories/学习
-  code: /categories/编程</code></pre>
-<p>4.补充说明：如果发现博客首页展示文本为英文，需要改为中文显示，需要修改先博客根目录下的_config.yml文件的language配置，示例如下：</p>
-<pre><code># Site
-title: My Blog
-subtitle: 
-description: 
-author: 
-language: zh-CN # 修改此处，一般默认为default.yml，原生英文显示
-timezone:</code></pre>
-<p>然后为实现文章归档名称显示为中文，接着再修改主题配置文件下language/zh-CN.yml即可，示例如下：</p>
-<pre><code>title:
-  archive: 归档
-  category: 分类
-  tag: 标签
-menu:
-  home: 首页
-  archives: 归档
-  categories: 分类
-  tags: 标签
-  about: 关于
-  essay: 随笔  # 编辑代码时注意语法规范如缩进、空格等
-  read: 阅读   # Hexo采用yml语法，具体可自行搜索
-  write: 写作</code></pre>
-<p>5.最终展示效果（图中红框作强调用）：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/iufblxk57cnscrgaw2xfdvce/image_1b8phsloq155m1dbv9f9cgd6g4t.png" alt="image_1b8phsloq155m1dbv9f9cgd6g4t.png-41.6kB">
-<p class="caption">image_1b8phsloq155m1dbv9f9cgd6g4t.png-41.6kB</p>
-</div>
-<p>6.点进某一归档分类如“阅读”，博客文章会依照归档配置，排序显示如下：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/ulra4asiae33y81ntpipyyrc/image_1b8pht2l6ifh1neh1k4i3hgsg21a.png" alt="image_1b8pht2l6ifh1neh1k4i3hgsg21a.png-27.1kB">
-<p class="caption">image_1b8pht2l6ifh1neh1k4i3hgsg21a.png-27.1kB</p>
-</div>
-<p>**注：目前下载安装的hexo貌似都没有<code>zh-CN.yml</code>，而以<code>zh-Hans</code>代替，第四步修改对应文件即可。</p>
-<h2 id="上传博客常用命令">上传博客常用命令</h2>
-<p>hexo目录下：</p>
-<pre><code># 清理缓存
-hexo clean
-# 生成静态文件
-hexo generate
-# 本地预览（在4000端口）
-hexo s
-#　提交至网站
-hexo deploy</code></pre>
-<p>文件前的title各标签视主题而有所不同。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/22/数据分析扫盲  --  2.机器学习/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/22/数据分析扫盲  --  2.机器学习/" itemprop="url">
-                  数据分析扫盲  --  2.机器学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-22T10:39:25+08:00">
-                2017-01-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/历程/" itemprop="url" rel="index">
-                    <span itemprop="name">历程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="fbiwarning本文一切知识点知识框架均来自于个人对数据分析数据挖掘机器学习等方面的理解推测均出自于本人的臆测如果对数据分析感兴趣可以参阅可汗学院的统计学各大学的数据分析和机器学习课程"><strong>FBIWARNING</strong>：本文一切知识点，知识框架均来自于个人对数据分析、数据挖掘、机器学习等方面的理解，推测均出自于本人的臆测，如果对数据分析感兴趣，可以参阅可汗学院的《统计学》、各大学的数据分析和机器学习课程。</h3>
-<h1 id="基础知识">基础知识</h1>
-<h2 id="机器学习定义">机器学习定义</h2>
-<blockquote>
-<p>机器学习在近30多年已发展为一门多领域交叉学科，涉及概率论、统计学、逼近论、凸分析、计算复杂性理论等多门学科。机器学习理论主要是设计和分析一些让计算机可以自动“学习”的算法。机器学习算法是一类从数据中自动分析获得规律，并利用规律对未知数据进行预测的算法 – <a href="https://zh.wikipedia.org/wiki/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0" target="_blank" rel="external">维基百科</a></p>
-</blockquote>
-<p><strong>简单从实现上来说，机器学习就是使用机器学习算法来得到目标数据集的最优近似函数的过程</strong>。</p>
-<h2 id="监督和无监督">监督和无监督</h2>
-<p><strong>监督学习</strong>所得到的结果都是已知的，即结果集是可预估的。常见的监督学习算法包括回归分析和统计分类。 <strong>无监督学习</strong>所得到的结果是未知的，即结果集是不可预估的，常见的无监督学习算法有聚类。 <strong>半监督学习</strong>继承了监督学习与无监督学习，往往采用少量的数据集使用监督学习得到部分结果，再以大量的无监督学习对结果进行验证和修正。 <strong>增强学习</strong>通过观察来学习做成如何的动作。每个动作都会对环境有所影响，学习对象根据观察到的周围环境的反馈来做出判断。</p>
-<h2 id="数据挖掘">数据挖掘</h2>
-<p>数据挖掘这一词语常与机器学习相混淆，实际上，数据挖掘的总体目标是从一个数据集中提取信息，并将其转换成可理解的结构，以进一步使用。出于发现数据集知识的目的，数据挖掘设计数据管理方面、数据预处理、模型与推断方面考量、兴趣度度量、复杂度的考虑，以及发现结构、可视化及在线更新等后处理。有鉴于此目标，“数据挖掘”实际上和“数据分析”这一名词在同一维度。</p>
-<h2 id="机器学习框架">机器学习框架</h2>
-<p>大多数机器学习算法的基本框架都是<strong>模型（model/Representation）</strong>、<strong>代价函数（cost function）</strong>、<strong>优化算法</strong>。</p>
-<p>以最简单的线性回归（Linear regression）来举例： 线性回归<strong>（模型）</strong>常用于有明显线性关系简单模型预测，例如流行病学、金融资产等，其算法的代价函数为<strong>最小二乘法（代价函数）</strong>，即 <img src="http://static.zybuluo.com/heavysheep/yk0gg17pp8bzfv7pkhmbgetq/%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98.png" alt="最小二乘.png-2.6kB"> 最终使用<strong>梯度下降（优化算法）</strong>得到结果。</p>
-<p>而在使用Logistic回归（Logistic Regression）算法时，Logistic回归<strong>（模型）</strong>使用的则是极大似然估计<strong>（代价函数）</strong>，即 <img src="http://static.zybuluo.com/heavysheep/unq0dly103j3vgrd66hdxojv/%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1.png" alt="极大似然估计.png-3.5kB"> 最终使用<strong>梯度下降（优化算法）</strong>得到结果。</p>
-<p>最小二乘和极大似然的关系</p>
-<p>在不同的情况中使用不同的代价函数，原因是各自的响应变量y服从不同的概率分布。</p>
-<p>在线性回归中，前提假设是y服从正态分布，即<span class="math display">\[y\sim N(\mu,\sigma^2)\]</span>而Logistic回归中的y是服从二项分布的，即<span class="math display">\[y\sim Bernoulli(\phi)\]</span></p>
-<p>因而，在用极大似然估计计算时，所得到的代价函数自然是不一样的。</p>
-<p>最小二乘是从函数形式上来看的，极大似然是从概率意义上来看的。事实上，最小二乘可以由高斯噪声假设+极大似然估计推导出来。</p>
-<p>所以在较复杂的模型中，一个代价函数可以用不同的优化算法，不同的代价函数也可以用相同的优化算法。</p>
-<p><strong>代价函数</strong></p>
-<p>代价函数也被称作平方误差函数，有时也被称为平方误差代价函数。我们之所以要求出误差的平方和，是因为误差平方代价函数，对于大多数问题，特别是回归问题，都是一个合理的选择。</p>
-<p>仍以线性回归作为示范，图中X为样本点，垂直蓝线是<strong>建模误差</strong>，为了得到合适的直线，我们必须令蓝线尽可能短，即建模误差最小。</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/lydr6nhxozb51ae9xpbj3he4/image_1b72gv22748b11ejve71o60us718.png" alt="image_1b72gv22748b11ejve71o60us718.png-20.2kB">
-<p class="caption">image_1b72gv22748b11ejve71o60us718.png-20.2kB</p>
-</div>
-<p>为了使代价函数最小，我们绘制套入代价函数结果的三维等高图，即可得到</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/u6wwn94yeq4qqetc7tvppyd1/image_1b72h6eea1vc61qv74rf1t4o1t8l1l.png" alt="image_1b72h6eea1vc61qv74rf1t4o1t8l1l.png-69kB">
-<p class="caption">image_1b72h6eea1vc61qv74rf1t4o1t8l1l.png-69kB</p>
-</div>
-<p>图中最凹点即为代价函数最优情况。（具体函数推导详见coursera机器学习课程2-3）。</p>
-<h2 id="全局最优解局部最优解">全局最优解/局部最优解</h2>
-<p>接下来，我们以梯度下降作为优化算法来计算代价函数最小值。 我们依然把一个二维数据集加入代价函数，绘制三维等高图，如图所示：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/9oa2paa82og4fidvv2iw5o3h/image_1b72hdcd5ehjhhk1e68rte1gsp22.png" alt="image_1b72hdcd5ehjhhk1e68rte1gsp22.png-135.5kB">
-<p class="caption">image_1b72hdcd5ehjhhk1e68rte1gsp22.png-135.5kB</p>
-</div>
-<p>无论数据初始在什么位置，我们的目标，是进入全局最优点（即全局最低点），也就是机器学习工程师们常说的<strong>下山</strong>。</p>
-<p>想象你正在所示起点，视野范围是有限的，为了尽快下山，你会在前往目之所及选择最低的一点。当你到达之前的最低点，再以此类推继续前往最低点。 如右边的线段所示，很常见的，在下山中不断的寻找有地点，很有可能进入并停留在一个<strong>局部最低点</strong>，而非<strong>全局最优点</strong>。这种情况常发生在视距(学习率a，库中命名为alpha)的选择不合适的情况下，降低a的值虽然可以提高进入全局最优点的准确率，也会很大的降低模型的计算速度。</p>
-<h2 id="欠拟合和过拟合">欠拟合和过拟合</h2>
-<p>以一个分类模型为例：</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/at1ubp6xrk2d6g0kggjvxg27/image_1b72i3cnefas1cvrjp9qp2qj22f.png" alt="image_1b72i3cnefas1cvrjp9qp2qj22f.png-226.9kB">
-<p class="caption">image_1b72i3cnefas1cvrjp9qp2qj22f.png-226.9kB</p>
-</div>
-<p>对一个多项式模型而言，x的次数越多，拟合效果就会越好，但是从操作上，将其控制在一个合适的范围内并不容易，图中第二个模型属于适当的分类，而第一个模型太过松散，称为<strong>欠拟合</strong>，第三个模型分类过度，称为<strong>过拟合</strong>，<strong>欠拟合和过拟合导致的调参问题一直都是机器学习使用者最大的问题</strong>。</p>
-<p>在欠拟合中，拟合度不足，我们可以轻松的通过增加x的次数（多项式）来弥补；而在过拟合中，通常有两种处理方法：</p>
-<p>1.使用特征工程，来抛弃一些对模型有影响却并没有实际意义的特征。 2.正则化，保留特征，但控制参数的大小。</p>
-<p>在实际运用中，一般会同时使用这两种方法。后面会提及这两种方法的具体使用。</p>
-<h1 id="算法选择">算法选择</h1>
-<h2 id="主要算法">主要算法</h2>
-<p>泛指被sklearn等大型库集成的算法。</p>
-<h3 id="朴素贝叶斯">1.朴素贝叶斯</h3>
-<p>朴素贝叶斯属于生成式模型（关于生成模型和判别式模型，主要还是在于是否需要求联合分布），比较简单，你只需做一堆计数即可。如果注有条件独立性假设（一个比较严格的条件），朴素贝叶斯分类器的收敛速度将快于判别模型，比如逻辑回归，所以你只需要较少的训练数据即可。即使NB条件独立假设不成立，NB分类器在实践中仍然表现的很出色。它的主要缺点是它不能学习特征间的相互作用，用mRMR中R来讲，就是特征冗余。引用一个比较经典的例子，比如，虽然你喜欢Brad Pitt和Tom Cruise的电影，但是它不能学习出你不喜欢他们在一起演的电影。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>朴素贝叶斯模型发源于古典数学理论，有着坚实的数学基础，以及稳定的分类效率。</li>
-<li>对小规模的数据表现很好，能个处理多分类任务，适合增量式训练；</li>
-<li>对缺失数据不太敏感，算法也比较简单，常用于文本分类。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>需要计算先验概率；</li>
-<li>分类决策存在错误率；</li>
-<li>对输入数据的表达形式很敏感。</li>
-</ul>
-<h3 id="logistic-regression逻辑回归">2.Logistic Regression（逻辑回归）</h3>
-<p>逻辑回归属于判别式模型，同时伴有很多模型正则化的方法（L0， L1，L2，etc），而且你不必像在用朴素贝叶斯那样担心你的特征是否相关。与决策树、SVM相比，会得到一个不错的概率解释，你甚至可以轻松地利用新数据来更新模型（使用在线梯度下降算法-online gradient descent）。如果需要一个概率架构（比如，简单地调节分类阈值，指明不确定性，或者是要获得置信区间）。</p>
-<p>Sigmoid函数：表达式为公式:</p>
-<p><span class="math display">\[f(x)=\frac{1}{1+e^{−x}}\]</span></p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>实现简单，广泛的应用于工业问题上；</li>
-<li>分类时计算量非常小，速度很快，存储资源低；</li>
-<li>便利的观测样本概率分数；</li>
-<li>对逻辑回归而言，多重共线性并不是问题，它可以结合L2正则化来解决该问题；</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>当特征空间很大时，逻辑回归的性能不是很好；</li>
-<li>容易欠拟合，一般准确度不太高</li>
-<li>不能很好地处理大量多类特征或变量；</li>
-<li>只能处理两分类问题（在此基础上衍生出来的softmax可以用于多分类），且必须线性可分；</li>
-<li>对于非线性特征，需要进行转换；</li>
-</ul>
-<h3 id="线性回归">3.线性回归</h3>
-<p>线性回归是用于回归的，它不像Logistic回归那样用于分类，其基本思想是用梯度下降法对最小二乘法形式的误差函数进行优化，当然也可以用normal equation直接求得参数的解，结果为：</p>
-<p><span class="math display">\[\hat{w}=(X^{T}X)^{-1}X^Ty\]</span> 而在LWLR（局部加权线性回归）中，参数的计算表达式为:</p>
-<p><span class="math display">\[\hat{w}=(X^{T}WX)^{-1}X^TWy\]</span> 由此可见LWLR与LR不同，LWLR是一个非参数模型，因为每次进行回归计算都要遍历训练样本至少一次。</p>
-<p><strong>优点：</strong> + 实现简单，计算简单；</p>
-<p><strong>缺点：</strong> + 不能拟合非线性数据.</p>
-<h3 id="最近邻算法knn">4.最近邻算法——KNN</h3>
-<p>KNN即最近邻算法，其主要过程为：</p>
-<ol style="list-style-type: decimal">
-<li>计算训练样本和测试样本中每个样本点的距离（常见的距离度量有欧式距离，马氏距离等）；</li>
-<li>对上面所有的距离值进行排序(升序)；</li>
-<li>选前k个最小距离的样本；</li>
-<li>根据这k个样本的标签进行投票，得到最后的分类类别； 如何选择一个最佳的K值，这取决于数据。一般情况下，在分类时较大的K值能够减小噪声的影响，但会使类别之间的界限变得模糊。一个较好的K值可通过各种启发式技术来获取，比如，交叉验证。另外噪声和非相关性特征向量的存在会使K近邻算法的准确性减小。近邻算法具有较强的一致性结果，随着数据趋于无限，算法保证错误率不会超过贝叶斯算法错误率的两倍。对于一些好的K值，K近邻保证错误率不会超过贝叶斯理论误差率。</li>
-</ol>
-<p><strong>优点：</strong></p>
-<ul>
-<li>理论成熟，思想简单，既可以用来做分类也可以用来做回归；</li>
-<li>可用于非线性分类；</li>
-<li>训练时间复杂度为O(n)；</li>
-<li>对数据没有假设，准确度高，对outlier不敏感；</li>
-</ul>
-<p><strong>缺点:</strong></p>
-<ul>
-<li>计算量大（体现在距离计算上）；</li>
-<li>样本不平衡问题（即有些类别的样本数量很多，而其它样本的数量很少）效果差；</li>
-<li>需要大量内存；</li>
-</ul>
-<h3 id="决策树">5.决策树</h3>
-<p>决策树的一大优势就是易于解释。它可以毫无压力地处理特征间的交互关系并且是非参数化的，因此你不必担心异常值或者数据是否线性可分（举个例子，决策树能轻松处理好类别A在某个特征维度x的末端，类别B在中间，然后类别A又出现在特征维度x前端的情况）。它的缺点之一就是不支持在线学习，于是在新样本到来后，决策树需要全部重建。另一个缺点就是容易出现过拟合，但这也就是诸如随机森林RF（或提升树boosted tree）之类的集成方法的切入点。</p>
-<p>决策树中很重要的一点就是选择一个属性进行分枝，因此要注意一下信息增益的计算公式，并深入理解它。</p>
-<p>信息熵的计算公式如下:</p>
-<p><span class="math display">\[H=-\sum^{n}_{i=1}p(x_i)log_2p(x_i)\]</span></p>
-<p>其中的n代表有n个分类类别（比如假设是二类问题，那么n=2）。分别计算这2类样本在总样本中出现的概率p1和p2，这样就可以计算出未选中属性分枝前的信息熵。</p>
-<p>现在选中一个属性x用来进行分枝，此时分枝规则是：如果x=v的话，将样本分到树的一个分支；如果不相等则进入另一个分支。很显然，分支中的样本很有可能包括2个类别，分别计算这2个分支的熵H1和H2,计算出分枝后的总信息熵H’ =p1 H1+p2 H2,则此时的信息增益ΔH = H - H’。以信息增益为原则，把所有的属性都测试一边，选择一个使增益最大的属性作为本次分枝属性。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>计算简单，易于理解，可解释性强；</li>
-<li>比较适合处理有缺失属性的样本；</li>
-<li>能够处理不相关的特征；</li>
-<li>在相对短的时间内能够对大型数据源做出可行且效果良好的结果。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>容易发生过拟合（随机森林可以很大程度上减少过拟合）；</li>
-<li>忽略了数据之间的相关性；</li>
-<li>对于那些各类别样本数量不一致的数据，在决策树当中,信息增益的结果偏向于那些具有更多数值的特征（只+ 要是使用了信息增益，都有这个缺点，如RF）。</li>
-</ul>
-<h3 id="adaboosting">5.1 Adaboosting</h3>
-<p>Adaboost是一种加和模型，每个模型都是基于上一次模型的错误率来建立的，过分关注分错的样本，而对正确分类的样本减少关注度，逐次迭代之后，可以得到一个相对较好的模型。该算法是一种典型的boosting算法，其加和理论的优势可以使用Hoeffding不等式得以解释。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>Adaboost是一种有很高精度的分类器。</li>
-<li>可以使用各种方法构建子分类器，Adaboost算法提供的是框架。</li>
-<li>当使用简单分类器时，计算出的结果是可以理解的，并且弱分类器的构造极其简单。</li>
-<li>简单，不用做特征筛选。</li>
-<li>不易发生过拟合。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>对离散值比较敏感</li>
-</ul>
-<h3 id="svm支持向量机">6.SVM支持向量机</h3>
-<p>支持向量机，一个经久不衰的算法，高准确率，为避免过拟合提供了很好的理论保证，而且就算数据在原特征空间线性不可分，只要给个合适的核函数，它就能运行得很好。在动辄超高维的文本分类问题中特别受欢迎。可惜内存消耗大，难以解释，运行和调参也有些烦人，而随机森林却刚好避开了这些缺点，比较实用。</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>可以解决高维问题，即大型特征空间；</li>
-<li>能够处理非线性特征的相互作用；</li>
-<li>无需依赖整个数据；</li>
-<li>可以提高泛化能力；</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>当观测样本很多时，效率并不是很高；</li>
-<li>对非线性问题没有通用解决方案，有时候很难找到一个合适的核函数；</li>
-<li>对缺失数据敏感；</li>
-<li>对于核的选择也是有技巧的（libsvm中自带了四种核函数：线性核、多项式核、RBF以及sigmoid核）：</li>
-</ul>
-<p>第一，如果样本数量小于特征数，那么就没必要选择非线性核，简单的使用线性核就可以了； 第二，如果样本数量大于特征数目，这时可以使用非线性核，将样本映射到更高维度，一般可以得到更好的结果； 第三，如果样本数目和特征数目相等，该情况可以使用非线性核，原理和第二种一样。 对于第一种情况，也可以先对数据进行降维，然后使用非线性核，这也是一种方法。</p>
-<h3 id="人工神经网络的优缺点">7. 人工神经网络的优缺点</h3>
-<p>（人工神经网络目前主要是深度学习的范畴）</p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>分类的准确度高；</li>
-<li>并行分布处理能力强,分布存储及学习能力强，</li>
-<li>对噪声神经有较强的鲁棒性和容错能力，能充分逼近复杂的非线性关系；</li>
-<li>具备联想记忆的功能。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>神经网络需要大量的参数，如网络拓扑结构、权值和阈值的初始值；</li>
-<li>不能观察之间的学习过程，输出结果难以解释，会影响到结果的可信度和可接受程度；</li>
-<li>学习时间过长,甚至可能达不到学习的目的。</li>
-<li><h3 id="k-means聚类">8、K-Means聚类</h3></li>
-</ul>
-<p><strong>优点：</strong></p>
-<ul>
-<li>算法简单，容易实现 ；</li>
-<li>对处理大数据集，该算法是相对可伸缩的和高效率的，因为它的复杂度大约是O(nkt)，其中n是所有对象的数目，k是簇的数目,t是迭代的次数。通常k&lt;&lt;n。这个算法通常局部收敛。</li>
-<li>算法尝试找出使平方误差函数值最小的k个划分。当簇是密集的、球状或团状的，且簇与簇之间区别明显时，聚类效果较好。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>对数据类型要求较高，适合数值型数据；</li>
-<li>可能收敛到局部最小值，在大规模数据上收敛较慢</li>
-<li>K值比较难以选取；</li>
-<li>对初值的簇心值敏感，对于不同的初始值，可能会导致不同的聚类结果；</li>
-<li>不适合于发现非凸面形状的簇，或者大小差别很大的簇。</li>
-<li>对于”噪声”和孤立点数据敏感，少量的该类数据能够对平均值产生极大影响。</li>
-</ul>
-<h2 id="仿生模拟算法">仿生/模拟算法</h2>
-<p>通过对自然过程的模拟，对原有算法进行优化，也叫启发式算法（人工神经网络和深度学习也在其中）。 ### 9.蚁群算法 又称蚂蚁算法，是一种用来在图中寻找优化路径的机率型算法。其灵感来源于蚂蚁在寻找食物过程中发现路径的行为。蚁群算法是一种模拟进化算法，初步的研究表明该算法具有许多优良的性质.针对PID控制器参数优化设计问题，将蚁群算法设计的结果与遗传算法设计的结果进行了比较，数值仿真结果表明，蚁群算法具有一种新的模拟进化优化方法的有效性和应用价值。</p>
-<h3 id="粒子群算法pso">10.粒子群算法(PSO)</h3>
-<p>又称微粒群算法，该算法使用如下心理学假设：在寻求一致的认知过程中，个体往往记住自身的信念，并同时考虑同事们的信念。当其察觉同事的信念较好的时候，将进行适应性地调整。</p>
-<p>流程如下： 初始化一群微粒（群体规模为m），包括随机的位置和速度； 评价每个微粒的适应度； 对每个微粒，将它的适应值和它经历过的最好位置pbest的作比较，如果较好，则将其作为当前的最好位置pbest； 对每个微粒，将它的适应值和全局所经历最好位置gbest的作比较，如果较好，则重新设置gbest的索引号； 根据方程（1）变化微粒的速度和位置； 如未达到结束条件（通常为足够好的适应值或达到一个预设最大代数Gmax），回到2）。</p>
-<h3 id="模拟退火算法">11.模拟退火算法</h3>
-<p>模拟退火算法的原理同金属退火类似：将搜寻空间内每一点想像成空气内的分子；分子的能量，就是它本身的动能；而搜寻空间内的每一点，也像空气分子一样带有“能量”，以表示该点对命题的合适程度。算法先以搜寻空间内一个任意点作起始：每一步先选择一个“邻居”，然后再计算从现有位置到达“邻居”的概率。</p>
-<p>在一个模型中，模拟退火算法起到的作用是跳崖，防止进入局部最优解。</p>
-<h3 id="禁忌搜索算法">12.禁忌搜索算法</h3>
-<p>类似于模拟退火算法的目标，具体方式为其先创立一个初始化的方案，基于此，算法“移动”到一相邻的方案。经过许多连续的移动过程，以提高解的质量。</p>
-<h2 id="其它优化算法">其它优化算法</h2>
-<h3 id="tf-idf算法">13.TF-IDF算法</h3>
-<p>TF-IDF是一种文本统计方法，字词的重要性随着它在文件中出现的次数成正比增加，但同时会随着它在语料库中出现的频率成反比下降。TF-IDF加权的各种形式常被搜索引擎应用，作为文件与用户查询之间相关程度的度量或评级。常见于将文本转换为数值以相互比较和计算。</p>
-<p>算法过程： <img src="http://static.zybuluo.com/heavysheep/5zqfgsplac1i2d9c0xyh0ymj/image_1b72m4bc14ofom89pe117h42l9.png" alt="image_1b72m4bc14ofom89pe117h42l9.png-3.9kB"> <img src="http://static.zybuluo.com/heavysheep/yvndl9mvdzzgj662nr12c7gh/image_1b72m4mes1qah1hcns8i1e0n1ibam.png" alt="image_1b72m4mes1qah1hcns8i1e0n1ibam.png-5.1kB"> <img src="http://static.zybuluo.com/heavysheep/me3qlhpk6ejqech6n9thqqe4/image_1b72m5gi818s91hm171h1ipg1o051g.png" alt="image_1b72m5gi818s91hm171h1ipg1o051g.png-3.7kB"></p>
-<h1 id="数据处理及应用">数据处理及应用</h1>
-<h2 id="数据缩放">数据缩放</h2>
-<p>在特征工程中，除了算法使用代价函数，还可以将不同特征的量纲控制在一定范围内。</p>
-<p>在<strong>梯度下降</strong>的使用中，面对多维特征问题的时候，我们要保证这些特征都具有相近的尺度，这将帮助梯 度下降算法更快地收敛。面对不同量纲的数据，解决的方法是尝试将所有特征的尺度都尽量缩放到-1 到 1 之间。以解决特征量纲的干扰。</p>
-<p>算法表现为： <span class="math display">\[ x_n = \frac{x_n-\mu}{s_n} \]</span></p>
-<h2 id="缺失值离散值极大极小值的处理">缺失值/离散值/极大极小值的处理</h2>
-<p>数据集难免存在缺失数据和录入错误的极端值数据，极大极小值也会影响模型，因此有不同的处理方式。</p>
-<p><strong>缺失值</strong>：判断数值的缺失是否合理。如果缺失不合理，考虑在数据足够大的条件下删除此数据；如果缺失合理或数据大小不适合删除此条数据，根据陈天奇大牛的建议，可以将此数据设为-999。 <strong>离散值</strong>：判断数值的离散是否合理，如果合理则保存此数据；如果不合理，则查看是否可以判断不合理原因给予修正；如无法修正，可以考虑作同缺失值的处理。 <strong>极大极小值</strong>：对不支持的模型，将其作为缺失值处理。</p>
-<h2 id="降维">降维</h2>
-<p>数据集的某些无意义特征的存在不但降低模型计算速度，还会形成噪音影响模型。因此通过数据降维来提升模型质量。降维的计算比较复杂，在不同的模型中应用方式也各有不同，好在大型的机器学习库都提供了相应的算法，不多赘述，详见<a href="http://dataunion.org/13451.html" target="_blank" rel="external">解析</a>。</p>
-<h2 id="稀疏矩阵">稀疏矩阵</h2>
-<p>稀疏矩阵是指将离散化的特征拆开，形成新的多个特征的一种手段，新生成的特征中只包含True（1）和False（0），且大部分元素都为False(0)的矩阵。实际上，连续性数据也可以通过分组达到此目的。</p>
-<p>稀疏矩阵的目的主要是通过其自身的稀疏特性，通过压缩可以大大节省稀疏矩阵的内存代价，从而加快模型的运算速度，更重要的是当数据过大时，通过稀疏矩阵，标准化的算法将之前不可操作的数据变为可操作数据。</p>
-<p>sklearn虽然集成了稀疏矩阵函数，但其效果并不优秀。在python语言中，可以依赖pandas的get_dummies函数将数据快速化为稀疏举证。具体信息详见：<a href="http://blog.csdn.net/zouxy09/article/details/24971995" target="_blank" rel="external">机器学习中的范数规则化之（一）L0、L1与L2范数</a>。</p>
-<h2 id="调参">调参</h2>
-<p>调参往往是模型碰到的最后敌人，当准备工作处理完毕后，不同的参数对结果会造成很大的不同，因此调参技巧是机器学习工程师必须要掌握的内容。直接贴一篇<a href="https://www.zhihu.com/question/34470160/answer/114305935" target="_blank" rel="external">大神的文章</a>，剩下的坑以后再补…</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/19/数据分析扫盲  --  1.传统数据分析/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/19/数据分析扫盲  --  1.传统数据分析/" itemprop="url">
-                  数据分析扫盲  --  1.传统数据分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-19T14:21:08+08:00">
-                2017-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/历程/" itemprop="url" rel="index">
-                    <span itemprop="name">历程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="fbiwarning本文一切知识点知识框架均来自于个人对数据分析数据挖掘机器学习等方面的理解推测均出自于本人的臆测如果对数据分析感兴趣可以参阅可汗学院的统计学各大学的数据分析和机器学习课程"><strong>FBIWARNING</strong>：本文一切知识点，知识框架均来自于个人对数据分析、数据挖掘、机器学习等方面的理解，推测均出自于本人的臆测，如果对数据分析感兴趣，可以参阅可汗学院的《统计学》、各大学的数据分析和机器学习课程。</h3>
-<h2 id="数据分析定义">数据分析定义</h2>
-<p>数据分析是指用适当的统计方法对收集来的大量第一手资料和第二手资料进行分析，以求最大化地开发数据资料的功能，发挥数据的作用。</p>
-<h2 id="上帝函数">“上帝函数”</h2>
-<p>吴恩达（机器学习领域四大牛之一）在coursera的《机器学习》中提到，对所有的数据总体而言，<strong>有且必然有一条能够完美解释此样本的函数</strong>，称为“上帝函数”。但是上帝函数无法通过计算得到（所有的统计，都是对样本的统计，而不是对数据总体的统计；另外对总体而言，即使数据是离散的，函数在复杂样本的数学意义上还是连续的），只能无限的逼近它。</p>
-<h2 id="数据分析方向">数据分析方向</h2>
-<p>数据分析的数学基础在20世纪早期就已确立，直到计算机出现才使得数据分析成为可能，在计算机性能不高时，以计算机协助人进行统计学分析以获得数据判断，这种数据分析方法被称为<strong>数据分析</strong>或<strong>传统数据分析</strong>。</p>
-<p>随着计算机性能增长以及<strong>最小二乘法</strong>和<strong>梯度下降优化</strong>思想得以被大规模应用到机器中，数据分析师得以从有价值的信息中更快速、更准确的得到更接近于“上帝函数”的数学结果。针对不同类型的数据集，也有不同的经典模型套用以快速求得最优结果。此时使用者已经不再关注基础统计学指标，而是转向了挖掘数据知识、关系探索等方向，这种数据分析方法被称为<strong>数据挖掘</strong>或<strong>机器学习</strong>。</p>
-<h2 id="传统数据分析本质">传统数据分析本质</h2>
-<p>在各种场景下（限定条件/逻辑），应用统计学（工具）对数据分析后的结果进行解释（逻辑），得到更接近真实情况的客观数据帮助决策的一种判断方式。</p>
-<h1 id="数据集的描述和定义">数据集的描述和定义</h1>
-<h2 id="传统数据分析工具">传统数据分析工具</h2>
-<p>在大多数需要统计的商业环境中，大型工具基本只有两种：<strong>SPSS</strong>和<strong>SAS</strong>。SPSS属于傻瓜相机，利用定制好的选项和图形界面在略懂统计知识的情况下即可作出符合传统数据分析的结论；如果有更深层的需求，例如银行、金融等环境，SAS能通过SAS语言用编程的形式制作所需的数据模型，从而得到更高定制化、更精确、性能更高的结果；此外，还有统计师使用MATLAB编程来达到所需目标。当然，以上三款软件所需都是不菲。因此在python和机器学习走强的今天，传统的统计工具只能保全大型金融机构这样的大客户，还是走向了衰败。R、oracle等语言也跟着大放异彩。</p>
-<h2 id="描述性统计分析">描述性统计分析</h2>
-<p>描述性统计分析是传统数据分析的基础，在此过程中需要求出数据分析的基础指标，包括：</p>
-<ul>
-<li><strong>平均值</strong>：常用的统计指标，受极端值影响。</li>
-<li><strong>中位数</strong>：数据以升序或降序排列后，处于最中间的数。如果数据呈现二向分布，中位数的表达会受极大的影响，且不能表现数据中极端值的影响。</li>
-<li><strong>众数</strong>：出现最多的数，缺点同上。</li>
-<li><strong>方差/标准差</strong>：反应样本个体之间的离散程度，<strong>统计学重要指标之一</strong>，有较多的应用。</li>
-<li><strong>上/下四分位数</strong>：数据以升序或降序排列后，25%位置与75%位置的值，常用于箱线图等对数据的图像展示。延伸有<strong>四分位数间距</strong></li>
-<li><strong>偏度</strong>：数据倾向于左边（左偏）或右边（右偏），对股票、公司财务健康等数据有较为重要的意义。</li>
-<li><strong>变异系数</strong>：数据标准差与平均数的比，反应离散程度，常用于对比不同量纲的数据中消除离散程度。</li>
-</ul>
-<h2 id="二项分布">二项分布</h2>
-<p>二项分布即重复n次独立的<a href="http://baike.baidu.com/view/710902.htm" target="_blank" rel="external">伯努利试验</a>。最简单的二项分布就是掷硬币游戏。虽然二项分布的概率是人类的常识，但二项分布的数学推导并不简单。此外，统计学中许多重要分布例如正态分布、伯努利分布、泊松分布等等都是以二项分布作为基础推导而出的。因此在统计学中，二项分布具有极其重要的意义。 <img src="http://static.zybuluo.com/heavysheep/dbzth2i8g6b9oxodu62pmqbq/%E4%BA%8C%E9%A1%B9%E5%88%86%E5%B8%83.jpg" alt="二项分布.jpg-26kB"></p>
-<h2 id="正态分布">正态分布</h2>
-<p>正态分布，又称钟形曲线。该分布展示了数据频数与分布域的关系，许多统计定理都是以正态分布为基础，该分布是统计学中的核心。详细描述请参考<a href="http://baike.baidu.com/link?url=78QqRK1FjEgzsMoygxJB4hCxcd29TTePQmm6DcjWPY_iynRSsWoQ0gWkjhh-1GoFgBsQQdxeroIfAWd9p9p_cA_vZDN9cNU0-XvX8zrsYb1GgVnAL5_Y6gAnKc33tfQa#3_1" target="_blank" rel="external">百度百科</a>。 <img src="http://static.zybuluo.com/heavysheep/275nldv927r5iy4lesn9s2kr/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83.jpg" alt="正态分布.jpg-9.4kB"></p>
-<p>正态分布之所以有巨大的研究价值，是因为大多数干预或未经干预的数据都呈正态分布状，从自然界各个数值的分布，到人类的行为，产品的偏差，基本都符合正态分布模式（其实是因为中心极限定理，呈现为正态分布）。掌握正态分布理论意味着在不清楚总体分布情况时，可以根据该数据的属性做其是否是正态分布的推测，可以轻易获得某情况较为接近真实存在的概率。</p>
-<p>正态分布也是统计学思维一种表现形式，“如果一直猴子坐在电脑前无限的敲打键盘，那么它终有一天能敲出莎士比亚全集”就是其中之一：从正态分布来看，我们无法<strong>绝对否定</strong>一件事情的发生概率，只能说“很有可能”会产生这样的结果，这也是有很多讽刺统计学家笑话的原因。 ## 泊松分布 泊松分布适合于描述单位时间内随机事件发生的次数。泊松分布在管理科学、运筹学以及自然科学的某些问题中都占有重要的地位。详情见<a href="http://baike.baidu.com/link?url=loTAUVdrtaf8RGSo3EjYPUD6oCsbibkcm1LJG_2q-AMVlSTUlj8qJDh6zy8b-qX0QmYlDvEbT1rrCZEHHjXgFNMZ8TeTnBCs5WfbEIaimyfveBHN0fOE0mf5eww9qnQt" target="_blank" rel="external">百度百科</a>。 <img src="http://static.zybuluo.com/heavysheep/wyyq4xxjf5q5ww2mmppk0fjm/%E6%B3%8A%E6%9D%BE%E5%88%86%E5%B8%83.jpg" alt="泊松分布.jpg-4.8kB"></p>
-<p>泊松分布可以在掌握部分样本的情况下，推测其值落在各个区间的概率。 ## 经验法则和切比雪夫不等式 当一组数据对称分布时（经验法则）：</p>
-<ul>
-<li>约有68%的数据在平均数1个标准差以内。</li>
-<li>约有95%的数据在平均数 2个标准差以内。切比雪夫不等式认为在75%个</li>
-<li>约有99%的数据在平均数 3个标准差以内。</li>
-<li><p>3个标准差以外的数据，在统计学上称为“离群点”。 当一组数据非对称分布时（切比雪夫不等式）：</p></li>
-<li>约有75%的数据落在平均数 2个标准差以内。</li>
-<li>约有89%的数据落在平均数 3个标准差以内。</li>
-<li><p>约有94%的数据落在平均数 4个标准差以内。</p></li>
-</ul>
-<p>实际使用上，切比雪夫不等式的估算效果并不好，只有当经验法则无法使用时（无标准界定，常用于偏度&gt;0.4）才会使用切比雪夫不等式。</p>
-<h2 id="大数定理和中心极限定理">大数定理和中心极限定理</h2>
-<p><strong>大数定理和中心极限定理是统计学中最重要的两条定理，我认为因为这两条定理存在，才能切实的奠定统计学的价值，并且是统计学思维的根源</strong> <strong>大数定理</strong>：又称大数法则，论证了在大量重复试验的过程中，样本量越多，样本平均值越接近于总体平均值。上文提到的切比雪夫不等式，是大数定理的一种特殊分布。详见<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B" target="_blank" rel="external">维基百科</a>。 <strong>中心极限定理</strong>：中心极限定理论证了在样本数较大时（通常定义为n&gt;30），样本均值近似正态分布。该定理在大数定理的基础上，给出了收敛的极限分布和渐近方差，更深入的研究了正态分布，是数理统计学和误差分析理论的研究基础。详见<a href="https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86" target="_blank" rel="external">维基百科</a>。</p>
-<h1 id="概率">概率</h1>
-<h2 id="概率基础从三个问题说开去">概率基础：从三个问题说开去</h2>
-<h3 id="赌徒谬论">赌徒谬论</h3>
-<p>超生游击队员老王已经连生4个闺女了，但老王实在太想要一个男娃，虽然家产都快被村里计生委的人给罚光，但还是要生，他想，都连生4个了，下个肯定是个带把的。 那么问题是，下一个小孩是男孩的概率？</p>
-<h3 id="三门问题">三门问题</h3>
-<p>假设你参加了一个电视节目，过关斩将来到了最后一关，此时你看见三扇关闭了的门，其中一扇的后面是一辆法拉利，另外两扇门后是山羊，当你选中了法拉利时，你就可以将其带走；如果选中了山羊，就会空手而归。支持人知道所有门后是什么。 你选定2号门后，主持人为了增加悬念，打开了3号门，门后是一只山羊，此时主持人询问你你是否要更换你的选择。那么问题是，是否应该更换选择？</p>
-<p><img src="http://static.zybuluo.com/heavysheep/5bavkhld6yzvmftynkonmfvt/%E4%B8%89%E9%97%A8%E9%97%AE%E9%A2%98.jpg" alt="三门问题.jpg-17.3kB"> ### 辛普森悖论 你是一位校长，假设有一天漂亮的秘书跑过来对你说：“校长，不好了，有很多男生在校门口抗议，他们说今年研究所女生录取率是男生的两倍，指责我们学校有性别歧视！” 这时你也很生气，说：“我不是特别交代，今年要尽量提升男生录取率以免落人口实吗？” 秘书赶紧回答说：“确实有交代下去，招生办说今年的男生确实比女生多，可是报告上显示男生所有学科录取率都比女生低了很多。” 那么问题是：有可能在男生所有学科录取率均比女生低的情况下，总性别比例还保持不变吗？</p>
-<div class="figure">
-<img src="http://static.zybuluo.com/heavysheep/p5dzk5euilslkozkv8amixq1/%E8%BE%9B%E6%99%AE%E6%A3%AE%E6%82%96%E8%AE%BA.jpg" alt="辛普森悖论.jpg-8.6kB">
-<p class="caption">辛普森悖论.jpg-8.6kB</p>
-</div>
-<h2 id="概率论中需要注意的基础问题">概率论中需要注意的基础问题</h2>
-<p>以中国人平均数学水平来说，基础概率的计算基本不是问题，只需要注意一些概率计算的基本假设：</p>
-<ul>
-<li>赌徒谬论：当事件与事件之间是相互独立的，不能联合计算概率，<a href="http://baike.baidu.com/view/5390506.htm" target="_blank" rel="external">百度百科</a></li>
-<li>三门问题：概率是随条件的改变而变化的，概率存在于被给予的条件下，概率不能寄托在实际的物体上，<a href="http://baike.baidu.com/item/%E4%B8%89%E9%97%A8%E9%97%AE%E9%A2%98" target="_blank" rel="external">百度百科</a></li>
-<li>辛普森悖论：在某个条件下的两组数据，分别讨论时都会满足某种性质，可是一旦合并考虑，却可能导致相反的结论，<a href="http://baike.baidu.com/link?url=XJw9jKhphOcvDB58_92KXe8gE2L6wbPDIBYZ42ql35LX6hdpxKF_OJ9HANaY5PPnjtdDS3s3d2JNmFPoNo18ncd29iPIzpf3-7XhmRLYE0Eo2WFeXO0MYiZzCeQH68rXD-_oAUvs16JHcrNRJLyD7_" target="_blank" rel="external">百度百科</a>。</li>
-</ul>
-<h2 id="组合法则">组合法则</h2>
-<p>组合法则是迅速计算在N内取n个有多少种方法的计算公式，体现为：</p>
-<p><span class="math display">\[\left(
-\begin{matrix}
-N \\
-n \\
-\end{matrix}
-\right)
-= \frac{N!}{(N-n)!}
-\]</span></p>
-<p>例如从4个项目中挑选2个来进行投资，则有:</p>
-<p><span class="math display">\[\left(
-\begin{matrix}
-N \\
-\end{matrix}
-\right)
-= \frac{4!}{2!  2!}
-= \frac{4\times3\times2\times1}{(2\times1)(2\times1)}
-= 6\]</span></p>
-<h2 id="贝叶斯定理">贝叶斯定理</h2>
-<p>通常，事件A在事件B（发生）的条件下的概率，与事件B在事件A（发生）的条件下的概率是不一样的，然而，这两者是有确定的关系的；贝叶斯定理通过的是A、B事件转换而得到目标概率，贝叶斯公式的一个用途在于通过已知的三个概率函数推出第四个。</p>
-<p>$ P(A|B) =  $</p>
-<p>下面通过一道题来理解贝叶斯定理。 对残疾人来说，电动轮椅很难驾驭。假设在房间的某一位置，轮椅使用者可以选择D（穿过房门），S（直行），T（停在桌旁），使用者意愿的概率分别是P(D)=0.5，P(S)=0.2，P(T)=0.3；当轮椅使用者将控制杆转向前时（记为J），则有P(J|D)=0.3，P(J|S)=0.4，P(J|T)=0.05。如果此时使用者将操作杆向前，各种情况的概率各是多少？</p>
-<p>其中P(D|J)的解为：</p>
-<pre><code>P(D|J) = P(J|D) * P(D) / P(J)
-P(D|J) = P(J|D) * P(D) / (P(D) * P(J|D) + P(S) * P(J|S) + P(T) * P(T|J))
-P(D|J) = 0.3 * 0.5 / 0.245
-P(D|J) = 0.612</code></pre>
-<h1 id="置信区间">置信区间</h1>
-<p><strong>置信区间</strong>：置信区间是对分布（尤其是正态分布）的一种深入研究。通过对样本的计算，得到对某个总体参数的区间估计，展现为总体参数的真实值有多少概率落在所计算的区间里（目前国内的统计不接受概率的说法，认为此操作不应属于概率的范畴）。置信水平越高，置信区间就会越宽；在置信水平不变的情况下，样本数量越多，置信区间越窄，且置信区间的需求样本量可以被计算出来。</p>
-<p>一般来说，置信区间一般会选择95%。</p>
-<h2 id="假设检验">假设检验</h2>
-<blockquote>
-<p>“反证法是统计学者最强大的武器！” – 想不起来谁说的了</p>
-</blockquote>
-<p>假设检验是一种用反证法证明对立条件（<strong>原假设/H0</strong>），从而判断目前条件（<strong>备择假设/Ha</strong>）是否正确的证明方式。常见名词如下： <strong>P值</strong>：观测的显著性水平，通过不同方式计算后，如果P值落在原假设的拒绝域，则拒绝原假设。 <strong>接受域</strong>：原假设的区间。 <strong>拒绝域</strong>：拒绝原假设的区间。 <strong>I类错误</strong>：原假设为真时，拒绝原假设。 <strong>II类错误</strong>：备择假设为真时，接受原假设。</p>
-<h2 id="单样本下的计算方法">单样本下的计算方法</h2>
-<p>在单样本下，置信区间和假设检验主要使用<strong>z统计</strong>和<strong>学生t统计（也称t检验）</strong>。 z统计和学生t统计是两种应用正态分布，求置信区间的计算方式。z统计应用于大样本的计算，因为中心极限定理的存在，z统计不要求该样本分布属于正态分布（因为会整理成近似正态分布）；学生t统计量主要应用于小样本的计算，要求总体分布必须近似正态分布，同时所取得的置信区间在同置信水平下也要比z统计得到的结果更宽。 <img src="http://static.zybuluo.com/heavysheep/19ea3cn07l3ktbepvbg95v34/Z-tabelle.png" alt="Z-tabelle.png-129.7kB"></p>
-<h2 id="两样本下的计算方法">两样本下的计算方法</h2>
-<p>两样本下，在统一量纲，消除样本均值差后，就可以使用常用统计方法来检验相关性。除了z统计和t统计外，还可使用卡方检验、F检验等。</p>
-<p>在SPSS/SAS甚至excel等软件中，以上基础的检验方法都被大规模的修正/革新，所以基础的公式基本已经不会被使用了。 ## 更多样本，更多方法 在更多样本中，不同计算方法的差距会越来越大，传统数据分析更着眼于方差分析等检测样本相关性，简单线性回归线等，因此，样本的<strong>抽样和配对方法</strong>对模型造成的影响也会增加。除了以上介绍的统计方法，还有F统计，U检定等大项，每种大项下都有许多经过统计学家门修正的方法，在此不多赘述。</p>
-<h2 id="抽样组织形式">抽样组织形式</h2>
-<p><strong>简单随机抽样</strong>：任何样本数为n的抽样几率都是相等的。 <strong>等距抽样/系统抽样</strong>：以总体N除以样本数n得到整数K，随机选择一个元素为R，以R开始，每隔K个的元素作为样本。 <strong>集群抽样</strong>：将总数分割成小的集群，再用简单随机抽样抽取小的集群，将集群作为样本。 <strong>二段随机抽样</strong>：先用集群抽样出集群，再对集群进行集群抽样。</p>
-<h2 id="传统统计分析总结">传统统计分析总结</h2>
-<p>在以上知识的基础上，统计学家们更热衷修正原有的经典检验方法，以逻辑为推进从数学上增强各种推断检验标准，但也人类思维的局限性，模型的解释性强必然造成预测能力的削弱，这也是机器学习专家和统计学家重要的不同之处。统计学家集中了现代数学的精华，从数理上证明了SVM，boosting等理论基础，但是在实践和探索未知知识的路上，统计学家并未作出卓越的贡献。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/05/瞎聊聊怎么造个人工智能/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/05/瞎聊聊怎么造个人工智能/" itemprop="url">
-                  瞎聊聊怎么造个人工智能
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-05T13:13:19+08:00">
-                2017-01-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="section">0</h2>
-<p>给黑猩猩一把枪，在教会他开枪之后，他会无聊的把枪丢掉，即使知道这能帮助他杀死自己的敌人。</p>
-<p>人类则不一样，人类在大自然中是一个奇怪的、乐于争斗的物种。在电影里，为了营造冲突，人类不停的给自己制造着反派。随着人类认知的发展，我们得不停的为反派升级来试着在电影里毁灭人类，从鬼神、人类本身、外星人到新一代的人工智能。</p>
-<p>从《太空漫游》开始，人类就不断在畅想人工智能，《太空漫游》还不错，起码AI不是坏人，接下去就慢慢不太对劲了，《终结者》、《机器公敌》、《鹰眼》，反正一个个人工智能都想毁灭人类。</p>
-<p>OK，那我们作为程序员的问题是，怎样才能造一款能毁灭人类的人工智能？</p>
-<p>一个AI，想要迅速成长，一定不能受人力的限；不受人力的限制，一定要实现自学习；要应用自学习的成果，一定要实现代码的自我迭代，让机器自己给自己写代码。</p>
-<p>就像《环形使者》一样，AI造出自己的下一版AI，如果AI可用，将会杀死前一个自己，不停的尝试自我毁灭的方式。</p>
-<h2 id="section-1">1</h2>
-<p>刚开始思考的时候就陷入一个错误的方向：AI要实现自学习，第一要实现代码识别，分析代码的意图，了解代码的意义，从而学会为了实现这个意义的写作方式；第二要实现提出需求，AI得知道“我需要一个列表来放置元素”才能制造一个列表。以此不断分解业务，由无数小的业务组成大的业务，最终实现自学习。</p>
-<p>直到我看到了鸭子预测 &gt; 如果一只鸭子看起来像鸭子，游泳像鸭子，叫声像鸭子，那么它就是只鸭子。</p>
-<p>智能生物对明显具有外部特征的定义，会选择只看表象来判断，而不是把它解剖了来确认；同理，机器只要了解通过代码中的数值转换，明白其最终达到了业务目标，那这就是代码的意义，除了结果之外，代码内容只是实现的“工具”而已，AI只需记住这么转换是可行的，下次就照着做准没错–如果错了，就去找下一段代码。</p>
-<p>1956年的夏天，40岁的香农和28岁的麦卡锡、明斯基、37岁的罗切斯特及其他六位大神一起举办了朴茨茅斯会议，尝试解决自然语言处理的问题。世界上最聪明的10个人头脑风暴了一个月，最后得到的结论还有没有当代一个机器学习PHD在读脑子里的东西多–他们一度陷入了机器“翻译”是基于“理解”的错误上，实际上，华生实验室90年代的成果表明，机器不需要了解词语的意义，只需要按照大数据的理念找到这种情况的其他做法就行，这一成果一夜之间让机器翻译的准确率从70%提升到了90%。</p>
-<p>其实人类对“原理”的理解，也只是用自己的所见去解释而已，我们不知道我们是不是活在《黑客帝国》里，我们不知道是不是三体人的质子正在干扰我们，我们不需要知道这么多。</p>
-<p>AI也不需要知道。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1527,7 +1320,7 @@ P(D|J) = 0.612</code></pre>
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
