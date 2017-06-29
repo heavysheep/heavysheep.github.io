@@ -87,94 +87,34 @@
 
 
 
-<meta name="description" content="赛题与数据
-代码
-基本数据创建
-result：每家店铺每日交易成功数量
-view：每家店铺每日浏览量
-参数分解
-shop_info
-
-
-
-shop_id
-city_name
-location_id
-per_pay
-score
-comment_cnt
-shop_level
-cate_name..
-
-
-
-
-商家id
-城市名
-所在位置编号
-人均消费
-评">
+<meta name="description" content="回归模型：
+线性回归模型
+感知器模型
+最简单的模型，多层感知器MLP即最简单的深度学习网络。
+感知器模型通过循环修正计算误差进行修正，因此没有没有学习率；在学习中，需要指定学习次数（例如学习样本数），否则感知器模型会无休止的进行下去。
+基础（单层）感知器模型是非常弱的模型，不会存在过拟合的情况。
+sklearn.linera_model.Perceptron(penalty=None,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="天池赛IJCAI-17 口碑商家客流量预测 解题思路">
-<meta property="og:url" content="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/index.html">
+<meta property="og:title" content="sklearn学习笔记-3 回归模型">
+<meta property="og:url" content="http://yoursite.com/2017/04/26/sklearn学习笔记-3 回归模型/index.html">
 <meta property="og:site_name" content="王子子的成长之路">
-<meta property="og:description" content="赛题与数据
-代码
-基本数据创建
-result：每家店铺每日交易成功数量
-view：每家店铺每日浏览量
-参数分解
-shop_info
-
-
-
-shop_id
-city_name
-location_id
-per_pay
-score
-comment_cnt
-shop_level
-cate_name..
-
-
-
-
-商家id
-城市名
-所在位置编号
-人均消费
-评">
-<meta property="og:updated_time" content="2017-06-29T02:14:42.147Z">
+<meta property="og:description" content="回归模型：
+线性回归模型
+感知器模型
+最简单的模型，多层感知器MLP即最简单的深度学习网络。
+感知器模型通过循环修正计算误差进行修正，因此没有没有学习率；在学习中，需要指定学习次数（例如学习样本数），否则感知器模型会无休止的进行下去。
+基础（单层）感知器模型是非常弱的模型，不会存在过拟合的情况。
+sklearn.linera_model.Perceptron(penalty=None,">
+<meta property="og:updated_time" content="2017-06-29T05:34:17.144Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="天池赛IJCAI-17 口碑商家客流量预测 解题思路">
-<meta name="twitter:description" content="赛题与数据
-代码
-基本数据创建
-result：每家店铺每日交易成功数量
-view：每家店铺每日浏览量
-参数分解
-shop_info
-
-
-
-shop_id
-city_name
-location_id
-per_pay
-score
-comment_cnt
-shop_level
-cate_name..
-
-
-
-
-商家id
-城市名
-所在位置编号
-人均消费
-评">
+<meta name="twitter:title" content="sklearn学习笔记-3 回归模型">
+<meta name="twitter:description" content="回归模型：
+线性回归模型
+感知器模型
+最简单的模型，多层感知器MLP即最简单的深度学习网络。
+感知器模型通过循环修正计算误差进行修正，因此没有没有学习率；在学习中，需要指定学习次数（例如学习样本数），否则感知器模型会无休止的进行下去。
+基础（单层）感知器模型是非常弱的模型，不会存在过拟合的情况。
+sklearn.linera_model.Perceptron(penalty=None,">
 
 
 
@@ -202,13 +142,13 @@ cate_name..
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/26/sklearn学习笔记-3 回归模型/"/>
 
 
 
 
 
-  <title> 天池赛IJCAI-17 口碑商家客流量预测 解题思路 | 王子子的成长之路 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> sklearn学习笔记-3 回归模型 | 王子子的成长之路 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -345,7 +285,7 @@ cate_name..
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/26/sklearn学习笔记-3 回归模型/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="王子子">
@@ -369,7 +309,7 @@ cate_name..
             
             
               
-                天池赛IJCAI-17 口碑商家客流量预测 解题思路
+                sklearn学习笔记-3 回归模型
               
             
           </h1>
@@ -384,8 +324,8 @@ cate_name..
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T21:40:03+08:00">
-                2017-03-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-26T21:42:52+08:00">
+                2017-04-26
               </time>
             
 
@@ -407,8 +347,8 @@ cate_name..
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/历程/" itemprop="url" rel="index">
-                    <span itemprop="name">历程</span>
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
                   </a>
                 </span>
 
@@ -442,97 +382,66 @@ cate_name..
       
 
       
-        <p><a href="https://tianchi.shuju.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.zu3kSJ&amp;raceId=231591" target="_blank" rel="external">赛题与数据</a><br>
-<a href="https://github.com/heavysheep/tianchi" target="_blank" rel="external">代码</a></p>
-<h2 id="基本数据创建">基本数据创建</h2>
-<p><strong>result</strong>：每家店铺每日交易成功数量<br>
-<strong>view</strong>：每家店铺每日浏览量</p>
-<h2 id="参数分解">参数分解</h2>
-<h3 id="shop_info">shop_info</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="center">shop_id</th>
-<th align="center">city_name</th>
-<th align="center">location_id</th>
-<th align="center">per_pay</th>
-<th align="center">score</th>
-<th align="center">comment_cnt</th>
-<th align="center">shop_level</th>
-<th align="center">cate_name..</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">商家id</td>
-<td align="center">城市名</td>
-<td align="center">所在位置编号</td>
-<td align="center">人均消费</td>
-<td align="center">评分</td>
-<td align="center">评论数</td>
-<td align="center">商铺等级</td>
-<td align="center">分类</td>
-</tr>
-</tbody>
-</table>
-<p><strong>shop_id</strong>：主键，索引<br>
-<strong>city_name</strong>：获取气温、消费能力、消费习惯<br>
-<strong><del>location_id</del></strong>：聚类算法，估计功效太低没什么意义，pass<br>
-<strong>per_pay</strong>：检测与result负相关，与view负相关。<br>
-<strong>socre</strong>：检测与result正相关，与view正相关。<br>
-<strong>comment_cnt</strong>：检测与result正相关，与view正相关。<br>
-<strong>shop_level</strong>：检测与result正相关，与view正相关。<br>
-<strong>cate_name</strong>：分类太细，考虑只保留使用“超市”和“美食”进行区分。</p>
-<p>检测<strong>per_pay</strong>、<strong>score</strong>、<strong>comment_cnt</strong>、<strong>shop——level</strong>与<strong>view</strong>、<strong>result</strong>的关联度。<br>
-score有很大的问题：这个值是处于变动的。</p>
-<h3 id="user_pay">user_pay</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="center">user_id</th>
-<th align="center">shop_id</th>
-<th align="center">time_stamp</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">付费用户id</td>
-<td align="center">商家id</td>
-<td align="center">消费时间</td>
-</tr>
-</tbody>
-</table>
-<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
-<h3 id="user_view">user_view</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="center">user_id</th>
-<th align="center">shop_id</th>
-<th align="center">time_stamp</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">浏览用户id</td>
-<td align="center">商家id</td>
-<td align="center">浏览时间</td>
-</tr>
-</tbody>
-</table>
-<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
-<h2 id="特征工程">特征工程</h2>
-<p>1.考虑到口碑是2015年6月23日开始发布，必然遭遇冷启动和虚假数据问题，那么时间序列中，体现趋势的指标应该是7日移动平均线ma，影响最大的特征因子应该是最近一次的ma_7。<br>
-2.城市天气逻辑体现非常重要，主要划分了三级（晴，小雨/小雪/，大雨/雪），但划分后的效果并不很好。<br>
-3.当日是否为工作日，次日是否为工作日比较重要。<br>
-4.16年情人节到过年的那周视为噪音。<br>
-5.GDP作为特征果然没效果，删了。</p>
-<h2 id="感受">感受</h2>
-<p>1.以不同可索引对象制造的模型再融合有巨大威力，第一次瞎配的权重都带来了最好的提升。<br>
-2.solo的问题不在于想法…判断出哪个想法提升最多是最重要的，当然这需要经验。<br>
-3.xgboost因为bug跑不起来，没时间走ARIMA，也没时间再上prophet，凄苦…水平不够时候有队友提升会比较快。<br>
-4.合理利用每日评分确定正确方向是非常有必要的，相信前几的差距已经是谁对趋势判断更敏锐了。<br>
-5.全身心的投入大约勉强能进前200，看wepon大神的blog，对底层的理解还是很重要，今后要加强学习和训练。</p>
+        <h2 id="回归模型">回归模型：</h2>
+<h3 id="线性回归模型">线性回归模型</h3>
+<h4 id="感知器模型"><strong>感知器模型</strong></h4>
+<p>最简单的模型，多层感知器MLP即最简单的深度学习网络。<br>
+感知器模型通过循环修正计算误差进行修正，因此没有没有学习率；在学习中，需要指定学习次数（例如学习样本数），否则感知器模型会无休止的进行下去。<br>
+基础（单层）感知器模型是非常弱的模型，不会存在过拟合的情况。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">sklearn.linera_model.Perceptron(penalty<span class="op">=</span><span class="va">None</span>, alpha<span class="op">=</span><span class="fl">0.0001</span>, fit_intercept<span class="op">=</span><span class="va">True</span>, n_iter<span class="op">=</span><span class="dv">5</span>,   shuffle<span class="op">=</span><span class="va">True</span>, verbose<span class="op">=</span><span class="dv">0</span>, eta0<span class="op">=</span><span class="fl">1.0</span>, n_jobs<span class="op">=</span><span class="dv">1</span>. random_state <span class="op">=</span> <span class="dv">0</span>, class_weight<span class="op">=</span><span class="va">None</span>,   warm_start<span class="op">=</span><span class="va">False</span>)  </code></pre></div>
+<p><strong>参数</strong></p>
+<ul>
+<li>penalty：正则惩罚项，默认为0<br>
+</li>
+<li>fit_intercept：截距<br>
+</li>
+<li>n_iter：迭代次数<br>
+</li>
+<li>shuffle：洗牌<br>
+</li>
+<li>verbose：打印日志等级<br>
+</li>
+<li>eta0 ：学习率<br>
+</li>
+<li>n_jobs：启动线程数，-1代表最大</li>
+</ul>
+<p><strong>实例</strong></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">df <span class="op">=</span> pd.read_csv(<span class="vs">r&#39;D:\BaiduYunDownload\sklearn\3.0 线性模型\adultTest.csv&#39;</span>)  
+<span class="co">#将object变量（字符串）制成稀疏矩阵，class是目标变量，不用放入  </span>
+dfNew<span class="op">=</span>pd.get_dummies(df,columns<span class="op">=</span>[<span class="st">&#39;workclass&#39;</span>,<span class="st">&#39;education&#39;</span>,<span class="st">&#39;marital-status&#39;</span>,<span class="st">&#39;occupation&#39;</span>,<span class="st">&#39;relationship&#39;</span>,<span class="st">&#39;race&#39;</span>,<span class="st">&#39;sex&#39;</span>, <span class="st">&#39;native-country&#39;</span>])  
+  
+dfNew[<span class="st">&#39;target&#39;</span>] <span class="op">=</span> dfNew[<span class="st">&#39;class&#39;</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">==</span> <span class="vs">r&#39; &lt;=50K&#39;</span> <span class="cf">else</span> <span class="dv">0</span>)  <span class="co"># 将结果二分为1和0  </span>
+xdata <span class="op">=</span> dfNew.drop([<span class="st">&#39;class&#39;</span>,<span class="st">&#39;target&#39;</span>],axis <span class="op">=</span> <span class="dv">1</span>)  <span class="co"># 测试集  </span>
+ydata <span class="op">=</span> dfNew[<span class="st">&#39;target&#39;</span>]  <span class="co"># 结果集  </span>
+  
+<span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron  <span class="co"># 调用感应器模型函数  </span>
+per <span class="op">=</span> Perceptron(n_iter<span class="op">=</span><span class="dv">20</span>)  <span class="co"># 创建对象并设定迭代次数为20  </span>
+per.fit(xdata,ydata)  <span class="co"># 训练模型  </span>
+<span class="bu">print</span>(per.predict(xdata))  <span class="co"># 对模型进行预测  </span>
+<span class="bu">print</span>(per.score(xdata,ydata))  <span class="co"># 对模型进行准确率评估  </span></code></pre></div>
+<p>tips：感知器没有概率值</p>
+<h4 id="线性回归模型-1"><strong>线性回归模型</strong></h4>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">sklearn.linear_model.LinearRegression9(fit_intercept <span class="op">=</span> <span class="va">True</span>, normalize <span class="op">=</span> <span class="va">False</span>, copy_X <span class="op">=</span> <span class="va">True</span>, n_jobs <span class="op">=</span> <span class="dv">1</span>)  </code></pre></div>
+<p><code>fit_intercept</code>：是否计算截距<br>
+<code>normalize</code>：是否对整个样本进行数据标准化，线性模型并不依赖于正则，所以此参数无意义。</p>
+<p>线性回归模型需要接受一个连续性的变量，以达到预测。</p>
+<p>在线性模型中，更复杂的模型会用到alpha惩罚项，简称a，并且会通过数据集的定义方式选择raige函数和lasso函数。</p>
+<p><strong>raige和lasso的区别</strong></p>
+<p>raige接受l2的正则，lasso接受l1的正则。<br>
+raige：(w1)<sup>2+(w2)</sup>2+(w3)^2…，每个权重平方相加；lasso:|w1|+|w2|+|w3|…，每个权重绝对值相加。<br>
+lasso接受的l1范数，所以得到的解可能是稀疏的，导致很多系数的权重都为0；raige接受l2的范数，得到的解不会为0。<br>
+从方便的角度考虑，我们更多的使用l2范数的raige。</p>
+<p><strong>交叉验证（Cross validation)</strong><br>
+交叉验证用于防止模型过于复杂而引起的过拟合。有时亦称循环估计，是一种统计学上将数据样本切割成较小子集的实用方法。于是可以先在一个子集上做分析，而其它子集则用来做后续对此分析的确认及验证。交叉验证是一种评估统计分析、机器学习算法对独立于训练数据的数据集的泛化能力（generalize）。<br>
+在sklearn的在线性模型中，为了保证模型值，我们可以使用后续加CV的函数来进行交叉验证：</p>
+<p><code>alpha</code>：接受一个数组，数组内是所有认为有效的a的值，函数会自动选择最优值<br>
+<code>cv</code>：接受交叉验证的切分份数<br>
+<code>scoring</code>：评估指标，不填写会选择默认指标进行判断，也接受填写最小绝对值误差/最小均方误差，一般不填写<br>
+其他同上</p>
+<p>在进行CV时，有时可能会遇到被切分的样本内没有1，或者样本不均匀的问题，因此我们调用分层函数进行解决:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.cross_validation <span class="im">import</span> StratifiedKFold<span class="co">#调用分层函数  </span>
+sf <span class="op">=</span> StratifiedKFold(ydata,n_folds<span class="op">=</span><span class="dv">5</span>)  <span class="co"># 创建对象并选择分为几层，避免发生稀疏矩阵的数据不均匀的问题  </span></code></pre></div>
+<p>这种情况在分类模型中才会发生，回归模型的y是连续值，因此不必进行分层。</p>
 
       
     </div>
@@ -563,8 +472,8 @@ score有很大的问题：这个值是处于变动的。</p>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/17/最近在做测试/" rel="next" title="最近在做测试">
-                <i class="fa fa-chevron-left"></i> 最近在做测试
+              <a href="/2017/04/17/sklearn学习笔记-2 数据处理/" rel="next" title="sklearn学习笔记-2 数据处理">
+                <i class="fa fa-chevron-left"></i> sklearn学习笔记-2 数据处理
               </a>
             
           </div>
@@ -572,10 +481,6 @@ score有很大的问题：这个值是处于变动的。</p>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/17/sklearn学习笔记-2 数据处理/" rel="prev" title="sklearn学习笔记-2 数据处理">
-                sklearn学习笔记-2 数据处理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -711,7 +616,7 @@ score有很大的问题：这个值是处于变动的。</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据创建"><span class="nav-number">1.</span> <span class="nav-text">基本数据创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数分解"><span class="nav-number">2.</span> <span class="nav-text">参数分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shop_info"><span class="nav-number">2.1.</span> <span class="nav-text">shop_info</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user_pay"><span class="nav-number">2.2.</span> <span class="nav-text">user_pay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user_view"><span class="nav-number">2.3.</span> <span class="nav-text">user_view</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">3.</span> <span class="nav-text">特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感受"><span class="nav-number">4.</span> <span class="nav-text">感受</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#回归模型"><span class="nav-number">1.</span> <span class="nav-text">回归模型：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性回归模型"><span class="nav-number">1.1.</span> <span class="nav-text">线性回归模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#感知器模型"><span class="nav-number">1.1.1.</span> <span class="nav-text">感知器模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线性回归模型-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">线性回归模型</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
