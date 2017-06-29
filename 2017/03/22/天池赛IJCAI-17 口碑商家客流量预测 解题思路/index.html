@@ -87,22 +87,94 @@
 
 
 
-<meta name="description" content="最近一直在忙测试相关工作，记录下测试工作心得：
-1.重要的不仅只是懂业务流程，也要把思路抽离在流程之外。因为产品在设计时，往往会先定下大的方向，再逐渐寻找最优路线，在不停的修改中，也许已经偏离“可用”的轨道，此时测试应该代入的是用户的思路，对测试时找到的BUG，提出期望结果；对不合适的流程，也要提出优化期望。
-2.细化的测试用例很重要，一方面可用于自动化测试的架构，另一方面，越细的测试用例，在">
+<meta name="description" content="赛题与数据
+代码
+基本数据创建
+result：每家店铺每日交易成功数量
+view：每家店铺每日浏览量
+参数分解
+shop_info
+
+
+
+shop_id
+city_name
+location_id
+per_pay
+score
+comment_cnt
+shop_level
+cate_name..
+
+
+
+
+商家id
+城市名
+所在位置编号
+人均消费
+评">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最近在做测试">
-<meta property="og:url" content="http://yoursite.com/2017/03/17/最近在做测试/index.html">
+<meta property="og:title" content="天池赛IJCAI-17 口碑商家客流量预测 解题思路">
+<meta property="og:url" content="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/index.html">
 <meta property="og:site_name" content="王子子的成长之路">
-<meta property="og:description" content="最近一直在忙测试相关工作，记录下测试工作心得：
-1.重要的不仅只是懂业务流程，也要把思路抽离在流程之外。因为产品在设计时，往往会先定下大的方向，再逐渐寻找最优路线，在不停的修改中，也许已经偏离“可用”的轨道，此时测试应该代入的是用户的思路，对测试时找到的BUG，提出期望结果；对不合适的流程，也要提出优化期望。
-2.细化的测试用例很重要，一方面可用于自动化测试的架构，另一方面，越细的测试用例，在">
-<meta property="og:updated_time" content="2017-06-29T02:09:47.022Z">
+<meta property="og:description" content="赛题与数据
+代码
+基本数据创建
+result：每家店铺每日交易成功数量
+view：每家店铺每日浏览量
+参数分解
+shop_info
+
+
+
+shop_id
+city_name
+location_id
+per_pay
+score
+comment_cnt
+shop_level
+cate_name..
+
+
+
+
+商家id
+城市名
+所在位置编号
+人均消费
+评">
+<meta property="og:updated_time" content="2017-06-29T02:14:42.147Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="最近在做测试">
-<meta name="twitter:description" content="最近一直在忙测试相关工作，记录下测试工作心得：
-1.重要的不仅只是懂业务流程，也要把思路抽离在流程之外。因为产品在设计时，往往会先定下大的方向，再逐渐寻找最优路线，在不停的修改中，也许已经偏离“可用”的轨道，此时测试应该代入的是用户的思路，对测试时找到的BUG，提出期望结果；对不合适的流程，也要提出优化期望。
-2.细化的测试用例很重要，一方面可用于自动化测试的架构，另一方面，越细的测试用例，在">
+<meta name="twitter:title" content="天池赛IJCAI-17 口碑商家客流量预测 解题思路">
+<meta name="twitter:description" content="赛题与数据
+代码
+基本数据创建
+result：每家店铺每日交易成功数量
+view：每家店铺每日浏览量
+参数分解
+shop_info
+
+
+
+shop_id
+city_name
+location_id
+per_pay
+score
+comment_cnt
+shop_level
+cate_name..
+
+
+
+
+商家id
+城市名
+所在位置编号
+人均消费
+评">
 
 
 
@@ -130,13 +202,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/17/最近在做测试/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/"/>
 
 
 
 
 
-  <title> 最近在做测试 | 王子子的成长之路 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 天池赛IJCAI-17 口碑商家客流量预测 解题思路 | 王子子的成长之路 </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +345,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/17/最近在做测试/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="王子子">
@@ -297,7 +369,7 @@
             
             
               
-                最近在做测试
+                天池赛IJCAI-17 口碑商家客流量预测 解题思路
               
             
           </h1>
@@ -312,8 +384,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T14:25:46+08:00">
-                2017-03-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T21:40:03+08:00">
+                2017-03-22
               </time>
             
 
@@ -370,13 +442,97 @@
       
 
       
-        <p>最近一直在忙测试相关工作，记录下测试工作心得：<br>
-1.重要的不仅只是懂业务流程，也要把思路抽离在流程之外。因为产品在设计时，往往会先定下大的方向，再逐渐寻找最优路线，在不停的修改中，也许已经偏离“可用”的轨道，此时测试应该代入的是用户的思路，对测试时找到的BUG，提出期望结果；对不合适的流程，也要提出优化期望。<br>
-2.细化的测试用例很重要，一方面可用于自动化测试的架构，另一方面，越细的测试用例，在写的时候就能发现非常多的问题。<br>
-3.如果作为懂技术的测试人员，对于测出的问题，应该做到比写这个功能的开发了解的更透彻，这也是一个测试人员平庸和杰出的分水岭。<br>
-4.测试人员是产品和开发扯皮中的重要第三方，沟通非常重要。<br>
-5.同上，测试“可信任”也是非常重要的，对能复现的问题，一定要通过复现从而找出问题；对不能复现的问题，记录下相关操作以便将来找出原因，直觉是知识、感官的积累，对于难以找到原因的问题，直觉非常重要。<br>
-6.最好的用例就是文档，文档即用例。</p>
+        <p><a href="https://tianchi.shuju.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.zu3kSJ&amp;raceId=231591" target="_blank" rel="external">赛题与数据</a><br>
+<a href="https://github.com/heavysheep/tianchi" target="_blank" rel="external">代码</a></p>
+<h2 id="基本数据创建">基本数据创建</h2>
+<p><strong>result</strong>：每家店铺每日交易成功数量<br>
+<strong>view</strong>：每家店铺每日浏览量</p>
+<h2 id="参数分解">参数分解</h2>
+<h3 id="shop_info">shop_info</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="center">shop_id</th>
+<th align="center">city_name</th>
+<th align="center">location_id</th>
+<th align="center">per_pay</th>
+<th align="center">score</th>
+<th align="center">comment_cnt</th>
+<th align="center">shop_level</th>
+<th align="center">cate_name..</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">商家id</td>
+<td align="center">城市名</td>
+<td align="center">所在位置编号</td>
+<td align="center">人均消费</td>
+<td align="center">评分</td>
+<td align="center">评论数</td>
+<td align="center">商铺等级</td>
+<td align="center">分类</td>
+</tr>
+</tbody>
+</table>
+<p><strong>shop_id</strong>：主键，索引<br>
+<strong>city_name</strong>：获取气温、消费能力、消费习惯<br>
+<strong><del>location_id</del></strong>：聚类算法，估计功效太低没什么意义，pass<br>
+<strong>per_pay</strong>：检测与result负相关，与view负相关。<br>
+<strong>socre</strong>：检测与result正相关，与view正相关。<br>
+<strong>comment_cnt</strong>：检测与result正相关，与view正相关。<br>
+<strong>shop_level</strong>：检测与result正相关，与view正相关。<br>
+<strong>cate_name</strong>：分类太细，考虑只保留使用“超市”和“美食”进行区分。</p>
+<p>检测<strong>per_pay</strong>、<strong>score</strong>、<strong>comment_cnt</strong>、<strong>shop——level</strong>与<strong>view</strong>、<strong>result</strong>的关联度。<br>
+score有很大的问题：这个值是处于变动的。</p>
+<h3 id="user_pay">user_pay</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="center">user_id</th>
+<th align="center">shop_id</th>
+<th align="center">time_stamp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">付费用户id</td>
+<td align="center">商家id</td>
+<td align="center">消费时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
+<h3 id="user_view">user_view</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="center">user_id</th>
+<th align="center">shop_id</th>
+<th align="center">time_stamp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">浏览用户id</td>
+<td align="center">商家id</td>
+<td align="center">浏览时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
+<h2 id="特征工程">特征工程</h2>
+<p>1.考虑到口碑是2015年6月23日开始发布，必然遭遇冷启动和虚假数据问题，那么时间序列中，体现趋势的指标应该是7日移动平均线ma，影响最大的特征因子应该是最近一次的ma_7。<br>
+2.城市天气逻辑体现非常重要，主要划分了三级（晴，小雨/小雪/，大雨/雪），但划分后的效果并不很好。<br>
+3.当日是否为工作日，次日是否为工作日比较重要。<br>
+4.16年情人节到过年的那周视为噪音。<br>
+5.GDP作为特征果然没效果，删了。</p>
+<h2 id="感受">感受</h2>
+<p>1.以不同可索引对象制造的模型再融合有巨大威力，第一次瞎配的权重都带来了最好的提升。<br>
+2.solo的问题不在于想法…判断出哪个想法提升最多是最重要的，当然这需要经验。<br>
+3.xgboost因为bug跑不起来，没时间走ARIMA，也没时间再上prophet，凄苦…水平不够时候有队友提升会比较快。<br>
+4.合理利用每日评分确定正确方向是非常有必要的，相信前几的差距已经是谁对趋势判断更敏锐了。<br>
+5.全身心的投入大约勉强能进前200，看wepon大神的blog，对底层的理解还是很重要，今后要加强学习和训练。</p>
 
       
     </div>
@@ -407,8 +563,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/24/Paxos算法简易理解/" rel="next" title="Paxos算法简易理解">
-                <i class="fa fa-chevron-left"></i> Paxos算法简易理解
+              <a href="/2017/03/17/最近在做测试/" rel="next" title="最近在做测试">
+                <i class="fa fa-chevron-left"></i> 最近在做测试
               </a>
             
           </div>
@@ -416,10 +572,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/" rel="prev" title="天池赛IJCAI-17 口碑商家客流量预测 解题思路">
-                天池赛IJCAI-17 口碑商家客流量预测 解题思路 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -466,8 +618,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg"
@@ -536,6 +697,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据创建"><span class="nav-number">1.</span> <span class="nav-text">基本数据创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数分解"><span class="nav-number">2.</span> <span class="nav-text">参数分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shop_info"><span class="nav-number">2.1.</span> <span class="nav-text">shop_info</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user_pay"><span class="nav-number">2.2.</span> <span class="nav-text">user_pay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#user_view"><span class="nav-number">2.3.</span> <span class="nav-text">user_view</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">3.</span> <span class="nav-text">特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感受"><span class="nav-number">4.</span> <span class="nav-text">感受</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
