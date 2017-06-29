@@ -268,6 +268,1302 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/15/改善 Python 程序的 91 个建议读书笔记 1/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/15/改善 Python 程序的 91 个建议读书笔记 1/" itemprop="url">
+                  改善 Python 程序的 91 个建议读书笔记 1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-15T23:11:31+08:00">
+                2017-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="第-1-章-引论">第 1 章 引论</h2>
+<h3 id="建议-1理解-pythonic-概念">建议 1：理解 Pythonic 概念</h3>
+<p><strong>Pythonic</strong><br>
+当你输入 <code>import this</code> 就会显示 <code>zen of python</code></p>
+<blockquote>
+<p>美丽胜于丑陋。<br>
+显式优于隐式。<br>
+简单比复杂好。<br>
+复合胜于复杂。<br>
+平面比嵌套好。<br>
+稀疏比密集好。<br>
+可读性是重要的。<br>
+特殊情况不足以打破规则。<br>
+虽然实用性胜过纯粹。<br>
+除了显示错误，错误永远不应该沉默。</p>
+</blockquote>
+<p><strong>代码风格</strong><br>
+充分体现python动态语言的特色，类似于</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># 变量交换  </span>
+a, b <span class="op">=</span> b, a  
+<span class="co"># 上下文管理  </span>
+<span class="cf">with</span> <span class="bu">open</span>(path, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:  
+    do_sth_with(f)  
+<span class="co"># 不应当过分地追求奇技淫巧  </span>
+a <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]   
+a[::<span class="op">-</span><span class="dv">1</span>] <span class="co"># 不推荐。好吧，自从学了切片我一直用的这个  </span>
+<span class="bu">list</span>(<span class="bu">reversed</span>(a))   <span class="co"># 推荐  </span></code></pre></div>
+<p>然后表扬了 Flask 框架，提到了 generator 之类的特性尤为 Pythonic，有个包和模块的约束：</p>
+<ul>
+<li>包和模块的命名采用小写、单数形式，而且短小<br>
+</li>
+<li>包通常仅作为命名空间，如只含空的__init__.py文件</li>
+</ul>
+<h3 id="建议-2编写-pythonic-代码">建议 2：编写 Pythonic 代码</h3>
+<p><strong>避免劣化代码</strong></p>
+<ul>
+<li>避免只用大小写区分不同的对象<br>
+</li>
+<li>避免使用容易引起混淆的名称<br>
+</li>
+<li>不要害怕过长的变量名</li>
+</ul>
+<p><strong>深入认识python有助于编写pythonic代码</strong></p>
+<ul>
+<li>全面掌握 python 提供的特性，包括语言和库<br>
+</li>
+<li>随着时间推移，要不断更新知识<br>
+</li>
+<li>深入学习业界公认的 pythoni 代码<br>
+</li>
+<li>编写符合 pep8 的代码规范（就是让你使用pycharm）</li>
+</ul>
+<h3 id="建议-3理解-python-与-c-语言的不同之处">建议 3：理解 Python 与 C 语言的不同之处</h3>
+<ul>
+<li>Python 使用代码缩进的方式来分割代码块，不要混用 Tab 键和空格<br>
+</li>
+<li>Python 中单、双引号的效果相同（个人建议使用单引号，在面对其他语言的双引号源码时不必再转义）<br>
+</li>
+<li>三元操作符：x if bool else y（原因是作者认为应该用可读性更好的方式表达）<br>
+</li>
+<li>用其他方法替代 switch-case</li>
+</ul>
+<h3 id="建议-4在代码中适当添加注释">建议 4：在代码中适当添加注释</h3>
+<ul>
+<li>块和行注释仅仅注释复杂的操作、算法等<br>
+</li>
+<li>注释和代码隔开一段距离<br>
+</li>
+<li>给外部可访问的函数和方法添加文档注释<br>
+</li>
+<li>推荐在文件头中包含 copyright 申明、模块描述等</li>
+</ul>
+<p>另外，编写代码应该朝代码即文档的方向进行，但仍应该注重注释的使用</p>
+<h3 id="建议-5通过适当添加空行使代码布局更为优雅合理">建议 5：通过适当添加空行使代码布局更为优雅、合理</h3>
+<ul>
+<li>表达完一个完整思路后，应该用空白行间隔，尽量不要在一段代码中说明几件事。<br>
+</li>
+<li>尽量保持上下文的易理解性，比如调用者在上，被调用者在下<br>
+</li>
+<li>避免过长的代码行，超过80个字符应该使用行连接换行（还是让你使用pycharm）<br>
+</li>
+<li>水平对齐毫无意义，不要用多余空格保持对齐<br>
+</li>
+<li>空格的使用要能够在需要使用时强调警示读者（符合PEP8规范）</li>
+</ul>
+<h3 id="建议-6编写函数的-4-个原则">建议 6：编写函数的 4 个原则</h3>
+<ol style="list-style-type: decimal">
+<li>函数设计要尽量短小，嵌套层次不宜过深<br>
+</li>
+<li>函数申明应该做到合理、简单、易于使用<br>
+</li>
+<li>函数参数设计应该考虑向下兼容<br>
+</li>
+<li>一个函数只做一件事，尽量保证函数语句粒度的一致性</li>
+</ol>
+<p>Python 中函数设计的好习惯还包括：不要在函数中定义可变对象作为默认值，使用异常替换返回错误，保证通过单元测试等。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># 关于函数设计的向下兼容  </span>
+<span class="kw">def</span> readfile(filename):         <span class="co"># 第一版本  </span>
+    <span class="cf">pass</span>  
+<span class="kw">def</span> readfile(filename, log):    <span class="co"># 第二版本  </span>
+    <span class="cf">pass</span>  
+<span class="kw">def</span> readfile(filename, logger<span class="op">=</span>logger.info):     <span class="co"># 合理的设计  </span>
+    <span class="cf">pass</span>  </code></pre></div>
+<p>最后还有个函数可读性良好的例子：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> GetContent(ServerAdr, PagePath):  
+    http <span class="op">=</span> httplib.HTTP(ServerAdr)  
+    http.putrequest(<span class="st">&#39;GET&#39;</span>, PagePath)  
+    http.putheader(<span class="st">&#39;Accept&#39;</span>, <span class="st">&#39;text/html&#39;</span>)  
+    http.putheader(<span class="st">&#39;Accept&#39;</span>, <span class="st">&#39;text/plain&#39;</span>)  
+    http.endheaders()  
+    httpcode, httpmsg, headers <span class="op">=</span> http.getreply()  
+    <span class="cf">if</span> httpcode <span class="op">!=</span> <span class="dv">200</span>:  
+        <span class="cf">raise</span> <span class="st">&quot;Could not get document: Check URL and Path.&quot;</span>  
+    doc <span class="op">=</span> http.getfile()  
+    data <span class="op">=</span> doc.read()       <span class="co"># 此处是不是应该使用 with ？  </span>
+    doc.close  
+    <span class="cf">return</span> data  
+  
+<span class="kw">def</span> ExtractData(inputstring, start_line, end_line):  
+    lstr <span class="op">=</span> inputstring.splitlines()             <span class="co"># split  </span>
+    j <span class="op">=</span> <span class="dv">0</span>  
+    <span class="cf">for</span> i <span class="kw">in</span> lstr:  
+        j <span class="op">+=</span> <span class="dv">1</span>  
+        <span class="cf">if</span> i.strip() <span class="op">==</span> start_line: slice_start <span class="op">=</span> j  
+        <span class="cf">elif</span> i.strip() <span class="op">==</span> end_line: slice_end <span class="op">=</span> j  
+    <span class="cf">return</span> lstr[slice_start:slice_end]  
+  
+<span class="kw">def</span> SendEmail(sender, receiver, smtpserver, username, password, content):  
+    subject <span class="op">=</span> <span class="st">&quot;Contented get from the web&quot;</span>  
+    msg <span class="op">=</span> MIMEText(content, <span class="st">&#39;plain&#39;</span>, <span class="st">&#39;utf-8&#39;</span>)  
+    msg[<span class="st">&#39;Subject&#39;</span>] <span class="op">=</span> Header(subject, <span class="st">&#39;utf-8&#39;</span>)  
+    smtp <span class="op">=</span> smtplib.SMTP()  
+    smtp.<span class="ex">connect</span>(smtpserver)  
+    smtp.login(username, password)  
+    smtp.sendmail(sender, receiver, msg.as_string())  
+    smtp.quit()  
+  </code></pre></div>
+<h3 id="建议-7将常量集中到一个文件">建议 7：将常量集中到一个文件</h3>
+<p>在Python中应当如何使用常量：</p>
+<ul>
+<li><strong>常量名全部大写</strong><br>
+</li>
+<li><strong>将存放常量的文件命名为constant.py</strong></li>
+</ul>
+<p>示例为：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> _const:  
+    <span class="kw">class</span> ConstError(<span class="pp">TypeError</span>): <span class="cf">pass</span>  
+    <span class="kw">class</span> ConstCaseError(ConstError): <span class="cf">pass</span>  
+  
+    <span class="kw">def</span> <span class="fu">__setattr__</span>(<span class="va">self</span>, name, value):  
+        <span class="cf">if</span> <span class="va">self</span>.__dict__.has_key(name):  
+            <span class="cf">raise</span> <span class="va">self</span>.ConstError, <span class="st">&quot;Can&#39;t change const.</span><span class="sc">%s</span><span class="st">&quot;</span> <span class="op">%</span> name  
+        <span class="cf">if</span> <span class="kw">not</span> name.isupper():  
+            <span class="cf">raise</span> <span class="va">self</span>.ConstCaseError, <span class="op">\</span>  
+                    <span class="co">&#39;const name &quot;%s&quot; is not all uppercase&#39;</span> <span class="op">%</span> name  
+        <span class="va">self</span>.__dict__[name] <span class="op">=</span> value  
+  
+<span class="im">import</span> sys  
+sys.modules[<span class="va">__name__</span>] <span class="op">=</span> _const()  
+<span class="im">import</span> const  
+const.MY_CONSTANT <span class="op">=</span> <span class="dv">1</span>  
+const.MY_SECOND_CONSTANT <span class="op">=</span> <span class="dv">2</span>  
+const.MY_THIRD_CONSTANT <span class="op">=</span> <span class="st">&#39;a&#39;</span>  
+const.MY_FORTH_CONSTANT <span class="op">=</span> <span class="st">&#39;b&#39;</span>  
+  </code></pre></div>
+<p>其他模块中引用这些常量时，按照如下方式进行即可：</p>
+<pre><code>from constant import const  
+print(const.MY_CONSTANT)  </code></pre>
+<h2 id="第-2-章-编程惯用法">第 2 章 编程惯用法</h2>
+<h3 id="建议-8利用-assert-语句来发现问题">建议 8：利用 assert 语句来发现问题</h3>
+<p>断言的判断会对性能有所影响，因此要分清断言的使用场合：</p>
+<ul>
+<li>断言应使用在正常逻辑无法到达的地方或总是为真的场合<br>
+</li>
+<li>python本身异常处理能解决的问题不需要用断言<br>
+</li>
+<li>不要使用断言检查用户输入，而使用条件判断<br>
+</li>
+<li>在函数调用后，当需要确认返回值是否合理时使用断言<br>
+</li>
+<li>当条件是业务的先决条件时可以使用断言</li>
+</ul>
+<p>代码示例：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="op">&gt;&gt;&gt;</span> y <span class="op">=</span> <span class="dv">2</span>  
+<span class="op">&gt;&gt;&gt;</span> <span class="cf">assert</span> x <span class="op">==</span> y, <span class="st">&quot;not equals&quot;</span>  
+Traceback (most recent call last):  
+  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span>  
+<span class="pp">AssertionError</span>: <span class="kw">not</span> equals  
+<span class="op">&gt;&gt;&gt;</span> x <span class="op">=</span> <span class="dv">1</span>  
+<span class="op">&gt;&gt;&gt;</span> y <span class="op">=</span> <span class="dv">2</span>  
+<span class="co"># 以上代码相当于  </span>
+<span class="op">&gt;&gt;&gt;</span> <span class="cf">if</span> <span class="va">__debug__</span> <span class="kw">and</span> <span class="kw">not</span> x <span class="op">==</span> y:  
+...     <span class="cf">raise</span> <span class="pp">AssertionError</span>(<span class="st">&quot;not equals&quot;</span>)  
+...   
+Traceback (most recent call last):  
+  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">2</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span>  
+<span class="pp">AssertionError</span>: <span class="kw">not</span> equals  
+  </code></pre></div>
+<p>运行是加入-O参数可以禁用断言。</p>
+<h3 id="建议-9数据交换的时候不推荐使用中间变量">建议 9：数据交换的时候不推荐使用中间变量</h3>
+<pre><code>&gt;&gt;&gt; Timer(&#39;temp = x; x = y; y = temp;&#39;, &#39;x = 2; y = 3&#39;).timeit()  
+0.059251302998745814  
+&gt;&gt;&gt; Timer(&#39;x, y = y, x&#39;, &#39;x = 2; y = 3&#39;).timeit()  
+0.05007316499904846  </code></pre>
+<p>对于表达式x, y = y, x，在内存中执行的顺序如下：<br>
+1. 先计算右边的表达式y, x，因此先在内存中创建元组(y, x)，其标识符和值分别为y, x及其对应的值，其中y和x是在初始化已经存在于内存中的对象。<br>
+2. 计算表达式左边的值并进行赋值，元组被依次分配给左边的标识符，通过解压缩，元组第一标识符y分配给左边第一个元素x，元组第二标识符x分配给左边第一个元素y，从而达到交换的目的。</p>
+<p>（简单来说，直接交换符合pythonic且性能最佳，这么做就对了）</p>
+<h3 id="建议-10充分利用-lazy-evaluation-的特性">建议 10：充分利用 Lazy evaluation 的特性</h3>
+<p>（就是生成器）<br>
+Lazy evaluation常被译为<strong>延迟计算</strong>，体现在用 yield 替换 return 使函数成为生成器，好处主要有两方面：</p>
+<ol style="list-style-type: decimal">
+<li>避免不必要的计算，带来性能提升<br>
+</li>
+<li>节省空间，使无限循环的数据结构成为可能</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> fib():  
+    a, b <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span>  
+    <span class="cf">while</span> <span class="va">True</span>:  
+        <span class="cf">yield</span> a  
+        a, b <span class="op">=</span> b, a <span class="op">+</span> b  </code></pre></div>
+<h3 id="建议-11理解枚举替代实现的缺陷">建议 11：理解枚举替代实现的缺陷</h3>
+<p>使用 flufl.enum 实现枚举</p>
+<h3 id="建议-12不推荐使用-type-来进行类型检查">建议 12：不推荐使用 type 来进行类型检查</h3>
+<p>使用 isinstance 来进行类型检查（注意上下包含关系就行）</p>
+<h3 id="建议-13尽量转换为浮点类型后再做除法">建议 13：尽量转换为浮点类型后再做除法</h3>
+<p>py2.x:转换浮点类型后再做除法</p>
+<h3 id="建议-14警惕-eval-的安全漏洞">建议 14：警惕 eval() 的安全漏洞</h3>
+<p>eval具有安全漏洞，建议使用安全性更好的ast.literal_eval。</p>
+<h3 id="建议-15使用-enumerate-获取序列迭代的索引和值">建议 15：使用 enumerate() 获取序列迭代的索引和值</h3>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="op">&gt;&gt;&gt;</span> li <span class="op">=</span> [<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>, <span class="st">&#39;d&#39;</span>, <span class="st">&#39;e&#39;</span>]  
+<span class="op">&gt;&gt;&gt;</span> <span class="cf">for</span> i, e <span class="kw">in</span> <span class="bu">enumerate</span>(li):  
+...     <span class="bu">print</span>(<span class="st">&#39;index: &#39;</span>, i, <span class="st">&#39;element: &#39;</span>, e)  
+...   
+index:  <span class="dv">0</span> element:  a  
+index:  <span class="dv">1</span> element:  b  
+index:  <span class="dv">2</span> element:  c  
+index:  <span class="dv">3</span> element:  d  
+index:  <span class="dv">4</span> element:  e  
+<span class="co"># enumerate(squence, start=0) 内部实现  </span>
+<span class="kw">def</span> <span class="bu">enumerate</span>(squence, start<span class="op">=</span><span class="dv">0</span>):  
+    n <span class="op">=</span> start  
+    <span class="cf">for</span> elem <span class="kw">in</span> sequence:  
+        <span class="cf">yield</span> n, elem   <span class="co"># 666  </span>
+        n <span class="op">+=</span> <span class="dv">1</span>  
+<span class="co"># 明白了原理我们自己也来实现一个反序的  </span>
+<span class="kw">def</span> reversed_enumerate(squence):  
+    n <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>  
+    <span class="cf">for</span> elem <span class="kw">in</span> <span class="bu">reversed</span>(sequence):  
+        <span class="cf">yield</span> <span class="bu">len</span>(sequence) <span class="op">+</span> n, elem  
+        n <span class="op">-=</span> <span class="dv">1</span>  
+  </code></pre></div>
+<p>（此方式相比从列表里放索引取值更加优雅）</p>
+<h3 id="建议-16分清-与-is-的适用场景">建议 16：分清 == 与 is 的适用场景</h3>
+<p>比较有趣的：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="op">&gt;&gt;&gt;</span> s1 <span class="op">=</span> <span class="st">&#39;hello world&#39;</span>  
+<span class="op">&gt;&gt;&gt;</span> s2 <span class="op">=</span> <span class="st">&#39;hello world&#39;</span>  
+<span class="op">&gt;&gt;&gt;</span> s1 <span class="op">==</span> s2  
+<span class="va">True</span>  
+<span class="op">&gt;&gt;&gt;</span> s1 <span class="kw">is</span> s2  
+<span class="va">False</span>  
+<span class="op">&gt;&gt;&gt;</span> s1.<span class="fu">__eq__</span>(s2)  
+<span class="va">True</span>  
+<span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> <span class="st">&#39;Hi&#39;</span>  
+<span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> <span class="st">&#39;Hi&#39;</span>  
+<span class="op">&gt;&gt;&gt;</span> a <span class="op">==</span> b  
+<span class="va">True</span>  
+<span class="op">&gt;&gt;&gt;</span> a <span class="kw">is</span> b  
+<span class="va">True</span>  
+  </code></pre></div>
+<p>为了提高系统性能，对于<strong>较小的字符串</strong>会保留其值的一个副本，当创建新的字符串时直接指向该副本，所以a和b的 id 值是一样的，同样对于小整数[-5, 257)也是如此：</p>
+<p>注意is不相当于 ==， is 是对 id 方法做的 == 。</p>
+<h3 id="建议-17考虑兼容性尽可能使用-unicode">建议 17：考虑兼容性，尽可能使用 Unicode</h3>
+<p>python2.x 这是无敌深坑，需要刻苦学习掌握（python3偶尔也会碰到这种问题，但避免了大多数这种可能）</p>
+<h3 id="建议-18构建合理的包层次来管理-module">建议 18：构建合理的包层次来管理 module</h3>
+<p>（__init__是对包的头文件定制） 本质上每一个 Python 文件都是一个模块，使用模块可以增强代码的可维护性和可重用性，在较大的项目中，我们需要合理地组织项目层次来管理模块，这就是包(Package)的作用。</p>
+<p>一句话说包：一个包含__init__.py 文件的目录。包中的模块可以通过.进行访问，即包名.模块名。那么这<strong>init</strong>.py文件有什么用呢？最明显的作用就是它区分了包和普通目录，在该文件中申明模块级别的 import 语句从而变成了包级别可见，另外在该文件中定义__all__变量，可以控制需要导入的子包或模块。</p>
+<p>这里给出一个较为合理的包组织方式，是<a href="http://link.zhihu.com/?target=https%3A//item.jd.com/11594082.html" target="_blank" rel="external">FlaskWeb 开发：基于Python的Web应用开发实战</a>一书中推荐而来的：</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="op">|-</span>flasky  
+    <span class="op">|-</span>app<span class="op">/</span>                      <span class="co"># Flask 程序  </span>
+        <span class="op">|-</span>templates<span class="op">/</span>            <span class="co"># 存放模板  </span>
+        <span class="op">|-</span>static<span class="op">/</span>               <span class="co"># 静态文件资源  </span>
+        <span class="op">|-</span>main<span class="op">/</span>  
+            <span class="op">|-</span><span class="fu">__init__</span>.py  
+            <span class="op">|-</span>errors.py         <span class="co"># 蓝本中的错误处理程序  </span>
+            <span class="op">|-</span>forms.py          <span class="co"># 表单对象  </span>
+            <span class="op">|-</span>views.py          <span class="co"># 蓝本中定义的程序路由  </span>
+        <span class="op">|-</span><span class="fu">__init__</span>.py  
+        <span class="op">|-</span>email.py              <span class="co"># 电子邮件支持  </span>
+        <span class="op">|-</span>models.py             <span class="co"># 数据库模型  </span>
+    <span class="op">|-</span>migrations<span class="op">/</span>               <span class="co"># 数据库迁移脚本  </span>
+    <span class="op">|-</span>tests<span class="op">/</span>                    <span class="co"># 单元测试  </span>
+        <span class="op">|-</span><span class="fu">__init__</span>.py  
+        <span class="op">|-</span>test<span class="op">*</span>.py  
+    <span class="op">|-</span>venv<span class="op">/</span>                     <span class="co"># 虚拟环境  </span>
+    <span class="op">|-</span>requirements<span class="op">/</span>  
+        <span class="op">|-</span>dev.txt               <span class="co"># 开发过程中的依赖包  </span>
+        <span class="op">|-</span>prod.txt              <span class="co"># 生产过程中的依赖包  </span>
+    <span class="op">|-</span>config.py                 <span class="co"># 储存程序配置  </span>
+    <span class="op">|-</span>manage.py                 <span class="co"># 启动程序以及其他的程序任务  </span>
+  </code></pre></div>
+<h2 id="第-3-章基础语法">第 3 章：基础语法</h2>
+<h3 id="建议-19有节制地使用-fromimport-语句">建议 19：有节制地使用 from…import 语句</h3>
+<p>Python 提供三种方式来引入外部模块：import语句、from…import语句以及__import__函数，其中__import__函数显式地将模块的名称作为字符串传递并赋值给命名空间的变量。</p>
+<p>使用import需要注意以下几点：</p>
+<ul>
+<li>优先使用import a的形式<br>
+</li>
+<li>有节制地使用from a import A<br>
+</li>
+<li>尽量避免使用from a import *</li>
+</ul>
+<p>为什么呢？我们来看看 Python 的 import 机制，Python 在初始化运行环境的时候会预先加载一批内建模块到内存中，同时将相关信息存放在sys.modules中，我们可以通过 sys.modules.items() 查看预加载的模块信息，当加载一个模块时，解释器实际上完成了如下动作：</p>
+<ol style="list-style-type: decimal">
+<li>在 sys.modules 中搜索该模块是否存在，如果存在就导入到当前局部命名空间，如果不存在就为其创建一个字典对象，插入到 sys.modules 中。<br>
+</li>
+<li>加载前确认是否需要对模块对应的文件进行编译，如果需要则先进行编译。</li>
+<li>执行动态加载，在当前命名空间中执行编译后的字节码，并将其中所有的对象放入模块对应的字典中。</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="op">&gt;&gt;&gt;</span> <span class="bu">dir</span>()  
+[<span class="st">&#39;__builtins__&#39;</span>, <span class="st">&#39;__doc__&#39;</span>, <span class="st">&#39;__loader__&#39;</span>, <span class="st">&#39;__name__&#39;</span>, <span class="st">&#39;__package__&#39;</span>, <span class="st">&#39;__spec__&#39;</span>]  
+<span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> test  
+testing module <span class="im">import</span>  
+<span class="op">&gt;&gt;&gt;</span> <span class="bu">dir</span>()  
+[<span class="st">&#39;__builtins__&#39;</span>, <span class="st">&#39;__doc__&#39;</span>, <span class="st">&#39;__loader__&#39;</span>, <span class="st">&#39;__name__&#39;</span>, <span class="st">&#39;__package__&#39;</span>, <span class="st">&#39;__spec__&#39;</span>, <span class="st">&#39;test&#39;</span>]  
+<span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> sys  
+<span class="op">&gt;&gt;&gt;</span> <span class="st">&#39;test&#39;</span> <span class="kw">in</span> sys.modules.keys()  
+<span class="va">True</span>  
+<span class="op">&gt;&gt;&gt;</span> <span class="bu">id</span>(test)  
+<span class="dv">140367239464744</span>  
+<span class="op">&gt;&gt;&gt;</span> <span class="bu">id</span>(sys.modules[<span class="st">&#39;test&#39;</span>])  
+<span class="dv">140367239464744</span>  
+<span class="op">&gt;&gt;&gt;</span> <span class="bu">dir</span>(test)  
+[<span class="st">&#39;__builtins__&#39;</span>, <span class="st">&#39;__cached__&#39;</span>, <span class="st">&#39;__doc__&#39;</span>, <span class="st">&#39;__file__&#39;</span>, <span class="st">&#39;__loader__&#39;</span>, <span class="st">&#39;__name__&#39;</span>, <span class="st">&#39;__package__&#39;</span>, <span class="st">&#39;__spec__&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>]  
+<span class="op">&gt;&gt;&gt;</span> sys.modules[<span class="st">&#39;test&#39;</span>].__dict__.keys()  
+dict_keys([<span class="st">&#39;__file__&#39;</span>, <span class="st">&#39;__builtins__&#39;</span>, <span class="st">&#39;__doc__&#39;</span>, <span class="st">&#39;__loader__&#39;</span>, <span class="st">&#39;__package__&#39;</span>, <span class="st">&#39;__spec__&#39;</span>, <span class="st">&#39;__name__&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;__cached__&#39;</span>])  </code></pre></div>
+<p>从上可以看出，对于用户自定义的模块，import 机制会创建一个新的 module。 将其加入当前的局部命名空间中，同时在 sys.modules 也加入该模块的信息，但本质上是在引用同一个对象，通过test.py所在的目录会多一个字节码文件。</p>
+<p>（这节说的是，盲目使用from…import…会带来：<br>
+1. 命名空间冲突<br>
+2. 循环嵌套导入）</p>
+<h3 id="建议-20优先使用-absolute-import-来导入模块">建议 20：优先使用 absolute import 来导入模块</h3>
+<p>（py3 中 relative import方法已被移除，不用操心）</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/08/为什么我不需要仪式感？/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/08/为什么我不需要仪式感？/" itemprop="url">
+                  为什么我不需要仪式感？
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-08T18:17:18+08:00">
+                2017-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>正是因为这个世界本就是混乱的、无序的<br>
+正是因为这个世界从来不存在什么天理昭昭，善恶有报<br>
+我才不想像其他人一样<br>
+在漫长幽暗的河流中，用尽全力点亮一座灯塔<br>
+告诉别人，这就是我生活的意义，生命的光辉</p>
+<p>我的选择不需要仪式感证明<br>
+我的梦想不需要仪式感升华</p>
+<p>我的力量在于不停的向前蠕动<br>
+而不是破茧成蝶</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/YES！产品经理读书笔记 1/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/04/YES！产品经理读书笔记 1/" itemprop="url">
+                  YES！产品经理读书笔记 1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-04T11:28:14+08:00">
+                2017-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="产品经理是什么">1.产品经理是什么</h2>
+<p><strong>什么是产品经理</strong><br>
+依据公司产品战略，对某个线产品担负根本责任的企业管理人员。</p>
+<p><strong>产品经理的职责</strong>：</p>
+<ol style="list-style-type: decimal">
+<li>根据公司战略制定所负责产品的战略和目标<br>
+</li>
+<li>根据产品情况调整产品战略和目标<br>
+</li>
+<li>根据公司战略优化产品<br>
+</li>
+<li>根据产品市场反馈为高层提供决策建议<br>
+</li>
+<li>指定有效的竞争分析和竞争策略<br>
+</li>
+<li>对现有产品和新产品进行管理</li>
+</ol>
+<p><strong>产品经理的任务</strong></p>
+<ol style="list-style-type: decimal">
+<li>竞争对手分析<br>
+</li>
+<li>产品组合管理<br>
+</li>
+<li>产品品牌管理<br>
+</li>
+<li>市场需求管理<br>
+</li>
+<li>规划和指定相关的产品策略<br>
+</li>
+<li>产品所需资源管理<br>
+</li>
+<li>指定营销策略</li>
+</ol>
+<h2 id="产品经理应该做什么">2.产品经理应该做什么</h2>
+<h3 id="知道做什么">知道做什么</h3>
+<ol style="list-style-type: decimal">
+<li>发现问题：找到市场需求<br>
+</li>
+<li>找到机会：找准市场位置<br>
+</li>
+<li>创新产品：指定产品发展思路</li>
+</ol>
+<p>不认同：<br>
+&gt; 做对的方向的乌龟，不做错的方向的兔子</p>
+<h3 id="知道怎么做">知道怎么做</h3>
+<ol style="list-style-type: decimal">
+<li>规划产品路线：产品目标是什么<br>
+</li>
+<li>设计产品策略：实现目标的方向<br>
+</li>
+<li>制定年度计划：如何逐步靠拢</li>
+</ol>
+<blockquote>
+<p>选择做的东西，最直接的指标是盈利能力评估</p>
+</blockquote>
+<h2 id="产品经理的战术执行">3.产品经理的战术执行</h2>
+<h3 id="让别人去做">让别人去做</h3>
+<ol style="list-style-type: decimal">
+<li>方向引导:制定发展规划<br>
+</li>
+<li>过程管理：控制环节入口和出口，保证实现过程规范化<br>
+</li>
+<li>工作指导：注重其他细节</li>
+</ol>
+<h2 id="产品管理职业的级别都有哪些">4.产品管理职业的级别都有哪些</h2>
+<ul>
+<li>产品助理：业务执行岗，数据收集和分析<br>
+</li>
+<li>产品经理：对企业发展做出合理判断。战略、规划、执行占2:3:5<br>
+</li>
+<li>高级产品经理：战略层面的规划。战略、规划、执行占2:3:5</li>
+</ul>
+<h2 id="产品经理的职业发展路线">5.产品经理的职业发展路线</h2>
+<p>SM：销售管理<br>
+MM：营销管理<br>
+BM：商业管理</p>
+<h2 id="什么样的人适合做产品经理">7.什么样的人适合做产品经理</h2>
+<ol style="list-style-type: decimal">
+<li>有成本意识：能为公司削减成本<br>
+</li>
+<li>有销售意识：能为公司挣钱<br>
+</li>
+<li>有团队意识：团队协作<br>
+</li>
+<li>有全局意识<br>
+</li>
+<li>不会抱怨：能力未到<br>
+</li>
+<li>不夸夸其谈<br>
+</li>
+<li>不喜欢加班<br>
+</li>
+<li>注重倾听</li>
+</ol>
+<h2 id="产品经理的人才模型">8.产品经理的人才模型</h2>
+<h3 id="加分项">加分项：</h3>
+<ol style="list-style-type: decimal">
+<li>独立思考能力<br>
+</li>
+<li>态度上，坚持自己想法</li>
+</ol>
+<blockquote>
+<p>能力和态度二选一时，选择后者</p>
+</blockquote>
+<h3 id="产品经理素养">产品经理素养</h3>
+<h4 id="个人素养">1.个人素养</h4>
+<ul>
+<li>个人修养<br>
+</li>
+<li>创新能力<br>
+</li>
+<li>沟通协调能力<br>
+</li>
+<li>自我管理能力<br>
+</li>
+<li>工作压力承受能力</li>
+</ul>
+<h4 id="管理知识">管理知识</h4>
+<ul>
+<li>战略知识管理<br>
+</li>
+<li>团队管理知识<br>
+</li>
+<li>时间管理知识<br>
+</li>
+<li>项目管理知识</li>
+</ul>
+<h4 id="核心能力">核心能力</h4>
+<ul>
+<li>产品需求管理<br>
+</li>
+<li>产品项目管理<br>
+</li>
+<li>新产品管理<br>
+</li>
+<li>产品生命周期管理<br>
+</li>
+<li>产品规范管理</li>
+</ul>
+<h2 id="产品经理的知识结构是什么">9.产品经理的知识结构是什么</h2>
+<p>图看不清</p>
+<h2 id="产品经理是通才还是专才">10.产品经理是“通”才还是“专”才</h2>
+<p>通的是方法和过程，专的是方向和目的</p>
+<h2 id="产品助理应该做些什么">11.产品助理应该做些什么</h2>
+<ol style="list-style-type: decimal">
+<li>数据整理：收集各类市场、产品、客户、竞争对手有关的数据。<br>
+</li>
+<li>文档管理：各类文档统一的入口和出口。<br>
+</li>
+<li>事务性工作：组织部门会议。</li>
+</ol>
+<h2 id="产品经理应该知道的产品战略图">12.产品经理应该知道的产品战略图</h2>
+<h3 id="产品线的规划">产品线的规划</h3>
+<ol style="list-style-type: decimal">
+<li>归纳目前产品线<br>
+</li>
+<li>根据特征对产品分类<br>
+</li>
+<li>评估生命周期<br>
+</li>
+<li>评估产品之间的关系<br>
+</li>
+<li>形成文档，即产品战略图（PST）</li>
+</ol>
+<h3 id="产品图不管怎么表现需要体现四个方面的信息">产品图不管怎么表现，需要体现四个方面的信息</h3>
+<ol style="list-style-type: decimal">
+<li>产品线信息<br>
+</li>
+<li>产品生命周期阶段信息<br>
+</li>
+<li>产品组合信息<br>
+</li>
+<li>产品信息</li>
+</ol>
+<h2 id="产品管理有行业特殊性吗">13.产品管理有行业特殊性吗</h2>
+<h3 id="产品管理在不同行业上的共性">产品管理在不同行业上的共性</h3>
+<ol style="list-style-type: decimal">
+<li>无论哪个行业，根本工作都是给企业规划处有持续盈利能力的产品（目的相同）<br>
+</li>
+<li>无论哪个行业，都是为企业创造价值（内容相同）<br>
+</li>
+<li>无论哪个行业，都需要先知道市场要什么，后规划如何满足需求，在用用企业提供的产品去满足我们认为需要满足的需求，实现价值交换。（流程相同）</li>
+</ol>
+<blockquote>
+<p>产品经理要让企业资源增值</p>
+</blockquote>
+<blockquote>
+<p>没有不做需求分析的企业，没有不做市场细分的企业，没有不做客户定位的企业</p>
+</blockquote>
+<blockquote>
+<p>很多时候，看到的不一定是真相，共识的不一定是真理，存在也不是我们要坚持的</p>
+</blockquote>
+<h2 id="产品经理是否有行业性限制">14.产品经理是否有行业性限制</h2>
+<h3 id="鲍尔默的商业规则">鲍尔默的商业规则</h3>
+<ol style="list-style-type: decimal">
+<li>一个公司，只有市场份额和现今流最重要<br>
+</li>
+<li>技术只是竞争优势，不是决胜优势<br>
+</li>
+<li>一切以客户和消费者作为企业的经营原则<br>
+</li>
+<li>一切以客户需求开发产品<br>
+</li>
+<li>找出问题！开动大脑！拿出方案！坚持执行！勇往直前！</li>
+</ol>
+<blockquote>
+<p>产品经理最终要提高的是商业运作能力</p>
+</blockquote>
+<p>（但是商业运作能力本身也是很虚的东西）</p>
+<h2 id="技术人员如何转型为产品经理">15.技术人员如何转型为产品经理</h2>
+<ol style="list-style-type: decimal">
+<li>了解自己是否真的不适合做技术工作<br>
+</li>
+<li>全面了解产品经理的工作，评估自己是否真的对这个工作有兴趣<br>
+</li>
+<li>岗位和思维都要转，要从懂产品变成懂业务<br>
+</li>
+<li>了解公司产品管理体系架构<br>
+</li>
+<li>从实践中获取第一手的市场业务信息</li>
+</ol>
+<h2 id="产品管理的工作流程是什么">16.产品管理的工作流程是什么</h2>
+<h3 id="战略活动"><strong>战略活动</strong></h3>
+<ol style="list-style-type: decimal">
+<li>预测问题<br>
+</li>
+<li>培育机会<br>
+</li>
+<li>创新产品<br>
+### <strong>规划活动</strong><br>
+</li>
+<li>产品路线<br>
+</li>
+<li>产品策略<br>
+</li>
+<li>产品规划<br>
+### <strong>战术活动</strong><br>
+</li>
+<li>概念化<br>
+</li>
+<li>图纸化<br>
+</li>
+<li>技术化<br>
+</li>
+<li>商品化<br>
+</li>
+<li>市场化</li>
+</ol>
+<blockquote>
+<p>PRD：产品需求文档<br>
+MRD：市场需求文档</p>
+</blockquote>
+<p><img src="http://static.zybuluo.com/heavysheep/6yl0ldxsqa0kan3pg896y98h/image_1bekb9u1miibsp22co130nt459.png" alt="image_1bekb9u1miibsp22co130nt459.png-95.3kB"><br>
+<img src="http://static.zybuluo.com/heavysheep/m7dmya3e80675l2hho2umc9p/image_1bekbb1n210s51r7n15qk7t3f61m.png" alt="image_1bekbb1n210s51r7n15qk7t3f61m.png-146.5kB"></p>
+<h2 id="产品管理工作的文档管理">17.产品管理工作的文档管理</h2>
+<h3 id="文档作用">文档作用</h3>
+<ol style="list-style-type: decimal">
+<li>记录介质<br>
+</li>
+<li>过程推动<br>
+</li>
+<li>抽象体现</li>
+</ol>
+<h3 id="文档类型">文档类型</h3>
+<ol style="list-style-type: decimal">
+<li>流程类<br>
+</li>
+<li>控制类<br>
+</li>
+<li>决策类</li>
+</ol>
+<h3 id="文档的规范">文档的规范</h3>
+<ol style="list-style-type: decimal">
+<li>文档模板规范<br>
+</li>
+<li>文档编号规范<br>
+</li>
+<li>文档存取规范<br>
+</li>
+<li>文档撰写规范<br>
+</li>
+<li>文档级别规范</li>
+</ol>
+<h2 id="产品经理需要了解的26个文档">18.产品经理需要了解的26个文档</h2>
+<p><img src="http://static.zybuluo.com/heavysheep/cvsoxti1vjnxh5vkdkm2n9ot/image_1bekc88kv19af1fap1mht1g26aro1g.png" alt="image_1bekc88kv19af1fap1mht1g26aro1g.png-363.4kB"><br>
+<img src="http://static.zybuluo.com/heavysheep/zwsw8ake0j41uhodde89ryrg/image_1bekc92221rdi1c461t38jqffga1t.png" alt="image_1bekc92221rdi1c461t38jqffga1t.png-244.3kB"><br>
+<img src="http://static.zybuluo.com/heavysheep/zk2hxg4sndm3yid29wulu4ob/image_1bekca8h21ac61ai716c33fhehc2a.png" alt="image_1bekca8h21ac61ai716c33fhehc2a.png-208kB"></p>
+<h3 id="个必须要写的文档">10个必须要写的文档</h3>
+<p>D3：需求矩阵表<br>
+D9：商业方案（必须精通）<br>
+D12：产品路线文档<br>
+D15：产品策略文档<br>
+D18：商业需求文档（必须精通）<br>
+D19：市场需求文档（必须精通）<br>
+D20：产品需求文档（必须精通）<br>
+D21：产品验收文档<br>
+D24：产品白皮书<br>
+D25：产品总结报告</p>
+<h2 id="产品管理部归于何处">19.产品管理部归于何处</h2>
+<blockquote>
+<p>懂的多只能说明你的知识丰富，爱学习。只有做的好才说明你能力强悍，货真价实。</p>
+</blockquote>
+<blockquote>
+<p>任何一次变革都是对现有利益的重新分配，这是方法，又是目的。</p>
+</blockquote>
+<p>用户购买一个产品的流程：<br>
+1. 发现的过程：知道我们宣传的产品价值是否和他期望的利益一致。<br>
+2. 选择的过程：让用户选择我们的产品而不是竞争对手产品<br>
+3. 购买的过程：寻找性价比最高的产品<br>
+4. 使用的过程：决定是否购买</p>
+<h2 id="产品部和业务部门的利益之争">20.产品部和业务部门的利益之争</h2>
+<blockquote>
+<p>不停的妥协和不停的打压都是不可取的</p>
+</blockquote>
+<blockquote>
+<p>在关系的夹缝中，要做到不偏不倚，实事求是</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/26/sklearn学习笔记-3 回归模型/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="王子子">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="王子子的成长之路">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/26/sklearn学习笔记-3 回归模型/" itemprop="url">
+                  sklearn学习笔记-3 回归模型
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-26T21:42:52+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="回归模型">回归模型：</h2>
+<h3 id="线性回归模型">线性回归模型</h3>
+<h4 id="感知器模型"><strong>感知器模型</strong></h4>
+<p>最简单的模型，多层感知器MLP即最简单的深度学习网络。<br>
+感知器模型通过循环修正计算误差进行修正，因此没有没有学习率；在学习中，需要指定学习次数（例如学习样本数），否则感知器模型会无休止的进行下去。<br>
+基础（单层）感知器模型是非常弱的模型，不会存在过拟合的情况。</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">sklearn.linera_model.Perceptron(penalty<span class="op">=</span><span class="va">None</span>, alpha<span class="op">=</span><span class="fl">0.0001</span>, fit_intercept<span class="op">=</span><span class="va">True</span>, n_iter<span class="op">=</span><span class="dv">5</span>,   shuffle<span class="op">=</span><span class="va">True</span>, verbose<span class="op">=</span><span class="dv">0</span>, eta0<span class="op">=</span><span class="fl">1.0</span>, n_jobs<span class="op">=</span><span class="dv">1</span>. random_state <span class="op">=</span> <span class="dv">0</span>, class_weight<span class="op">=</span><span class="va">None</span>,   warm_start<span class="op">=</span><span class="va">False</span>)  </code></pre></div>
+<p><strong>参数</strong></p>
+<ul>
+<li>penalty：正则惩罚项，默认为0<br>
+</li>
+<li>fit_intercept：截距<br>
+</li>
+<li>n_iter：迭代次数<br>
+</li>
+<li>shuffle：洗牌<br>
+</li>
+<li>verbose：打印日志等级<br>
+</li>
+<li>eta0 ：学习率<br>
+</li>
+<li>n_jobs：启动线程数，-1代表最大</li>
+</ul>
+<p><strong>实例</strong></p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">df <span class="op">=</span> pd.read_csv(<span class="vs">r&#39;D:\BaiduYunDownload\sklearn\3.0 线性模型\adultTest.csv&#39;</span>)  
+<span class="co">#将object变量（字符串）制成稀疏矩阵，class是目标变量，不用放入  </span>
+dfNew<span class="op">=</span>pd.get_dummies(df,columns<span class="op">=</span>[<span class="st">&#39;workclass&#39;</span>,<span class="st">&#39;education&#39;</span>,<span class="st">&#39;marital-status&#39;</span>,<span class="st">&#39;occupation&#39;</span>,<span class="st">&#39;relationship&#39;</span>,<span class="st">&#39;race&#39;</span>,<span class="st">&#39;sex&#39;</span>, <span class="st">&#39;native-country&#39;</span>])  
+  
+dfNew[<span class="st">&#39;target&#39;</span>] <span class="op">=</span> dfNew[<span class="st">&#39;class&#39;</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">==</span> <span class="vs">r&#39; &lt;=50K&#39;</span> <span class="cf">else</span> <span class="dv">0</span>)  <span class="co"># 将结果二分为1和0  </span>
+xdata <span class="op">=</span> dfNew.drop([<span class="st">&#39;class&#39;</span>,<span class="st">&#39;target&#39;</span>],axis <span class="op">=</span> <span class="dv">1</span>)  <span class="co"># 测试集  </span>
+ydata <span class="op">=</span> dfNew[<span class="st">&#39;target&#39;</span>]  <span class="co"># 结果集  </span>
+  
+<span class="im">from</span> sklearn.linear_model <span class="im">import</span> Perceptron  <span class="co"># 调用感应器模型函数  </span>
+per <span class="op">=</span> Perceptron(n_iter<span class="op">=</span><span class="dv">20</span>)  <span class="co"># 创建对象并设定迭代次数为20  </span>
+per.fit(xdata,ydata)  <span class="co"># 训练模型  </span>
+<span class="bu">print</span>(per.predict(xdata))  <span class="co"># 对模型进行预测  </span>
+<span class="bu">print</span>(per.score(xdata,ydata))  <span class="co"># 对模型进行准确率评估  </span></code></pre></div>
+<p>tips：感知器没有概率值</p>
+<h4 id="线性回归模型-1"><strong>线性回归模型</strong></h4>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">sklearn.linear_model.LinearRegression9(fit_intercept <span class="op">=</span> <span class="va">True</span>, normalize <span class="op">=</span> <span class="va">False</span>, copy_X <span class="op">=</span> <span class="va">True</span>, n_jobs <span class="op">=</span> <span class="dv">1</span>)  </code></pre></div>
+<p><code>fit_intercept</code>：是否计算截距<br>
+<code>normalize</code>：是否对整个样本进行数据标准化，线性模型并不依赖于正则，所以此参数无意义。</p>
+<p>线性回归模型需要接受一个连续性的变量，以达到预测。</p>
+<p>在线性模型中，更复杂的模型会用到alpha惩罚项，简称a，并且会通过数据集的定义方式选择raige函数和lasso函数。</p>
+<p><strong>raige和lasso的区别</strong></p>
+<p>raige接受l2的正则，lasso接受l1的正则。<br>
+raige：(w1)<sup>2+(w2)</sup>2+(w3)^2…，每个权重平方相加；lasso:|w1|+|w2|+|w3|…，每个权重绝对值相加。<br>
+lasso接受的l1范数，所以得到的解可能是稀疏的，导致很多系数的权重都为0；raige接受l2的范数，得到的解不会为0。<br>
+从方便的角度考虑，我们更多的使用l2范数的raige。</p>
+<p><strong>交叉验证（Cross validation)</strong><br>
+交叉验证用于防止模型过于复杂而引起的过拟合。有时亦称循环估计，是一种统计学上将数据样本切割成较小子集的实用方法。于是可以先在一个子集上做分析，而其它子集则用来做后续对此分析的确认及验证。交叉验证是一种评估统计分析、机器学习算法对独立于训练数据的数据集的泛化能力（generalize）。<br>
+在sklearn的在线性模型中，为了保证模型值，我们可以使用后续加CV的函数来进行交叉验证：</p>
+<p><code>alpha</code>：接受一个数组，数组内是所有认为有效的a的值，函数会自动选择最优值<br>
+<code>cv</code>：接受交叉验证的切分份数<br>
+<code>scoring</code>：评估指标，不填写会选择默认指标进行判断，也接受填写最小绝对值误差/最小均方误差，一般不填写<br>
+其他同上</p>
+<p>在进行CV时，有时可能会遇到被切分的样本内没有1，或者样本不均匀的问题，因此我们调用分层函数进行解决:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="im">from</span> sklearn.cross_validation <span class="im">import</span> StratifiedKFold<span class="co">#调用分层函数  </span>
+sf <span class="op">=</span> StratifiedKFold(ydata,n_folds<span class="op">=</span><span class="dv">5</span>)  <span class="co"># 创建对象并选择分为几层，避免发生稀疏矩阵的数据不均匀的问题  </span></code></pre></div>
+<p>这种情况在分类模型中才会发生，回归模型的y是连续值，因此不必进行分层。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/sklearn学习笔记-2 数据处理/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -515,769 +1811,11 @@ df.replace(np.inf,np.nan)：替换过大值为NaN</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/22/天池赛IJCAI-17 口碑商家客流量预测 解题思路/" itemprop="url">
-                  天池赛IJCAI-17 口碑商家客流量预测 解题思路
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T21:40:03+08:00">
-                2017-03-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/历程/" itemprop="url" rel="index">
-                    <span itemprop="name">历程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://tianchi.shuju.aliyun.com/competition/information.htm?spm=5176.100067.5678.2.zu3kSJ&amp;raceId=231591" target="_blank" rel="external">赛题与数据</a><br>
-<a href="https://github.com/heavysheep/tianchi" target="_blank" rel="external">代码</a></p>
-<h2 id="基本数据创建">基本数据创建</h2>
-<p><strong>result</strong>：每家店铺每日交易成功数量<br>
-<strong>view</strong>：每家店铺每日浏览量</p>
-<h2 id="参数分解">参数分解</h2>
-<h3 id="shop_info">shop_info</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="center">shop_id</th>
-<th align="center">city_name</th>
-<th align="center">location_id</th>
-<th align="center">per_pay</th>
-<th align="center">score</th>
-<th align="center">comment_cnt</th>
-<th align="center">shop_level</th>
-<th align="center">cate_name..</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">商家id</td>
-<td align="center">城市名</td>
-<td align="center">所在位置编号</td>
-<td align="center">人均消费</td>
-<td align="center">评分</td>
-<td align="center">评论数</td>
-<td align="center">商铺等级</td>
-<td align="center">分类</td>
-</tr>
-</tbody>
-</table>
-<p><strong>shop_id</strong>：主键，索引<br>
-<strong>city_name</strong>：获取气温、消费能力、消费习惯<br>
-<strong><del>location_id</del></strong>：聚类算法，估计功效太低没什么意义，pass<br>
-<strong>per_pay</strong>：检测与result负相关，与view负相关。<br>
-<strong>socre</strong>：检测与result正相关，与view正相关。<br>
-<strong>comment_cnt</strong>：检测与result正相关，与view正相关。<br>
-<strong>shop_level</strong>：检测与result正相关，与view正相关。<br>
-<strong>cate_name</strong>：分类太细，考虑只保留使用“超市”和“美食”进行区分。</p>
-<p>检测<strong>per_pay</strong>、<strong>score</strong>、<strong>comment_cnt</strong>、<strong>shop——level</strong>与<strong>view</strong>、<strong>result</strong>的关联度。<br>
-score有很大的问题：这个值是处于变动的。</p>
-<h3 id="user_pay">user_pay</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="center">user_id</th>
-<th align="center">shop_id</th>
-<th align="center">time_stamp</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">付费用户id</td>
-<td align="center">商家id</td>
-<td align="center">消费时间</td>
-</tr>
-</tbody>
-</table>
-<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
-<h3 id="user_view">user_view</h3>
-<table>
-<thead>
-<tr class="header">
-<th align="center">user_id</th>
-<th align="center">shop_id</th>
-<th align="center">time_stamp</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">浏览用户id</td>
-<td align="center">商家id</td>
-<td align="center">浏览时间</td>
-</tr>
-</tbody>
-</table>
-<p><strong>time_stamp</strong>：分解出日期<strong>day</strong>和时间<strong>time</strong>列。</p>
-<h2 id="特征工程">特征工程</h2>
-<p>1.考虑到口碑是2015年6月23日开始发布，必然遭遇冷启动和虚假数据问题，那么时间序列中，体现趋势的指标应该是7日移动平均线ma，影响最大的特征因子应该是最近一次的ma_7。<br>
-2.城市天气逻辑体现非常重要，主要划分了三级（晴，小雨/小雪/，大雨/雪），但划分后的效果并不很好。<br>
-3.当日是否为工作日，次日是否为工作日比较重要。<br>
-4.16年情人节到过年的那周视为噪音。<br>
-5.GDP作为特征果然没效果，删了。</p>
-<h2 id="感受">感受</h2>
-<p>1.以不同可索引对象制造的模型再融合有巨大威力，第一次瞎配的权重都带来了最好的提升。<br>
-2.solo的问题不在于想法…判断出哪个想法提升最多是最重要的，当然这需要经验。<br>
-3.xgboost因为bug跑不起来，没时间走ARIMA，也没时间再上prophet，凄苦…水平不够时候有队友提升会比较快。<br>
-4.合理利用每日评分确定正确方向是非常有必要的，相信前几的差距已经是谁对趋势判断更敏锐了。<br>
-5.全身心的投入大约勉强能进前200，看wepon大神的blog，对底层的理解还是很重要，今后要加强学习和训练。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/17/最近在做测试/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/17/最近在做测试/" itemprop="url">
-                  最近在做测试
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-17T14:25:46+08:00">
-                2017-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/历程/" itemprop="url" rel="index">
-                    <span itemprop="name">历程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近一直在忙测试相关工作，记录下测试工作心得：<br>
-1.重要的不仅只是懂业务流程，也要把思路抽离在流程之外。因为产品在设计时，往往会先定下大的方向，再逐渐寻找最优路线，在不停的修改中，也许已经偏离“可用”的轨道，此时测试应该代入的是用户的思路，对测试时找到的BUG，提出期望结果；对不合适的流程，也要提出优化期望。<br>
-2.细化的测试用例很重要，一方面可用于自动化测试的架构，另一方面，越细的测试用例，在写的时候就能发现非常多的问题。<br>
-3.如果作为懂技术的测试人员，对于测出的问题，应该做到比写这个功能的开发了解的更透彻，这也是一个测试人员平庸和杰出的分水岭。<br>
-4.测试人员是产品和开发扯皮中的重要第三方，沟通非常重要。<br>
-5.同上，测试“可信任”也是非常重要的，对能复现的问题，一定要通过复现从而找出问题；对不能复现的问题，记录下相关操作以便将来找出原因，直觉是知识、感官的积累，对于难以找到原因的问题，直觉非常重要。<br>
-6.最好的用例就是文档，文档即用例。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/24/Paxos算法简易理解/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/24/Paxos算法简易理解/" itemprop="url">
-                  Paxos算法简易理解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-24T13:32:31+08:00">
-                2017-02-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="简介">简介</h2>
-<p>Paxos算法简单来说就是一个在异步分布式系统里用以保证一致性的投票算法，严格来说，Paxos并不是一个算法，而是一个经过严谨逻辑推导出的投票方式。该算法由莱斯利·兰伯特于1990年提出，只由一些必须要被满足的基本条件推导得出，因此Paxos是在所有分布式算法中最简单，同时也是最稳定的算法。</p>
-<p>Paxos应用于“基于消息传递且要求具有高度容错特性”的场景，在“共享内存”的分布式场景中并不适用，另外，虽然有许多基于Paxos的一致性算法，但都没有paxos稳定。</p>
-<p>谷歌在其分布式锁服务（Chubby lock）中应用了Paxos算法。Yahoo!开源的ZooKeeper是一个开源的类Paxos实现，而hadoop也支持ZooKeeper协议。</p>
-<blockquote>
-<p>这个世界上只有一种一致性算法，那就是Paxos，其它的算法都是残次品 – Mike Burrows</p>
-</blockquote>
-<h2 id="算法假设">算法假设</h2>
-<p>1.不存在<a href="https://zh.wikipedia.org/wiki/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E5%B0%86%E5%86%9B%E9%97%AE%E9%A2%98" target="_blank" rel="external">拜占庭将军问题</a>（一条消息可能被传递两次，但在传递中不会出错） 2.只要等待足够的时间，消息就会被传到(信息必定到达） 3.每个节点对于信息，接收到信息即以为赞同，同时只有接受和忽略，没有反对。（只可根据赞成数来确定结果） 4.信息不一定会被成功传递，也无法确定传递时间。（包容传递失败，并确定在此条件下也能保持一致性） ##算法定义 在一个分布式系统中，每个节点会有最少1种，最多3种身份，分别是<strong>proposers（提案者）</strong>、<strong>acceptors（批准者）</strong>、<strong>learners（接受者）</strong>，他们在节点中相互传递信息被称为<strong>value（决议）</strong>。 1.决议只能被提案者提出，同时随决议附有一个编号，编号是递增且唯一的； 2.任何两个提案编号之间构成偏序（意味着提案者的编号大小是有意义的；同一次提案，提案者的权限是有等级分别的）； 3.在一次算法执行中，每个批准者一次只批准一条决议，并且只与最新的决议形成交互（意味着可能存在信息队列）； 4.收到超过半数的表态，即视为通过决议，并向所有人广播； 5.接受者只能获得最终被批准的决议。 需要注意的是，节点可以同时拥有三种身份，当节点既是提案者，又是批准者时，他必定会为自己提出的决议投出一票。</p>
-<h2 id="实例">实例</h2>
-<p>东方网准备开一场主题为“智橙生活未来发展方向”的会议，与会人员分别是董事长何XX、副董事长徐XX、纪委书记金X、副总裁高X、技术总监老王。与会人员都可以<strong>提案</strong>和<strong>赞同</strong>，一人一票。其他未与会人员例如开发、产品、数据分析师等，只能<strong>接受</strong>讨论结果（定义5）。</p>
-<p>第一天：董事长提案智橙生活应该主打“上海市民离不开的产品”，其他4人纷纷表示“赞同”，董事长收到其他4人的表态，开心的表示全票通过，向所有人广播<strong>“产品基调定好，新的提案不得再讨论本问题”</strong>，全场统一。</p>
-<p>第二天：董事长提案智橙生活应该添加“为民办事”功能，老王不能装作听不见，只好表示“赞同”（假设3），副总裁和纪委书记睡着了，无法表态，董事长等了半天只等到了两个表态，表示少两人老子照样干，加上自己一票通过了决议（定义4），向所有人广播<strong>“功能确定，新的提案不得再讨论本问题”</strong>，全场统一。</p>
-<p>第三天：副总裁和纪委书记睡醒了，发现了董事长的提案，但同时（或更早）收到了提案结果的广播，于是他们<strong>不必再对此提案表态</strong>，全场统一。</p>
-<p>第四天：轮到老王提案，他提出了“打磨产品，塑造核心功能点”的主旨，这时其他4位领导都睡着了，老王未获得任何表态。<strong>决议失败，不能向任何人广播。只能重新提案</strong>，全场统一。</p>
-<p>第五天：4位领导终于都醒了，这时董事长提出了“尽可能多的造功能，我们要做一款万能APP”的主旨，老王再次提出昨天的提案，其他三位领导先听见了董事长的训示，纷纷表态支持，这时才反应过来老王有一份同样的提案，这时有两种情况：</p>
-<p>老王职级低：其他领导表态后收到了老王的提案并发现是相同的提案（定义3），但老王的职级比他们的低，因此会<strong>忽略</strong>老王的提案，全场统一。</p>
-<p>老王职级高：其他领导表态后收到了老王的提案并发现是相同的提案（定义3），他们会向老王<strong>回复之前已经通过了的提案及其内容并忽略投票</strong>，这样老王会知道自己的提案无望，全场统一。</p>
-<p>第六天：董事长和老王同时说出对一件事的提案，并且获得邻座（近邻节点）的迅速反馈，此时老王邻座的副总裁和纪委书记先向老王表态“赞同”，当董事长的提案到来时，他们会再次表示“赞同”。而副董事长先向董事长的提案表示“赞同”后，收到了老王的提案，此时他将向老王表示“已有大人物关注此事，你不要插手”（定义2）。<strong>当信息传递结束，高权限必定获得更高的“赞同”</strong>，提案通过，全场统一。</p>
-<p>第七天：老王总结出了深刻的人生哲理：在异步的任何情况下，即使<strong>某一节点出于某些原因无法接受信息，也绝不影响该节点以及总体对于一致性的检测</strong>，并且<strong>为了保证异步一致，权限相对较低的节点在提案和投票中处于较不利的位置</strong>。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/18/使用sklearn进行数据预处理 —— 归一化-标准化-正则化/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="王子子">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="http://ww3.sinaimg.cn/large/646083e8jw1e4k8rg9xhdj20ai0am3z6.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="王子子的成长之路">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="王子子的成长之路" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/18/使用sklearn进行数据预处理 —— 归一化-标准化-正则化/" itemprop="url">
-                  使用sklearn进行数据预处理 —— 归一化/标准化/正则化
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-18T23:23:34+08:00">
-                2017-02-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本文主要是对照scikit-learn的preprocessing章节结合代码简单的回顾下预处理技术的几种方法，主要包括标准化、数据最大最小缩放处理、正则化、特征二值化和数据缺失值处理。内容比较简单，仅供参考！</p>
-<p>首先来回顾一下下面要用到的基本知识。 ## <strong>一、知识回顾</strong> 均值公式： <span class="math display">\[\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_{i}\]</span> 方差公式： <span class="math display">\[s^{2}=\frac{1}{n}\sum_{i=1}^{n}(x_{i}-\bar{x})^{2}\]</span> 0-范数，向量中非零元素的个数。 1-范数： <span class="math display">\[||X||=\sum_{i=1}^{n}|x_{i}|\]</span> 2-范数： <span class="math display">\[||X||_{2}=(\sum_{i=1}^{n}x_{i}^{2})^{\frac{1}{2}}\]</span> p-范数的计算公式： <span class="math display">\[||X||_{p}=(\sum_{i=1}^{n}x_{i}^{p})^{\frac{1}{p}}\]</span></p>
-<hr>
-<p>数据标准化：当单个特征的样本取值相差甚大或明显不遵从高斯正态分布时，标准化表现的效果较差。实际操作中，经常忽略特征数据的分布形状，移除每个特征均值，划分离散特征的标准差，从而等级化，进而实现数据中心化。</p>
-<h2 id="二标准化standardization或者去除均值和方差进行缩放"><strong>二、标准化(Standardization)，或者去除均值和方差进行缩放</strong></h2>
-<p>公式为：(X-X_mean)/X_std 计算时对每个属性/每列分别进行.</p>
-<p>将数据按其属性(按列进行)减去其均值，然后除以其方差。最后得到的结果是，对每个属性/每列来说所有数据都聚集在0附近，方差值为1。</p>
-<p>首先说明下sklearn中preprocessing库里面的scale函数使用方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sklearn.preprocessing.scale(X, axis=<span class="number">0</span>, with_mean=<span class="keyword">True</span>, with_std=<span class="keyword">True</span>, copy=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
-<p>根据参数的不同，可以沿任意轴标准化数据集。 参数解释：</p>
-<ul>
-<li>X：数组或者矩阵</li>
-<li>axis：int类型，初始值为0，axis用来计算均值 means 和标准方差 standard + deviations. 如果是0，则单独的标准化每个特征（列），如果是1，则标准化每个观测样本（行）。</li>
-<li>with_mean: boolean类型，默认为True，表示将数据均值规范到0</li>
-<li>with_std: boolean类型，默认为True，表示将数据方差规范到1</li>
-</ul>
-<p><strong>一个简单的例子</strong></p>
-<p>假设现在我构造一个数据集X，然后想要将其标准化。下面使用不同的方法来标准化X：</p>
-<p><strong>方法一：使用sklearn.preprocessing.scale()函数</strong></p>
-<p>方法说明：</p>
-<ul>
-<li>X.mean(axis=0)用来计算数据X每个特征的均值；</li>
-<li>X.std(axis=0)用来计算数据X每个特征的方差；</li>
-<li>preprocessing.scale(X)直接标准化数据X。</li>
-</ul>
-<p>将代码整理到一个文件中：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing   </div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np  </div><div class="line">X = np.array([[ <span class="number">1.</span>, <span class="number">-1.</span>,  <span class="number">2.</span>],  </div><div class="line">              [ <span class="number">2.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],  </div><div class="line">              [ <span class="number">0.</span>,  <span class="number">1.</span>, <span class="number">-1.</span>]])  </div><div class="line"><span class="comment"># calculate mean  </span></div><div class="line">X_mean = X.mean(axis=<span class="number">0</span>)  </div><div class="line"><span class="comment"># calculate variance   </span></div><div class="line">X_std = X.std(axis=<span class="number">0</span>)  </div><div class="line"><span class="comment"># standardize X  </span></div><div class="line">X1 = (X-X_mean)/X_std  </div><div class="line"><span class="comment"># use function preprocessing.scale to standardize X  </span></div><div class="line">X_scale = preprocessing.scale(X)</div></pre></td></tr></table></figure>
-<p>最后X_scale的值和X1的值是一样的，前面是单独的使用数学公式来计算，主要是为了形成一个对比，能够更好的理解scale()方法。</p>
-<p><strong>方法2：sklearn.preprocessing.StandardScaler类</strong></p>
-<p>该方法也可以对数据X进行标准化处理，实例如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing   </div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np  </div><div class="line">X = np.array([[ <span class="number">1.</span>, <span class="number">-1.</span>,  <span class="number">2.</span>],  </div><div class="line">              [ <span class="number">2.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],  </div><div class="line">              [ <span class="number">0.</span>,  <span class="number">1.</span>, <span class="number">-1.</span>]])  </div><div class="line">scaler = preprocessing.StandardScaler()  </div><div class="line">X_scaled = scaler.fit_transform(X)</div></pre></td></tr></table></figure>
-<p>这两个方法得到最后的结果都是一样的。</p>
-<h2 id="三将特征的取值缩小到一个范围如0到1"><strong>三、将特征的取值缩小到一个范围（如0到1）</strong></h2>
-<p>除了上述介绍的方法之外，另一种常用的方法是将属性缩放到一个指定的最大值和最小值(通常是1-0)之间，这可以通过preprocessing.MinMaxScaler类来实现。</p>
-<p>使用这种方法的目的包括：</p>
-<ul>
-<li>1、对于方差非常小的属性可以增强其稳定性；</li>
-<li>2、维持稀疏矩阵中为0的条目。</li>
-</ul>
-<p>下面将数据缩至0-1之间，采用MinMaxScaler函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing   </div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np  </div><div class="line">X = np.array([[ <span class="number">1.</span>, <span class="number">-1.</span>,  <span class="number">2.</span>],  </div><div class="line">              [ <span class="number">2.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],  </div><div class="line">              [ <span class="number">0.</span>,  <span class="number">1.</span>, <span class="number">-1.</span>]])  </div><div class="line">min_max_scaler = preprocessing.MinMaxScaler()  </div><div class="line">X_minMax = min_max_scaler.fit_transform(X)</div></pre></td></tr></table></figure>
-<p>最后输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">array([[ <span class="number">0.5</span>       ,  <span class="number">0.</span>        ,  <span class="number">1.</span>        ],  </div><div class="line">       [ <span class="number">1.</span>        ,  <span class="number">0.5</span>       ,  <span class="number">0.33333333</span>],  </div><div class="line">       [ <span class="number">0.</span>        ,  <span class="number">1.</span>        ,  <span class="number">0.</span>        ]])</div></pre></td></tr></table></figure>
-<p>测试用例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">X_test = np.array([[ <span class="number">-3.</span>, <span class="number">-1.</span>,  <span class="number">4.</span>]])  </div><div class="line">X_test_minmax = min_max_scaler.transform(X_test)  </div><div class="line">X_test_minmax  </div><div class="line">array([[<span class="number">-1.5</span>       ,  <span class="number">0.</span>        ,  <span class="number">1.66666667</span>]])</div></pre></td></tr></table></figure>
-<p>注意：这些变换都是对列进行处理。</p>
-<p>当然，在构造类对象的时候也可以直接指定最大最小值的范围：feature_range=(min, max)，此时应用的公式变为：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">X_std=(X-X.min(axis=<span class="number">0</span>))/(X.max(axis=<span class="number">0</span>)-X.min(axis=<span class="number">0</span>))  </div><div class="line">X_minmax=X_std/(X.max(axis=<span class="number">0</span>)-X.min(axis=<span class="number">0</span>))+X.min(axis=<span class="number">0</span>))</div></pre></td></tr></table></figure>
-<h2 id="四正则化normalization"><strong>四、正则化(Normalization)</strong></h2>
-<p>正则化的过程是将每个样本缩放到单位范数(每个样本的范数为1)，如果要使用如二次型(点积)或者其它核方法计算两个样本之间的相似性这个方法会很有用。</p>
-<p>该方法是文本分类和聚类分析中经常使用的向量空间模型（Vector Space Model)的基础.</p>
-<p>Normalization主要思想是对每个样本计算其p-范数，然后对该样本中每个元素除以该范数，这样处理的结果是使得每个处理后样本的p-范数(l1-norm,l2-norm)等于1。</p>
-<p><strong>方法1：使用sklearn.preprocessing.normalize()函数</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>X = [[ <span class="number">1.</span>, <span class="number">-1.</span>,  <span class="number">2.</span>],  </div><div class="line"><span class="meta">... </span>     [ <span class="number">2.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],  </div><div class="line"><span class="meta">... </span>     [ <span class="number">0.</span>,  <span class="number">1.</span>, <span class="number">-1.</span>]]  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>X_normalized = preprocessing.normalize(X, norm=<span class="string">'l2'</span>)  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>X_normalized                                        </div><div class="line">array([[ <span class="number">0.40</span>..., <span class="number">-0.40</span>...,  <span class="number">0.81</span>...],  </div><div class="line">       [ <span class="number">1.</span>  ...,  <span class="number">0.</span>  ...,  <span class="number">0.</span>  ...],  </div><div class="line">       [ <span class="number">0.</span>  ...,  <span class="number">0.70</span>..., <span class="number">-0.70</span>...]])</div></pre></td></tr></table></figure>
-<p><strong>方法2：sklearn.preprocessing.StandardScaler类</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>normalizer = preprocessing.Normalizer().fit(X)  <span class="comment"># fit does nothing </span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>normalizer  </div><div class="line">Normalizer(copy=<span class="keyword">True</span>, norm=<span class="string">'l2'</span>)</div></pre></td></tr></table></figure>
-<p>然后使用正则化实例来转换样本向量：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>normalizer.transform(X)                              </div><div class="line">array([[ <span class="number">0.40</span>..., <span class="number">-0.40</span>...,  <span class="number">0.81</span>...],  </div><div class="line">       [ <span class="number">1.</span>  ...,  <span class="number">0.</span>  ...,  <span class="number">0.</span>  ...],  </div><div class="line">       [ <span class="number">0.</span>  ...,  <span class="number">0.70</span>..., <span class="number">-0.70</span>...]])  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>normalizer.transform([[<span class="number">-1.</span>,  <span class="number">1.</span>, <span class="number">0.</span>]])               </div><div class="line">array([[<span class="number">-0.70</span>...,  <span class="number">0.70</span>...,  <span class="number">0.</span>  ...]])</div></pre></td></tr></table></figure>
-<p>两种方法都可以，效果是一样的。</p>
-<h2 id="五二值化binarization"><strong>五、二值化(Binarization)</strong></h2>
-<p>特征的二值化主要是为了将数据特征转变成boolean变量。在sklearn中，sklearn.preprocessing.Binarizer函数可以实现这一功能。实例如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>X = [[ <span class="number">1.</span>, <span class="number">-1.</span>,  <span class="number">2.</span>],  </div><div class="line"><span class="meta">... </span>     [ <span class="number">2.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],  </div><div class="line"><span class="meta">... </span>     [ <span class="number">0.</span>,  <span class="number">1.</span>, <span class="number">-1.</span>]]  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>binarizer = preprocessing.Binarizer().fit(X)  <span class="comment"># fit does nothing  </span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>binarizer  </div><div class="line">Binarizer(copy=<span class="keyword">True</span>, threshold=<span class="number">0.0</span>)  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>binarizer.transform(X)  </div><div class="line">array([[ <span class="number">1.</span>,  <span class="number">0.</span>,  <span class="number">1.</span>],  </div><div class="line">       [ <span class="number">1.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],  </div><div class="line">       [ <span class="number">0.</span>,  <span class="number">1.</span>,  <span class="number">0.</span>]])</div></pre></td></tr></table></figure>
-<p>Binarizer函数也可以设定一个阈值，结果数据值大于阈值的为1，小于阈值的为0，实例代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>binarizer = preprocessing.Binarizer(threshold=<span class="number">1.1</span>)  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>binarizer.transform(X)  </div><div class="line">array([[ <span class="number">0.</span>,  <span class="number">0.</span>,  <span class="number">1.</span>],  </div><div class="line">       [ <span class="number">1.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>],  </div><div class="line">       [ <span class="number">0.</span>,  <span class="number">0.</span>,  <span class="number">0.</span>]])</div></pre></td></tr></table></figure>
-<h2 id="六缺失值处理"><strong>六、缺失值处理</strong></h2>
-<p>由于不同的原因，许多现实中的数据集都包含有缺失值，要么是空白的，要么使用NaNs或者其它的符号替代。这些数据无法直接使用scikit-learn分类器直接训练，所以需要进行处理。幸运地是，sklearn中的Imputer类提供了一些基本的方法来处理缺失值，如使用均值、中位值或者缺失值所在列中频繁出现的值来替换。</p>
-<p>下面是使用均值来处理的实例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> Imputer  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>imp = Imputer(missing_values=<span class="string">'NaN'</span>, strategy=<span class="string">'mean'</span>, axis=<span class="number">0</span>)  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>imp.fit([[<span class="number">1</span>, <span class="number">2</span>], [np.nan, <span class="number">3</span>], [<span class="number">7</span>, <span class="number">6</span>]])  </div><div class="line">Imputer(axis=<span class="number">0</span>, copy=<span class="keyword">True</span>, missing_values=<span class="string">'NaN'</span>, strategy=<span class="string">'mean'</span>, verbose=<span class="number">0</span>)  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>X = [[np.nan, <span class="number">2</span>], [<span class="number">6</span>, np.nan], [<span class="number">7</span>, <span class="number">6</span>]]  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(imp.transform(X))                             </div><div class="line">[[ <span class="number">4.</span>          <span class="number">2.</span>        ]  </div><div class="line"> [ <span class="number">6.</span>          <span class="number">3.666</span>...]  </div><div class="line"> [ <span class="number">7.</span>          <span class="number">6.</span>        ]]</div></pre></td></tr></table></figure>
-<p>Imputer类同样支持稀疏矩阵：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> scipy.sparse <span class="keyword">as</span> sp  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>X = sp.csc_matrix([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">0</span>, <span class="number">3</span>], [<span class="number">7</span>, <span class="number">6</span>]])  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>imp = Imputer(missing_values=<span class="number">0</span>, strategy=<span class="string">'mean'</span>, axis=<span class="number">0</span>)  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>imp.fit(X)  </div><div class="line">Imputer(axis=<span class="number">0</span>, copy=<span class="keyword">True</span>, missing_values=<span class="number">0</span>, strategy=<span class="string">'mean'</span>, verbose=<span class="number">0</span>)  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>X_test = sp.csc_matrix([[<span class="number">0</span>, <span class="number">2</span>], [<span class="number">6</span>, <span class="number">0</span>], [<span class="number">7</span>, <span class="number">6</span>]])  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(imp.transform(X_test))                        </div><div class="line">[[ <span class="number">4.</span>          <span class="number">2.</span>        ]  </div><div class="line"> [ <span class="number">6.</span>          <span class="number">3.666</span>...]  </div><div class="line"> [ <span class="number">7.</span>          <span class="number">6.</span>        ]]</div></pre></td></tr></table></figure>
-<p>sklearn相关英文版本:<a href="http://scikit-learn.org/stable/modules/preprocessing.html#preprocessing" target="_blank" rel="external">Preprocessing data</a> 中文版本:<a href="http://sklearn.lzjqsdd.com/modules/preprocessing.html#preprocessing" target="_blank" rel="external">数据预处理</a></p>
-<p>本文提取自：http://blog.csdn.net/dream_angel_z/article/details/49406573</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1320,7 +1858,7 @@ score有很大的问题：这个值是处于变动的。</p>
           
             <div class="site-state-item site-state-posts">
               <a href="/">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1329,7 +1867,7 @@ score有很大的问题：这个值是处于变动的。</p>
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
